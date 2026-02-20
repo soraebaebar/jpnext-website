@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JP NEXT | 不動産・M&Aの現場から、日本の経営を変える。</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080808;
+    --white: #F5F2EC;
+    --cream: #EDE8DF;
+    --accent: #C8A96E;
+    --accent-dark: #9A7A45;
+    --gray: #888580;
+    --light-gray: #D4CFC6;
+    --dark-gray: #1A1A1A;
+    --mid: #2C2C2C;
+  }
+
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom Cursor */
+  .cursor {
+    width: 10px;
+    height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease;
+    mix-blend-mode: difference;
+  }
+
+  .cursor-follower {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.15s ease;
+    opacity: 0.6;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 28px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    mix-blend-mode: difference;
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.15em;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+  }
+
+  .nav-links a:hover {
+    opacity: 1;
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 60px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 80% 60% at 70% 40%, rgba(200, 169, 110, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 20% 80%, rgba(200, 169, 110, 0.05) 0%, transparent 50%);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(200, 169, 110, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200, 169, 110, 0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: 0.6;
+  }
+
+  .hero-number {
+    position: absolute;
+    top: 50%;
+    right: 60px;
+    transform: translateY(-50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(200px, 25vw, 400px);
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(200, 169, 110, 0.12);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    user-select: none;
+  }
+
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(48px, 7vw, 110px);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    max-width: 520px;
+    font-size: 15px;
+    line-height: 2;
+    color: rgba(245, 242, 236, 0.6);
+    margin-bottom: 64px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.7s forwards;
+  }
+
+  .hero-cta {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.9s forwards;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--accent);
+    color: var(--black);
+    padding: 18px 40px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  }
+
+  .btn-primary:hover {
+    background: var(--white);
+    gap: 24px;
+  }
+
+  .btn-secondary {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .btn-secondary::after {
+    content: '→';
+    transition: transform 0.3s;
+  }
+
+  .btn-secondary:hover {
+    opacity: 1;
+  }
+
+  .btn-secondary:hover::after {
+    transform: translateX(6px);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 80px;
+    right: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.2s forwards;
+  }
+
+  .hero-scroll span {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    writing-mode: vertical-rl;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: scrollLine 2s ease infinite;
+  }
+
+  @keyframes scrollLine {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  /* Ticker */
+  .ticker {
+    background: var(--accent);
+    padding: 14px 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .ticker-inner {
+    display: flex;
+    gap: 0;
+    animation: ticker 25s linear infinite;
+    white-space: nowrap;
+  }
+
+  .ticker-item {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding: 0 32px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--black);
+    font-weight: 700;
+  }
+
+  .ticker-dot {
+    width: 4px;
+    height: 4px;
+    background: var(--black);
+    border-radius: 50%;
+    opacity: 0.4;
+  }
+
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* Section Base */
+  section {
+    padding: 120px 60px;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  /* About */
+  .about {
+    background: var(--dark-gray);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-left h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 4vw, 60px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+  }
+
+  .about-left h2 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .about-left p {
+    font-size: 15px;
+    line-height: 2;
+    color: rgba(245, 242, 236, 0.65);
+    margin-bottom: 20px;
+  }
+
+  .about-right {
+    position: relative;
+  }
+
+  .profile-card {
+    background: var(--mid);
+    border: 1px solid rgba(200, 169, 110, 0.2);
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .profile-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+  }
+
+  .profile-role {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .profile-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 36px;
+    margin-bottom: 8px;
+  }
+
+  .profile-name-en {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--gray);
+    margin-bottom: 32px;
+  }
+
+  .profile-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .profile-items li {
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+    color: rgba(245, 242, 236, 0.65);
+    line-height: 1.6;
+    align-items: flex-start;
+  }
+
+  .profile-items li::before {
+    content: '▸';
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(200, 169, 110, 0.15);
+    margin-top: 40px;
+  }
+
+  .stat {
+    background: var(--dark-gray);
+    padding: 32px 24px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: rgba(245, 242, 236, 0.5);
+    letter-spacing: 0.1em;
+  }
+
+  /* Products */
+  .products {
+    background: var(--black);
+  }
+
+  .products-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 80px;
+  }
+
+  .products-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 4vw, 60px);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .products-header h2 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: rgba(200, 169, 110, 0.1);
+  }
+
+  .product-card {
+    background: var(--dark-gray);
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s ease;
+    cursor: none;
+  }
+
+  .product-card:hover {
+    background: var(--mid);
+  }
+
+  .product-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+    transform-origin: left;
+  }
+
+  .product-card:hover::after {
+    transform: scaleX(1);
+  }
+
+  .product-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    padding: 6px 14px;
+    border: 1px solid;
+  }
+
+  .status-coming {
+    color: var(--accent);
+    border-color: rgba(200, 169, 110, 0.3);
+  }
+
+  .status-coming .dot {
+    width: 5px;
+    height: 5px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  .product-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 80px;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(200, 169, 110, 0.15);
+    line-height: 1;
+    position: absolute;
+    top: 20px;
+    right: 30px;
+  }
+
+  .product-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .product-card p {
+    font-size: 13px;
+    line-height: 1.9;
+    color: rgba(245, 242, 236, 0.55);
+    margin-bottom: 40px;
+  }
+
+  .product-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0.6;
+  }
+
+  /* Dev */
+  .dev {
+    background: var(--cream);
+    color: var(--black);
+  }
+
+  .dev .section-label {
+    color: var(--accent-dark);
+  }
+
+  .dev .section-label::before {
+    background: var(--accent-dark);
+  }
+
+  .dev-inner {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 100px;
+    align-items: start;
+  }
+
+  .dev h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 4vw, 56px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+    color: var(--black);
+  }
+
+  .dev h2 em {
+    font-style: italic;
+    color: var(--accent-dark);
+  }
+
+  .dev > .dev-inner > div > p {
+    font-size: 15px;
+    line-height: 2;
+    color: rgba(8, 8, 8, 0.65);
+    margin-bottom: 48px;
+  }
+
+  .dev-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: rgba(8,8,8,0.08);
+  }
+
+  .dev-feature {
+    background: var(--cream);
+    padding: 32px 28px;
+    transition: background 0.3s;
+  }
+
+  .dev-feature:hover {
+    background: #E8E0D0;
+  }
+
+  .dev-feature-icon {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+
+  .dev-feature h4 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: var(--black);
+  }
+
+  .dev-feature p {
+    font-size: 12px;
+    line-height: 1.8;
+    color: rgba(8, 8, 8, 0.55);
+  }
+
+  .dev-right {
+    padding-top: 20px;
+  }
+
+  .process-list {
+    list-style: none;
+  }
+
+  .process-item {
+    display: flex;
+    gap: 32px;
+    padding: 32px 0;
+    border-bottom: 1px solid rgba(8,8,8,0.1);
+    align-items: flex-start;
+    transition: padding 0.3s ease;
+  }
+
+  .process-item:hover {
+    padding-left: 8px;
+  }
+
+  .process-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    color: var(--accent-dark);
+    line-height: 1;
+    flex-shrink: 0;
+    opacity: 0.4;
+  }
+
+  .process-content h4 {
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: var(--black);
+  }
+
+  .process-content p {
+    font-size: 13px;
+    line-height: 1.8;
+    color: rgba(8,8,8,0.55);
+  }
+
+  /* Contact */
+  .contact {
+    background: var(--black);
+    text-align: center;
+    padding: 160px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(200, 169, 110, 0.06) 0%, transparent 70%);
+  }
+
+  .contact-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .contact-label::before,
+  .contact-label::after {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .contact h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(40px, 6vw, 90px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  .contact h2 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .contact p {
+    font-size: 15px;
+    line-height: 2;
+    color: rgba(245, 242, 236, 0.55);
+    max-width: 500px;
+    margin: 0 auto 64px;
+  }
+
+  .contact-email {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 48px;
+    transition: opacity 0.3s;
+  }
+
+  .contact-email:hover {
+    opacity: 0.7;
+  }
+
+  .contact-actions {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Footer */
+  footer {
+    background: var(--dark-gray);
+    padding: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(200, 169, 110, 0.1);
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 0.15em;
+    color: var(--white);
+  }
+
+  .footer-copy {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--gray);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover {
+    color: var(--accent);
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    nav {
+      padding: 24px 32px;
+    }
+    .nav-links { display: none; }
+    section { padding: 80px 32px; }
+    .hero { padding: 0 32px 60px; }
+    .hero-title { font-size: clamp(40px, 10vw, 80px); }
+    .about { grid-template-columns: 1fr; gap: 60px; }
+    .products-grid { grid-template-columns: 1fr; }
+    .dev-inner { grid-template-columns: 1fr; gap: 60px; }
+    .dev-features { grid-template-columns: 1fr; }
+    .products-header { flex-direction: column; align-items: flex-start; gap: 24px; }
+    footer { flex-direction: column; gap: 32px; text-align: center; }
+    .hero-scroll { display: none; }
+    .hero-number { font-size: 160px; right: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
+
+<!-- Nav -->
+<nav>
+  <a href="#" class="nav-logo">JP NEXT</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#dev">Development</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-number">01</div>
+
+  <p class="hero-tag">不動産 × M&A × Technology</p>
+
+  <h1 class="hero-title">
+    現場から、<br>
+    日本の経営を<br>
+    <em>変える。</em>
+  </h1>
+
+  <p class="hero-sub">
+    不動産・M&Aの最前線で培った業務知識をプロダクトに。<br>
+    現場が本当に使えるツールを、速く、安く届ける。<br>
+    JP NEXTは、実務家が作る次世代の経営インフラです。
+  </p>
+
+  <div class="hero-cta">
+    <a href="#products" class="btn-primary">
+      Products を見る →
+    </a>
+    <a href="#contact" class="btn-secondary">お問い合わせ</a>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- Ticker -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <!-- Duplicated for seamless loop -->
+    <span class="ticker-item">不動産ツール <span class="ticker-dot"></span></span>
+    <span class="ticker-item">M&A査定 <span class="ticker-dot"></span></span>
+    <span class="ticker-item">買い切り型 <span class="ticker-dot"></span></span>
+    <span class="ticker-item">受託開発 <span class="ticker-dot"></span></span>
+    <span class="ticker-item">中小企業DX <span class="ticker-dot"></span></span>
+    <span class="ticker-item">現場発のプロダクト <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Real Estate Tools <span class="ticker-dot"></span></span>
+    <span class="ticker-item">M&A Valuation <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Buy Once, Use Forever <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Custom Development <span class="ticker-dot"></span></span>
+    <span class="ticker-item">不動産ツール <span class="ticker-dot"></span></span>
+    <span class="ticker-item">M&A査定 <span class="ticker-dot"></span></span>
+    <span class="ticker-item">買い切り型 <span class="ticker-dot"></span></span>
+    <span class="ticker-item">受託開発 <span class="ticker-dot"></span></span>
+    <span class="ticker-item">中小企業DX <span class="ticker-dot"></span></span>
+    <span class="ticker-item">現場発のプロダクト <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Real Estate Tools <span class="ticker-dot"></span></span>
+    <span class="ticker-item">M&A Valuation <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Buy Once, Use Forever <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Custom Development <span class="ticker-dot"></span></span>
+  </div>
+</div>
+
+<!-- About -->
+<section class="about" id="about">
+  <div class="about-left reveal">
+    <p class="section-label">JP NEXT とは</p>
+    <h2>
+      現場を知る者だけが、<br>
+      <em>本物のツール</em>を<br>
+      作れる。
+    </h2>
+    <p>
+      JP NEXTは、現役M&Aアドバイザーが立ち上げた、プロダクト開発会社です。不動産仕入・M&Aアドバイザリーの現場を知るからこそ、使われないツールは作らない。
+    </p>
+    <p>
+      日本の中小企業が世界と戦える経営基盤を、テクノロジーで構築します。「JP NEXT」に込めた想いは、日本が再び世界一になること。その最前線に立つ会社であり続けます。
+    </p>
+  </div>
+
+  <div class="about-right reveal">
+    <div class="profile-card">
+      <p class="profile-role">Founder & CEO</p>
+      <h3 class="profile-name">ソラエバエバル</h3>
+      <p class="profile-name-en">JP NEXT Inc.</p>
+      <ul class="profile-items">
+        <li>明治大学卒業後、新卒でマンション用地仕入れを3年半経験</li>
+        <li>M&AベストパートナーズにてM&Aアドバイザーとして従事</li>
+        <li>現在ウィルゲートにてM&Aアドバイザー（成長系M&A支援）</li>
+        <li>不動産・M&A両分野の実務経験をプロダクト開発に昇華</li>
+      </ul>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-num">3.5<span style="font-size:24px">年</span></div>
+        <div class="stat-label">不動産仕入経験</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">2+<span style="font-size:24px">年</span></div>
+        <div class="stat-label">M&Aアドバイザー</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">可能性</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Products -->
+<section class="products" id="products">
+  <div class="products-header reveal">
+    <div>
+      <p class="section-label">プロダクト</p>
+      <h2>
+        現場課題から生まれた<br>
+        <em>ツール群。</em>
+      </h2>
+    </div>
+    <p style="font-size:13px;color:rgba(245,242,236,0.45);max-width:280px;line-height:1.8;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.05em;">
+      買い切り型。導入コストゼロから。<br>
+      現場で使い続けられる設計。
+    </p>
+  </div>
+
+  <div class="products-grid reveal">
+    <div class="product-card">
+      <div class="product-num">01</div>
+      <div class="product-status status-coming">
+        <span class="dot"></span>
+        Coming Soon
+      </div>
+      <h3>M&A簡易査定<br>ツール</h3>
+      <p>売上・利益・業種から企業価値を瞬時に算出。経営者との初回面談前の事前準備、売り手側の自社価値把握に。</p>
+      <p class="product-tag">// M&A × Valuation</p>
+    </div>
+
+    <div class="product-card">
+      <div class="product-num">02</div>
+      <div class="product-status status-coming">
+        <span class="dot"></span>
+        Coming Soon
+      </div>
+      <h3>不動産事業<br>収支シミュレーター</h3>
+      <p>物件取得から賃料収入、出口戦略まで一気通貫でシミュレーション。マンション・商業・土地開発に対応。</p>
+      <p class="product-tag">// Real Estate × Finance</p>
+    </div>
+
+    <div class="product-card">
+      <div class="product-num">03</div>
+      <div class="product-status status-coming">
+        <span class="dot"></span>
+        In Development
+      </div>
+      <h3>M&A DD<br>チェックリスト</h3>
+      <p>デューデリジェンスで確認すべき項目を業種別に網羅。見落としゼロの体系的なチェックフローを提供。</p>
+      <p class="product-tag">// M&A × Due Diligence</p>
+    </div>
+  </div>
+</section>
+
+<!-- Dev -->
+<section class="dev" id="dev">
+  <div class="dev-inner">
+    <div>
+      <p class="section-label">受託開発</p>
+      <h2>
+        御社の業務に合った<br>
+        ツールを、<br>
+        <em>一緒に作ります。</em>
+      </h2>
+      <p>
+        大手SIerより速く、スタートアップより現場を理解している。それがJP NEXTの受託開発です。中小企業が自社で使うツールを、安く・スピード感を持って開発します。
+      </p>
+
+      <div class="dev-features">
+        <div class="dev-feature">
+          <div class="dev-feature-icon">⚡</div>
+          <h4>スピード開発</h4>
+          <p>要件定義から納品まで最短2週間。スタートアップのスピードで動きます。</p>
+        </div>
+        <div class="dev-feature">
+          <div class="dev-feature-icon">💰</div>
+          <h4>リーズナブル</h4>
+          <p>大手SIerの数分の一のコストで、同等以上のクオリティを実現。</p>
+        </div>
+        <div class="dev-feature">
+          <div class="dev-feature-icon">🎯</div>
+          <h4>現場理解</h4>
+          <p>不動産・M&Aの実務経験者が要件定義から参加。的外れな提案はしません。</p>
+        </div>
+        <div class="dev-feature">
+          <div class="dev-feature-icon">🔄</div>
+          <h4>継続改善</h4>
+          <p>納品後も使いながら改善。「作って終わり」ではなく伴走します。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dev-right">
+      <p class="section-label" style="margin-bottom:48px;">開発フロー</p>
+      <ul class="process-list">
+        <li class="process-item">
+          <span class="process-num">01</span>
+          <div class="process-content">
+            <h4>ヒアリング・課題整理</h4>
+            <p>現場の課題を深く理解するところから始めます。「何を作るか」より「何を解決するか」を先に定義。</p>
+          </div>
+        </li>
+        <li class="process-item">
+          <span class="process-num">02</span>
+          <div class="process-content">
+            <h4>要件定義・設計</h4>
+            <p>必要最小限の機能に絞り込み、無駄なコストを排除。シンプルで使いやすい設計を優先します。</p>
+          </div>
+        </li>
+        <li class="process-item">
+          <span class="process-num">03</span>
+          <div class="process-content">
+            <h4>スピード開発・レビュー</h4>
+            <p>週次でデモを共有しながら進行。認識のズレを早期に解消し、手戻りを最小化します。</p>
+          </div>
+        </li>
+        <li class="process-item">
+          <span class="process-num">04</span>
+          <div class="process-content">
+            <h4>納品・運用サポート</h4>
+            <p>納品後の社内展開・定着まで支援。使われるツールにするための伴走を続けます。</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact" id="contact">
+  <div class="contact-bg"></div>
+  <div class="contact-label">Contact</div>
+  <h2>
+    一緒に、<br>
+    <em>日本を変えよう。</em>
+  </h2>
+  <p>
+    プロダクトのご利用、受託開発のご相談、<br>
+    または単純に話を聞いてみたい方、<br>
+    まずはお気軽にご連絡ください。
+  </p>
+  <a href="mailto:info@jpnext.co" class="contact-email">info@jpnext.co</a>
+  <div class="contact-actions">
+    <a href="mailto:info@jpnext.co" class="btn-primary">メールで相談する →</a>
+    <a href="tel:09040670219" class="btn-secondary">090-4067-0219</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">JP NEXT</div>
+  <ul class="footer-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#dev">Development</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 JP NEXT. All rights reserved.</p>
+</footer>
+
+<script>
+  // Custom Cursor
+  const cursor = document.getElementById('cursor');
+  const follower = document.getElementById('cursorFollower');
+  let mouseX = 0, mouseY = 0;
+  let followerX = 0, followerY = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursor.style.left = mouseX - 5 + 'px';
+    cursor.style.top = mouseY - 5 + 'px';
+  });
+
+  function animateFollower() {
+    followerX += (mouseX - followerX - 20) * 0.12;
+    followerY += (mouseY - followerY - 20) * 0.12;
+    follower.style.left = followerX + 'px';
+    follower.style.top = followerY + 'px';
+    requestAnimationFrame(animateFollower);
+  }
+  animateFollower();
+
+  // Cursor scale on hover
+  document.querySelectorAll('a, button, .product-card, .dev-feature').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'scale(2)';
+      follower.style.transform = 'scale(1.5)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'scale(1)';
+      follower.style.transform = 'scale(1)';
+    });
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, i * 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Nav scroll effect
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80) {
+      nav.style.mixBlendMode = 'normal';
+      nav.style.background = 'rgba(8,8,8,0.92)';
+      nav.style.backdropFilter = 'blur(20px)';
+      nav.style.borderBottom = '1px solid rgba(200,169,110,0.1)';
+    } else {
+      nav.style.background = 'transparent';
+      nav.style.backdropFilter = 'none';
+      nav.style.borderBottom = 'none';
+      nav.style.mixBlendMode = 'difference';
+    }
+  });
+</script>
+</body>
+</html>
