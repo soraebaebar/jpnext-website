@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>M&A簡易査定ツール | JP NEXT — 売上・業種から企業価値を瞬時に算出</title>
+<title>M&A簡易査定ツール | 企業価値を瞬時に算出【買い切り型】JP NEXT</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -22,6 +22,8 @@
     --gray-700: #2C2C2E;
   }
 
+
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { font-size: 16px; scroll-behavior: smooth; }
 
@@ -569,102 +571,174 @@
   }
 </style>
 
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="M&A簡易査定ツール｜売上・利益・業種を入力するだけで企業価値を瞬時に算出。M&Aアドバイザーとの面談前準備や自社の企業価値把握に。JP NEXTが提供する買い切り型ツール。">
-  <meta name="keywords" content="M&A査定,企業価値評価,企業売却,M&A簡易査定,EBITDAマルチプル,会社売却,中小企業M&A,M&Aアドバイザー,企業価値計算,バリュエーション">
-  <meta name="robots" content="index, follow">
+  <!-- ===== SEO: Technical & On-Page ===== -->
+  <meta name="description" content="M&A簡易査定ツール｜売上・利益・業種を入力するだけで企業価値を素早く算出。会社売却を検討中の経営者や、M&Aアドバイザーとの面談前に自社価値を把握したい方に最適。JP NEXTが提供する買い切り型ツール。">
+  <meta name="keywords" content="M&A査定,企業価値評価,会社売却,企業価値計算,EBITDAマルチプル,M&Aアドバイザー,中小企業M&A,バリュエーション,企業価値算定,M&A相場,会社の価値,株式価値,事業譲渡,M&A費用,売却価格">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <meta name="author" content="JP NEXT">
+  <meta name="theme-color" content="#D42020">
   <link rel="canonical" href="https://www.jpnext.co/ma-tool.html">
 
-  <!-- Open Graph -->
+  <!-- Open Graph / SNS -->
   <meta property="og:type" content="product">
   <meta property="og:url" content="https://www.jpnext.co/ma-tool.html">
-  <meta property="og:title" content="M&A簡易査定ツール | JP NEXT — 企業価値を瞬時に算出">
-  <meta property="og:description" content="売上・利益・業種を入力するだけで企業価値を瞬時に算出。M&Aアドバイザーとの面談前準備や自社価値の把握に最適な買い切り型ツール。">
+  <meta property="og:title" content="M&A簡易査定ツール | 企業価値を瞬時に算出 — JP NEXT">
+  <meta property="og:description" content="売上・利益・業種を入力するだけで企業価値を算出。M&Aアドバイザー5年以上の実務経験者が設計した、中小企業オーナー向け買い切り型査定ツール。">
   <meta property="og:image" content="https://www.jpnext.co/ogp-ma-tool.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="M&A簡易査定ツール - 企業価値を瞬時に算出">
   <meta property="og:site_name" content="JP NEXT">
   <meta property="og:locale" content="ja_JP">
-
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="M&A簡易査定ツール | JP NEXT — 企業価値を瞬時に算出">
-  <meta name="twitter:description" content="売上・利益・業種を入力するだけで企業価値を瞬時に算出。M&Aアドバイザーとの面談前準備に最適な買い切り型ツール。">
+  <meta name="twitter:title" content="M&A簡易査定ツール | 企業価値を瞬時に算出 — JP NEXT">
+  <meta name="twitter:description" content="売上・利益・業種を入力するだけで企業価値を算出。M&Aアドバイザー5年以上の実務経験者が設計した買い切り型査定ツール。">
   <meta name="twitter:image" content="https://www.jpnext.co/ogp-ma-tool.png">
 
-  <!-- JSON-LD Structured Data -->
+  <!-- Structured Data: SoftwareApplication -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@graph": [
+    "@type": "SoftwareApplication",
+    "@id": "https://www.jpnext.co/ma-tool.html#product",
+    "name": "M&A簡易査定ツール",
+    "alternateName": "M&A企業価値計算ツール",
+    "description": "売上・利益・業種を入力するだけで企業価値を瞬時に算出できるM&A査定ツール。EBITDAマルチプル法など実務で使われる手法で計算。会社売却を検討中の経営者やM&Aアドバイザーとの面談前準備に最適。",
+    "url": "https://www.jpnext.co/ma-tool.html",
+    "applicationCategory": "BusinessApplication",
+    "applicationSubCategory": "Finance",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "JPY",
+      "availability": "https://schema.org/PreOrder",
+      "description": "買い切り型 - サブスクリプション不要"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "JP NEXT",
+      "@id": "https://www.jpnext.co/#organization"
+    },
+    "featureList": [
+      "売上・営業利益・EBITDAから自動計算",
+      "業種別マルチプル対応",
+      "M&A相場の参考値提示",
+      "買い切り型・サブスク不要",
+      "実務経験者監修"
+    ],
+    "screenshot": "https://www.jpnext.co/ogp-ma-tool.png",
+    "inLanguage": "ja"
+  }
+  </script>
+
+  <!-- Structured Data: WebPage with Breadcrumb -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://www.jpnext.co/ma-tool.html#webpage",
+    "url": "https://www.jpnext.co/ma-tool.html",
+    "name": "M&A簡易査定ツール | 企業価値を瞬時に算出 — JP NEXT",
+    "description": "売上・利益・業種を入力するだけで企業価値を算出。M&Aアドバイザー5年以上の実務経験者が設計した、中小企業オーナー向け買い切り型査定ツール。",
+    "inLanguage": "ja",
+    "isPartOf": {"@id": "https://www.jpnext.co/#website"},
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "JP NEXT トップ", "item": "https://www.jpnext.co/"},
+        {"@type": "ListItem", "position": 2, "name": "プロダクト"},
+        {"@type": "ListItem", "position": 3, "name": "M&A簡易査定ツール", "item": "https://www.jpnext.co/ma-tool.html"}
+      ]
+    }
+  }
+  </script>
+
+  <!-- Structured Data: FAQ (keyword-rich Q&A for Google Rich Results) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
       {
-        "@type": "SoftwareApplication",
-        "@id": "https://www.jpnext.co/ma-tool.html#product",
-        "name": "M&A簡易査定ツール",
-        "description": "売上・利益・業種を入力するだけで企業価値を瞬時に算出できるM&A査定ツール。M&Aアドバイザーとの面談前準備や自社の企業価値把握に最適。",
-        "url": "https://www.jpnext.co/ma-tool.html",
-        "applicationCategory": "BusinessApplication",
-        "operatingSystem": "Web",
-        "offers": {
-          "@type": "Offer",
-          "priceCurrency": "JPY",
-          "availability": "https://schema.org/PreOrder"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "JP NEXT",
-          "url": "https://www.jpnext.co"
-        },
-        "featureList": ["企業価値自動算出", "業種別マルチプル対応", "EBITDAベース計算", "M&A相場参考値提示"],
-        "inLanguage": "ja"
-      },
-      {
-        "@type": "WebPage",
-        "@id": "https://www.jpnext.co/ma-tool.html#webpage",
-        "url": "https://www.jpnext.co/ma-tool.html",
-        "name": "M&A簡易査定ツール | JP NEXT — 企業価値を瞬時に算出",
-        "description": "売上・利益・業種を入力するだけで企業価値を瞬時に算出。M&Aアドバイザーとの面談前準備や自社価値の把握に最適な買い切り型ツール。",
-        "inLanguage": "ja",
-        "breadcrumb": {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            {"@type": "ListItem", "position": 1, "name": "JP NEXT", "item": "https://www.jpnext.co/"},
-            {"@type": "ListItem", "position": 2, "name": "プロダクト"},
-            {"@type": "ListItem", "position": 3, "name": "M&A簡易査定ツール", "item": "https://www.jpnext.co/ma-tool.html"}
-          ]
+        "@type": "Question",
+        "name": "中小企業のM&Aで企業価値はどうやって決まりますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "中小企業のM&Aでは主にEBITDAマルチプル法（営業利益×業種別倍率）や年買法が使われます。業種・収益性・成長性によって倍率は3〜10倍程度変動します。本ツールでは売上・営業利益・業種を入力するだけで相場感のある企業価値を算出できます。"
         }
       },
       {
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "M&A査定ツールはどのように企業価値を計算しますか？",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "売上・営業利益・業種などの基本情報をもとに、EBITDAマルチプル法などの実務で使われる手法で企業価値の目安を算出します。"
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "このツールはどんな人に向いていますか？",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "M&Aアドバイザーとの面談前に自社の価値感を把握したい経営者や、売却を検討している中小企業オーナーに最適です。"
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "サブスクリプションは必要ですか？",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "いいえ。JP NEXTのプロダクトは買い切り型です。一度購入すれば継続費用なくご利用いただけます。"
-            }
-          }
-        ]
+        "@type": "Question",
+        "name": "会社売却の相場はどのくらいですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "中小企業の売却相場は営業利益の3〜8倍程度が一般的ですが、業種・成長率・顧客基盤によって大きく異なります。例えば営業利益3,000万円の会社の場合、9,000万円〜2億4,000万円程度が目安となります。本ツールで業種別の相場感を確認できます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "M&Aアドバイザーに相談する前に何を準備すればいいですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "M&Aアドバイザーとの初回面談前に、直近3期の売上・営業利益・EBITDAを把握しておくことが重要です。本ツールで事前に企業価値の目安を算出しておくことで、面談での交渉や判断がスムーズになります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "このM&A査定ツールは無料ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "現在Coming Soon（開発中）のツールです。リリース後は買い切り型での提供を予定しています。月額サブスクリプションは不要で、一度購入すれば継続費用なくご利用いただけます。事前登録はお問い合わせフォームからどうぞ。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "EBITDAとは何ですか？M&Aでどう使いますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "EBITDAとは「利払い前・税引き前・減価償却前利益」のことで、企業の実質的なキャッシュ創出力を示す指標です。M&Aでは「EBITDAマルチプル法」として、EBITDA×業種別倍率で企業価値を算出する手法が広く使われています。"
+        }
       }
     ]
   }
   </script>
+
+  <!-- Structured Data: HowTo (ツールの使い方) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "M&A簡易査定ツールの使い方",
+    "description": "3ステップで企業価値の目安を算出します",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "基本情報を入力",
+        "text": "売上・営業利益（またはEBITDA）・業種を入力します"
+      },
+      {
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "算定結果を確認",
+        "text": "業種別マルチプルをもとに企業価値の目安レンジが表示されます"
+      },
+      {
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "M&Aアドバイザーへ相談",
+        "text": "算定結果を持参してM&Aアドバイザーに相談し、本格的な査定を依頼します"
+      }
+    ],
+    "tool": {
+      "@type": "SoftwareApplication",
+      "name": "M&A簡易査定ツール"
+    }
+  }
+  </script>
+
+  <!-- Performance: Font preload -->
+  <link rel="preload" href="https://fonts.gstatic.com/s/notosansjp/v53/-F6jfjtqLzI2JPCgQBnw7HFyzSD-AsregP8VFBEj75s.woff2" as="font" type="font/woff2" crossorigin>
 </head>
 <body>
 
@@ -688,6 +762,19 @@
 
 <!-- HERO -->
 <main>
+<nav aria-label="パンくずリスト" style="background:var(--gray-50);padding:12px 48px;border-bottom:1px solid var(--gray-100);font-size:12px;color:var(--gray-400);">
+  <ol style="display:flex;gap:8px;list-style:none;align-items:center;max-width:1240px;margin:0 auto;" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="https://www.jpnext.co/" style="color:var(--gray-400);text-decoration:none;font-weight:500;"><span itemprop="name">JP NEXT</span></a>
+      <meta itemprop="position" content="1" />
+    </li>
+    <li style="opacity:0.4;">›</li>
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <span itemprop="name" style="color:var(--gray-500);">M&A簡易査定ツール</span>
+      <meta itemprop="position" content="2" />
+    </li>
+  </ol>
+</nav>
 <section class="hero">
   <div class="badge">COMING SOON — 発売準備中</div>
   <h1>企業価値を、<br><span class="accent">その場で</span>算定。</h1>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JP NEXT | 不動産・M&A専門チームによる中小企業向け経営ツール・受託開発</title>
+<title>JP NEXT | M&A査定・不動産投資ツール｜実務経験者が作る中小企業向け経営ツール</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -192,6 +192,9 @@
   .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
+
+  /* Screen reader only - SEO text */
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
   @media (max-width: 960px) {
     .nav-links { display: none; }
     .hero-inner { grid-template-columns: 1fr; padding: 60px 24px; }
@@ -207,71 +210,211 @@
   }
 </style>
 
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="JP NEXTは不動産・M&Aの実務経験を持つ専門家チームが開発する、中小企業向けプロダクト・受託開発チームです。M&A簡易査定ツール、不動産収支シミュレーターなど買い切り型ツールを提供。">
-  <meta name="keywords" content="M&A,企業売却,M&Aアドバイザー,企業価値評価,不動産投資,収支シミュレーション,中小企業,受託開発,業務ツール,買収,M&A査定">
-  <meta name="robots" content="index, follow">
+  <!-- ===== SEO: Technical & On-Page ===== -->
+  <meta name="description" content="JP NEXTは不動産5年・M&Aアドバイザー5年以上の実務経験者が作る、中小企業向け経営ツール開発チームです。M&A簡易査定ツール・不動産収支シミュレーター・DDチェックリストなど買い切り型ツールを提供。受託開発も対応。">
+  <meta name="keywords" content="M&A査定,企業価値評価,会社売却,M&Aアドバイザー,企業価値計算,EBITDAマルチプル,中小企業M&A,不動産収支計算,不動産投資シミュレーション,受託開発,業務ツール開発,M&A費用,会社買収,バリュエーション,デューデリジェンス">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <meta name="author" content="JP NEXT">
+  <meta name="copyright" content="JP NEXT">
+  <meta name="language" content="Japanese">
+  <meta name="revisit-after" content="7 days">
+  <meta name="theme-color" content="#D42020">
   <link rel="canonical" href="https://www.jpnext.co/">
 
-  <!-- Open Graph -->
+  <!-- Open Graph / SNS -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.jpnext.co/">
-  <meta property="og:title" content="JP NEXT | 不動産・M&Aの現場から、日本の経営を変える。">
-  <meta property="og:description" content="不動産・M&Aの実務経験者が作る、中小企業向け買い切り型ツール。M&A簡易査定・不動産収支シミュレーターなど現場が本当に使えるプロダクトを提供します。">
+  <meta property="og:title" content="JP NEXT | M&A査定・不動産投資ツール｜実務経験者が作る中小企業向け経営ツール">
+  <meta property="og:description" content="不動産5年・M&Aアドバイザー5年以上の実務経験者が開発。M&A簡易査定ツール・不動産収支シミュレーターなど買い切り型ツールと受託開発を提供。サブスク不要で使い続けられます。">
   <meta property="og:image" content="https://www.jpnext.co/ogp.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="JP NEXT - 現場から日本の経営を変える">
   <meta property="og:site_name" content="JP NEXT">
   <meta property="og:locale" content="ja_JP">
-
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="JP NEXT | 不動産・M&Aの現場から、日本の経営を変える。">
-  <meta name="twitter:description" content="不動産・M&Aの実務経験者が作る、中小企業向け買い切り型ツール。現場が本当に使えるプロダクトを提供します。">
+  <meta name="twitter:site" content="@jpnext_co">
+  <meta name="twitter:title" content="JP NEXT | M&A査定・不動産投資ツール｜実務経験者が作る中小企業向け経営ツール">
+  <meta name="twitter:description" content="不動産5年・M&Aアドバイザー5年以上の実務経験者が開発。買い切り型M&A査定ツール・不動産収支シミュレーターを提供。">
   <meta name="twitter:image" content="https://www.jpnext.co/ogp.png">
 
-  <!-- JSON-LD Structured Data -->
+  <!-- Structured Data: Organization -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@graph": [
+    "@type": "Organization",
+    "@id": "https://www.jpnext.co/#organization",
+    "name": "JP NEXT",
+    "alternateName": "ジェイピーネクスト",
+    "url": "https://www.jpnext.co/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.jpnext.co/ogp.png",
+      "width": 1200,
+      "height": 630
+    },
+    "description": "不動産・M&A・財務・営業の実務経験者とエンジニアが集結した、中小企業向けプロダクト開発チーム。M&A簡易査定ツール、不動産収支シミュレーター、DDチェックリストなど買い切り型ツールを提供。",
+    "email": "info@jpnext.co",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "JP"
+    },
+    "knowsAbout": ["M&A","企業価値評価","デューデリジェンス","不動産投資","収支シミュレーション","中小企業支援","受託開発","業務ツール開発"],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "JP NEXTのプロダクト・サービス",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "SoftwareApplication",
+            "name": "M&A簡易査定ツール",
+            "description": "売上・利益・業種から企業価値を瞬時に算出する買い切り型ツール",
+            "applicationCategory": "BusinessApplication",
+            "url": "https://www.jpnext.co/ma-tool.html"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "SoftwareApplication",
+            "name": "不動産収支シミュレーター",
+            "description": "物件取得から出口まで一気通貫で収支シミュレーションできる買い切り型ツール",
+            "applicationCategory": "BusinessApplication"
+          }
+        }
+      ]
+    }
+  }
+  </script>
+
+  <!-- Structured Data: WebSite with SearchAction -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://www.jpnext.co/#website",
+    "url": "https://www.jpnext.co/",
+    "name": "JP NEXT",
+    "description": "不動産・M&A実務経験者が作る中小企業向け経営ツール",
+    "publisher": {"@id": "https://www.jpnext.co/#organization"},
+    "inLanguage": "ja"
+  }
+  </script>
+
+  <!-- Structured Data: WebPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://www.jpnext.co/#webpage",
+    "url": "https://www.jpnext.co/",
+    "name": "JP NEXT | M&A査定・不動産投資ツール｜実務経験者が作る中小企業向け経営ツール",
+    "description": "不動産5年・M&Aアドバイザー5年以上の実務経験者が開発。M&A簡易査定・不動産収支シミュレーターなど買い切り型ツールと受託開発を提供。",
+    "isPartOf": {"@id": "https://www.jpnext.co/#website"},
+    "about": {"@id": "https://www.jpnext.co/#organization"},
+    "inLanguage": "ja",
+    "potentialAction": {
+      "@type": "CommunicateAction",
+      "target": "mailto:info@jpnext.co"
+    }
+  }
+  </script>
+
+  <!-- Structured Data: FAQ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
       {
-        "@type": "Organization",
-        "@id": "https://www.jpnext.co/#organization",
-        "name": "JP NEXT",
-        "url": "https://www.jpnext.co/",
-        "logo": "https://www.jpnext.co/ogp.png",
-        "description": "不動産・M&Aの実務経験を持つ専門家チームが開発する、中小企業向けプロダクト・受託開発チーム",
-        "email": "info@jpnext.co",
-        "sameAs": [],
-        "knowsAbout": ["M&A", "企業価値評価", "不動産投資", "受託開発", "中小企業支援"]
+        "@type": "Question",
+        "name": "JP NEXTのプロダクトはサブスクリプションですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "いいえ。JP NEXTのプロダクトはすべて買い切り型です。一度購入すれば月額費用なくずっとご利用いただけます。"
+        }
       },
       {
-        "@type": "WebSite",
-        "@id": "https://www.jpnext.co/#website",
-        "url": "https://www.jpnext.co/",
-        "name": "JP NEXT",
-        "publisher": {"@id": "https://www.jpnext.co/#organization"},
-        "inLanguage": "ja"
+        "@type": "Question",
+        "name": "M&A査定ツールでどのくらいの精度で企業価値がわかりますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "売上・営業利益・業種をもとにEBITDAマルチプル法などの実務手法で算出するため、初期の価値感把握や相場確認に十分な精度があります。最終的な査定はM&Aアドバイザーへの相談をお勧めします。"
+        }
       },
       {
-        "@type": "WebPage",
-        "@id": "https://www.jpnext.co/#webpage",
-        "url": "https://www.jpnext.co/",
-        "name": "JP NEXT | 不動産・M&Aの現場から、日本の経営を変える。",
-        "description": "不動産・M&Aの実務経験者が作る、中小企業向け買い切り型ツール。M&A簡易査定・不動産収支シミュレーターなど現場が本当に使えるプロダクトを提供します。",
-        "isPartOf": {"@id": "https://www.jpnext.co/#website"},
-        "inLanguage": "ja"
+        "@type": "Question",
+        "name": "受託開発の費用はどれくらいかかりますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "プロジェクト規模により異なりますが、50万円〜対応しています。大手SIerと比較して大幅にコストを抑えながら、不動産・M&A実務経験者が要件定義から参加するため的外れな提案がありません。まずはお気軽にご相談ください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "不動産収支シミュレーターはどんな物件に対応していますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "マンション・商業施設・土地開発など様々な物件タイプに対応予定です。物件取得から賃料収入・売却出口まで一気通貫でシミュレーションできます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "JP NEXTチームの実務経験はどのくらいですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "不動産業界で5年以上、M&Aアドバイザーとして5年以上の実務経験があり、M&A実行経験も2件以上あります。現場経験者がプロダクト設計・受託開発の要件定義から直接参加します。"
+        }
       }
     ]
   }
   </script>
+
+  <!-- Structured Data: Service (受託開発) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "業務ツール受託開発",
+    "provider": {"@id": "https://www.jpnext.co/#organization"},
+    "description": "不動産・M&A実務経験者が要件定義から参加する受託開発サービス。中小企業向け業務ツールを大手SIerより速く・安く開発します。",
+    "serviceType": "ソフトウェア受託開発",
+    "areaServed": {
+      "@type": "Country",
+      "name": "Japan"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "受託開発プラン",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "name": "スモール開発",
+          "description": "〜50万円。小規模な業務ツール・自動化スクリプト",
+          "priceCurrency": "JPY"
+        },
+        {
+          "@type": "Offer",
+          "name": "スタンダード開発",
+          "description": "50〜300万円。中規模Webアプリ・管理システム",
+          "priceCurrency": "JPY"
+        }
+      ]
+    }
+  }
+  </script>
+
+  <!-- Performance: Font preload -->
+  <link rel="preload" href="https://fonts.gstatic.com/s/outfit/v11/QGYvz_MVcBeNP4NjuGObqx1XmO1I4TC1C4G-EiAou6Y.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="https://fonts.gstatic.com/s/notosansjp/v53/-F6jfjtqLzI2JPCgQBnw7HFyzSD-AsregP8VFBEj75s.woff2" as="font" type="font/woff2" crossorigin>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
-    <a href="#" class="nav-logo">
+    <a href="/" class="nav-logo" aria-label="JP NEXT トップページへ戻る">
       <svg viewBox="0 0 280 80" fill="none" xmlns="http://www.w3.org/2000/svg">
         <line x1="8" y1="40" x2="52" y2="40" stroke="#D42020" stroke-width="3.5"/>
         <polyline points="30,16 58,40 30,64" fill="none" stroke="#0D0D0D" stroke-width="4" stroke-linejoin="round"/>
@@ -296,6 +439,7 @@
   <div class="hero-inner">
     <div class="hero-left">
       <div class="hero-eyebrow">不動産 &times; M&A &times; Technology</div>
+      <h2 class="sr-only">不動産・M&Aの実務経験者が作る中小企業向け経営ツール・受託開発チーム</h2>
       <h1>現場から、<br><span class="accent">日本の経営</span>を<br>変える。</h1>
       <p class="hero-sub">不動産・M&Aの最前線を知る専門家チームが、中小企業の経営課題を解決するプロダクトを開発。買い切り型ツールで、現場が本当に使える仕組みを届けます。</p>
       <div class="hero-cta">
@@ -326,9 +470,19 @@
 
 <div class="divider-bar"></div>
 
+
+<!-- Breadcrumb: hidden but parsed by Google -->
+<nav aria-label="breadcrumb" style="display:none">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="https://www.jpnext.co/"><span itemprop="name">JP NEXT</span></a>
+      <meta itemprop="position" content="1" />
+    </li>
+  </ol>
+</nav>
 <main>
 <!-- ABOUT -->
-<section class="section about" id="about">
+<section class="section about" id="about" aria-label="チームについて">
   <div class="section-inner">
     <div class="about-grid">
       <div class="about-left reveal">
@@ -402,7 +556,7 @@
 </section>
 
 <!-- PRODUCTS -->
-<section class="section products" id="products">
+<section class="section products" id="products" aria-label="プロダクト">
   <div class="section-inner">
     <div class="products-header reveal">
       <span class="section-label">プロダクト</span>
@@ -439,7 +593,7 @@
 </section>
 
 <!-- DEV -->
-<section class="section dev" id="dev">
+<section class="section dev" id="dev" aria-label="受託開発">
   <div class="section-inner">
     <div class="dev-inner">
       <div class="reveal">
@@ -467,7 +621,7 @@
 </section>
 
 <!-- CONTACT (白背景) -->
-<section class="contact" id="contact">
+<section class="contact" id="contact" aria-label="お問い合わせ">
   <div class="section-inner">
     <div class="contact-top reveal">
       <span class="section-label">お問い合わせ</span>
@@ -639,7 +793,7 @@
   </div>
 </footer>
 
-<script>
+<script defer>
   // Tab switching
   function switchTab(tab) {
     document.querySelectorAll('.form-tab').forEach(t => t.classList.remove('active'));
