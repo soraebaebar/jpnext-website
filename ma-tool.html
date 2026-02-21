@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>企業価値算定ツール — JP NEXT</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #FFFFFF;
+    --off-white: #FAFAFA;
+    --black: #0A0A0A;
+    --red: #D42020;
+    --red-dark: #B01818;
+    --gray-50: #F7F7F8;
+    --gray-100: #F0F0F1;
+    --gray-200: #E2E2E4;
+    --gray-300: #CBCBCE;
+    --gray-400: #9C9CA1;
+    --gray-500: #6E6E73;
+    --gray-600: #48484C;
+    --gray-700: #2C2C2E;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans JP', 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--black);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 18px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(24px);
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    transition: all 0.3s;
+  }
+
+  .nav-logo svg { height: 30px; }
+
+  .nav-links { display: flex; align-items: center; gap: 32px; }
+
+  .nav-links a {
+    font-size: 13px; font-weight: 500; color: var(--gray-500);
+    text-decoration: none; letter-spacing: 0.02em; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--black); }
+
+  .nav-cta {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
+    color: var(--white) !important; background: var(--black);
+    padding: 10px 24px; transition: background 0.3s;
+  }
+  .nav-cta:hover { background: var(--red) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 160px 48px 100px;
+    position: relative;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 80px; right: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(212,32,32,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 32px;
+    opacity: 0; animation: fadeUp 0.7s ease 0.1s forwards;
+  }
+
+  .badge::before {
+    content: '';
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--red);
+    animation: pulse 2s ease infinite;
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 5.5vw, 72px);
+    font-weight: 900; line-height: 1.12;
+    letter-spacing: -0.03em;
+    max-width: 800px;
+    margin-bottom: 28px;
+    opacity: 0; animation: fadeUp 0.7s ease 0.25s forwards;
+  }
+
+  .hero h1 .accent { color: var(--red); }
+
+  .hero-sub {
+    font-size: 16px; font-weight: 300; line-height: 1.9;
+    color: var(--gray-500); max-width: 520px;
+    margin-bottom: 48px;
+    opacity: 0; animation: fadeUp 0.7s ease 0.4s forwards;
+  }
+
+  .hero-actions {
+    display: flex; gap: 12px; align-items: center;
+    opacity: 0; animation: fadeUp 0.7s ease 0.55s forwards;
+  }
+
+  .btn-main {
+    font-family: inherit; font-size: 13px; font-weight: 600;
+    letter-spacing: 0.06em; padding: 16px 36px;
+    background: var(--red); color: var(--white);
+    border: none; cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.3s; position: relative; overflow: hidden;
+  }
+  .btn-main:hover { background: var(--red-dark); }
+
+  .btn-outline {
+    font-family: inherit; font-size: 13px; font-weight: 600;
+    letter-spacing: 0.06em; padding: 16px 36px;
+    background: transparent; color: var(--black);
+    border: 1px solid var(--gray-200); cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.3s;
+  }
+  .btn-outline:hover { border-color: var(--black); }
+
+  .hero-stat-row {
+    display: flex; gap: 48px; margin-top: 80px;
+    opacity: 0; animation: fadeUp 0.7s ease 0.7s forwards;
+  }
+
+  .hero-stat { }
+  .hero-stat-value {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 32px; font-weight: 700; letter-spacing: -0.02em;
+  }
+  .hero-stat-label {
+    font-size: 11px; font-weight: 500; color: var(--gray-400);
+    letter-spacing: 0.06em; margin-top: 4px;
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 120px 48px; }
+
+  .section-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--red); margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: clamp(26px, 3.2vw, 42px);
+    font-weight: 900; letter-spacing: -0.01em;
+    line-height: 1.2; margin-bottom: 20px;
+  }
+
+  .section-sub {
+    font-size: 15px; font-weight: 300; line-height: 1.8;
+    color: var(--gray-500); max-width: 560px; margin-bottom: 56px;
+  }
+
+  /* ── FEATURES ── */
+  .features { background: var(--off-white); }
+
+  .features-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--gray-200);
+    max-width: 1100px;
+  }
+
+  .feature-card {
+    background: var(--white); padding: 48px 36px;
+    position: relative; transition: all 0.3s;
+  }
+
+  .feature-card:hover { background: var(--gray-50); }
+
+  .feature-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 0; height: 2px; background: var(--red);
+    transition: width 0.4s ease;
+  }
+  .feature-card:hover::before { width: 100%; }
+
+  .feature-num {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.15em; color: var(--red);
+    margin-bottom: 20px;
+  }
+
+  .feature-title {
+    font-size: 18px; font-weight: 700;
+    margin-bottom: 12px; line-height: 1.4;
+  }
+
+  .feature-en {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.1em; color: var(--gray-400);
+    text-transform: uppercase; margin-bottom: 16px;
+  }
+
+  .feature-desc {
+    font-size: 13px; font-weight: 300; line-height: 1.8;
+    color: var(--gray-500);
+  }
+
+  /* ── DEMO ── */
+  .demo { background: var(--white); }
+
+  .demo-container {
+    max-width: 1100px;
+  }
+
+  .demo-window {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .demo-toolbar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 16px;
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  .demo-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--gray-200);
+  }
+
+  .demo-toolbar-title {
+    font-size: 11px; color: var(--gray-400);
+    margin-left: 8px; letter-spacing: 0.04em;
+  }
+
+  .demo-slides {
+    position: relative;
+    min-height: 480px;
+    overflow: hidden;
+  }
+
+  .demo-slide {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    padding: 40px;
+    opacity: 0; transform: translateX(40px);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    display: flex; flex-direction: column;
+  }
+
+  .demo-slide.active {
+    opacity: 1; transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .demo-slide-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--red); margin-bottom: 12px;
+  }
+
+  .demo-slide-title {
+    font-size: 22px; font-weight: 700; margin-bottom: 8px;
+  }
+
+  .demo-slide-desc {
+    font-size: 13px; color: var(--gray-500); font-weight: 300;
+    line-height: 1.7; margin-bottom: 24px; max-width: 500px;
+  }
+
+  .demo-mockup {
+    flex: 1;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    padding: 24px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+
+  .mock-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .mock-label { font-size: 12px; color: var(--gray-500); }
+  .mock-value {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 600;
+    padding: 6px 12px;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    min-width: 100px; text-align: right;
+  }
+
+  .mock-result {
+    margin-top: auto;
+    background: var(--black);
+    padding: 20px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .mock-result-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(255,255,255,0.4);
+  }
+
+  .mock-result-value {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 24px; font-weight: 700; color: var(--white);
+  }
+
+  .mock-result-value .yen {
+    font-size: 14px; opacity: 0.5; margin-right: 2px;
+  }
+
+  .demo-nav {
+    display: flex; gap: 0;
+    border-top: 1px solid var(--gray-200);
+  }
+
+  .demo-nav-btn {
+    flex: 1;
+    padding: 16px;
+    font-family: inherit; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.06em;
+    background: var(--white); border: none;
+    color: var(--gray-400); cursor: pointer;
+    transition: all 0.2s; position: relative;
+    text-align: center;
+  }
+
+  .demo-nav-btn:not(:last-child) { border-right: 1px solid var(--gray-200); }
+  .demo-nav-btn:hover { color: var(--gray-600); background: var(--gray-50); }
+
+  .demo-nav-btn.active {
+    color: var(--red); background: var(--white);
+  }
+
+  .demo-nav-btn.active::after {
+    content: ''; position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px; background: var(--red);
+  }
+
+  .demo-nav-step {
+    display: block;
+    font-size: 9px; font-weight: 500; letter-spacing: 0.1em;
+    color: var(--gray-300); margin-bottom: 2px;
+  }
+
+  .demo-nav-btn.active .demo-nav-step { color: var(--red); opacity: 0.5; }
+
+  /* ── HOW TO USE ── */
+  .howto { background: var(--black); color: var(--white); position: relative; overflow: hidden; }
+
+  .howto::after {
+    content: '';
+    position: absolute; bottom: -150px; left: 50%;
+    transform: translateX(-50%);
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(212,32,32,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .howto .section-title { color: var(--white); }
+  .howto .section-sub { color: rgba(255,255,255,0.45); }
+
+  .howto-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 24px; max-width: 900px;
+  }
+
+  .howto-card {
+    padding: 36px;
+    border: 1px solid rgba(255,255,255,0.08);
+    position: relative; transition: all 0.3s;
+  }
+
+  .howto-card:hover {
+    border-color: rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.02);
+  }
+
+  .howto-step {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.15em; color: var(--red);
+    margin-bottom: 16px;
+  }
+
+  .howto-card-title {
+    font-size: 16px; font-weight: 700;
+    margin-bottom: 10px; line-height: 1.4;
+  }
+
+  .howto-card-desc {
+    font-size: 13px; font-weight: 300; line-height: 1.8;
+    color: rgba(255,255,255,0.45);
+  }
+
+  /* ── PRICING ── */
+  .pricing { background: var(--white); text-align: center; }
+
+  .price-card {
+    max-width: 480px; margin: 0 auto;
+    border: 2px solid var(--black);
+    padding: 56px 48px;
+    position: relative;
+  }
+
+  .price-card::before {
+    content: 'COMING SOON';
+    position: absolute; top: -14px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+    background: var(--red); color: var(--white);
+    padding: 6px 20px;
+  }
+
+  .price-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--gray-400);
+    margin-bottom: 12px;
+  }
+
+  .price-value {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 56px; font-weight: 700;
+    letter-spacing: -0.03em; margin-bottom: 4px;
+  }
+
+  .price-value .yen { font-size: 24px; font-weight: 500; vertical-align: top; margin-right: 2px; }
+  .price-value .tax { font-size: 14px; font-weight: 400; color: var(--gray-400); margin-left: 4px; }
+
+  .price-desc {
+    font-size: 13px; color: var(--gray-500); font-weight: 300;
+    line-height: 1.7; margin-bottom: 32px; margin-top: 8px;
+  }
+
+  .price-features {
+    text-align: left; margin-bottom: 36px;
+  }
+
+  .price-feature {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 13px; color: var(--gray-600);
+  }
+
+  .price-feature:last-child { border-bottom: none; }
+
+  .price-check {
+    flex-shrink: 0; width: 18px; height: 18px;
+    background: var(--red); display: flex;
+    align-items: center; justify-content: center;
+    margin-top: 1px;
+  }
+
+  .price-check svg { width: 10px; height: 10px; }
+
+  /* ── CTA / WAITLIST ── */
+  .waitlist {
+    padding: 140px 48px;
+    text-align: center;
+    background: var(--off-white);
+    position: relative;
+  }
+
+  .waitlist::before {
+    content: '';
+    position: absolute; top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 1px; height: 80px;
+    background: linear-gradient(to bottom, var(--gray-200), var(--red));
+  }
+
+  .waitlist-form {
+    display: flex; gap: 0; max-width: 480px;
+    margin: 0 auto; margin-top: 40px;
+  }
+
+  .waitlist-form input {
+    flex: 1;
+    font-family: inherit; font-size: 14px; font-weight: 400;
+    padding: 16px 20px;
+    border: 1px solid var(--gray-200);
+    border-right: none;
+    background: var(--white); color: var(--black);
+    outline: none; transition: border-color 0.2s;
+  }
+  .waitlist-form input:focus { border-color: var(--red); }
+  .waitlist-form input::placeholder { color: var(--gray-300); }
+
+  .waitlist-form button {
+    font-family: inherit; font-size: 13px; font-weight: 600;
+    letter-spacing: 0.06em; padding: 16px 32px;
+    background: var(--red); color: var(--white);
+    border: 1px solid var(--red);
+    cursor: pointer; transition: all 0.3s; white-space: nowrap;
+  }
+  .waitlist-form button:hover { background: var(--red-dark); border-color: var(--red-dark); }
+
+  .waitlist-note {
+    font-size: 11px; color: var(--gray-400);
+    margin-top: 12px; letter-spacing: 0.02em;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 40px 48px;
+    border-top: 1px solid var(--gray-200);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  footer svg { height: 22px; opacity: 0.4; }
+
+  .footer-text {
+    font-size: 11px; color: var(--gray-400); letter-spacing: 0.04em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(28px);
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .nav-links a:not(.nav-cta) { display: none; }
+    section { padding: 80px 20px; }
+    .hero { padding: 120px 20px 60px; }
+    .hero-stat-row { gap: 32px; flex-wrap: wrap; }
+    .features-grid { grid-template-columns: 1fr; }
+    .demo-slides { min-height: 520px; }
+    .demo-slide { padding: 24px; }
+    .howto-grid { grid-template-columns: 1fr; }
+    .price-card { padding: 40px 28px; }
+    .waitlist { padding: 100px 20px; }
+    .waitlist-form { flex-direction: column; }
+    .waitlist-form input { border-right: 1px solid var(--gray-200); border-bottom: none; }
+    footer { padding: 32px 20px; flex-direction: column; gap: 12px; }
+    .hero-actions { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <svg width="130" height="30" viewBox="0 0 280 64" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 8 L50 32 L10 56" fill="none" stroke="#0A0A0A" stroke-width="8" stroke-linejoin="miter"/>
+      <path d="M30 14 L62 32 L30 50" fill="none" stroke="#0A0A0A" stroke-width="7" stroke-linejoin="miter"/>
+      <line x1="2" y1="32" x2="46" y2="32" stroke="#D42020" stroke-width="4"/>
+      <text x="80" y="42" font-family="'DM Sans',sans-serif" font-size="38" font-weight="700" fill="#0A0A0A" letter-spacing="2">JP NEXT</text>
+    </svg>
+  </div>
+  <div class="nav-links">
+    <a href="#features">機能</a>
+    <a href="#demo">デモ</a>
+    <a href="#pricing">価格</a>
+    <a href="#waitlist" class="nav-cta">事前登録</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge">COMING SOON — 発売準備中</div>
+  <h1>企業価値を、<br><span class="accent">その場で</span>算定。</h1>
+  <p class="hero-sub">
+    マルチプル、DCF、純資産のれん ——<br>
+    3つの算定手法を1つのツールに。M&Aの現場で使えるプロ仕様の査定ツール。
+  </p>
+  <div class="hero-actions">
+    <a href="#waitlist" class="btn-main">事前登録する</a>
+    <a href="#demo" class="btn-outline">デモを見る</a>
+  </div>
+  <div class="hero-stat-row">
+    <div class="hero-stat">
+      <div class="hero-stat-value">3</div>
+      <div class="hero-stat-label">算定手法を搭載</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-value">PDF</div>
+      <div class="hero-stat-label">ワンクリック出力</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-value">0</div>
+      <div class="hero-stat-label">インストール不要</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section-label reveal">FEATURES</div>
+  <h2 class="section-title reveal">3つの手法を、自由に組み合わせる。</h2>
+  <p class="section-sub reveal">必要な手法だけ選んで算定。EV/EBITDAの倍率1つからでも査定書が出せます。</p>
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <div class="feature-num">01</div>
+      <div class="feature-title">マルチプル法</div>
+      <div class="feature-en">Multiples Valuation</div>
+      <div class="feature-desc">
+        PSR、EV/EBITDA、EV/営業利益、PERの4指標に対応。入力した倍率のみで自動算出されるため、現場での速算にも対応。
+      </div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-num">02</div>
+      <div class="feature-title">DCF法</div>
+      <div class="feature-en">Discounted Cash Flow</div>
+      <div class="feature-desc">
+        5年間のFCF予測とWACC、永続成長率からターミナルバリューまで算出。ネットデット調整も自動で反映。
+      </div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-num">03</div>
+      <div class="feature-title">純資産のれん法</div>
+      <div class="feature-en">Net Asset + Goodwill</div>
+      <div class="feature-desc">
+        簿価純資産に含み益・含み損・簿外債務を加味した時価純資産を算出し、のれん価値を年数ベースで加算。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section class="demo" id="demo">
+  <div class="demo-container">
+    <div class="section-label reveal">DEMO</div>
+    <h2 class="section-title reveal">こうやって使います。</h2>
+    <p class="section-sub reveal">
+      数字を入れるだけ。査定結果はリアルタイムで反映され、PDF出力もワンクリック。
+    </p>
+
+    <div class="demo-window reveal">
+      <div class="demo-toolbar">
+        <div class="demo-dot"></div>
+        <div class="demo-dot"></div>
+        <div class="demo-dot"></div>
+        <span class="demo-toolbar-title">企業価値算定ツール</span>
+      </div>
+
+      <div class="demo-slides">
+        <!-- Slide 1 -->
+        <div class="demo-slide active" id="dslide-0">
+          <div class="demo-slide-label">STEP 01</div>
+          <div class="demo-slide-title">財務数値を入力する</div>
+          <div class="demo-slide-desc">
+            対象会社の売上高やEBITDAなど、基本的な財務数値を入力します。決算書や試算表の数字をそのまま入力するだけです。
+          </div>
+          <div class="demo-mockup">
+            <div class="mock-row"><span class="mock-label">売上高</span><span class="mock-value">1,200,000</span></div>
+            <div class="mock-row"><span class="mock-label">EBITDA</span><span class="mock-value">180,000</span></div>
+            <div class="mock-row"><span class="mock-label">営業利益</span><span class="mock-value">120,000</span></div>
+            <div class="mock-row"><span class="mock-label">有利子負債</span><span class="mock-value">50,000</span></div>
+            <div class="mock-row"><span class="mock-label">現預金</span><span class="mock-value">200,000</span></div>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="demo-slide" id="dslide-1">
+          <div class="demo-slide-label">STEP 02</div>
+          <div class="demo-slide-title">業界の倍率を入力する</div>
+          <div class="demo-slide-desc">
+            対象会社が属する業界の一般的な倍率を調べて入力するだけ。ネットで調べたり、専門会社にヒアリングすることで適切な倍率が分かります。
+          </div>
+          <div class="demo-mockup">
+            <div class="mock-row"><span class="mock-label">EV / EBITDA 倍率</span><span class="mock-value" style="color:var(--red);font-weight:700;">8.0x</span></div>
+            <div class="mock-row"><span class="mock-label">EV / 営業利益 倍率</span><span class="mock-value" style="color:var(--red);font-weight:700;">10.0x</span></div>
+            <div style="flex:1;"></div>
+            <div style="padding:16px;background:var(--gray-50);border:1px solid var(--gray-100);font-size:12px;color:var(--gray-500);line-height:1.7;">
+              倍率は業界・規模・成長性で異なります。ネットで類似企業の取引事例を調べたり、M&Aの専門会社にヒアリングして、自社の属する業界の適正倍率を確認しましょう。
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="demo-slide" id="dslide-2">
+          <div class="demo-slide-label">STEP 03</div>
+          <div class="demo-slide-title">結果を確認し、PDFで出力</div>
+          <div class="demo-slide-desc">
+            各手法の算定結果と、平均値・中央値・レンジを一覧で確認。そのままPDF出力して、社内検討資料や面談資料として活用できます。
+          </div>
+          <div class="demo-mockup">
+            <div class="mock-row"><span class="mock-label">EV/EBITDA ベース</span><span class="mock-value">1,590,000</span></div>
+            <div class="mock-row"><span class="mock-label">EV/営業利益 ベース</span><span class="mock-value">1,350,000</span></div>
+            <div class="mock-row"><span class="mock-label">平均値</span><span class="mock-value" style="font-weight:700;">1,470,000</span></div>
+            <div class="mock-result">
+              <span class="mock-result-label">推定企業価値</span>
+              <span class="mock-result-value"><span class="yen">¥</span>1,350,000 〜 1,590,000 千円</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-nav">
+        <button class="demo-nav-btn active" onclick="switchDemo(0)">
+          <span class="demo-nav-step">STEP 01</span>数値を入力
+        </button>
+        <button class="demo-nav-btn" onclick="switchDemo(1)">
+          <span class="demo-nav-step">STEP 02</span>倍率を設定
+        </button>
+        <button class="demo-nav-btn" onclick="switchDemo(2)">
+          <span class="demo-nav-step">STEP 03</span>結果 / PDF出力
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO USE -->
+<section class="howto">
+  <div class="section-label reveal">HOW TO USE</div>
+  <h2 class="section-title reveal">はじめての方へ</h2>
+  <p class="section-sub reveal">M&Aや企業価値算定が初めてでも、このステップで進められます。</p>
+  <div class="howto-grid">
+    <div class="howto-card reveal">
+      <div class="howto-step">POINT 01</div>
+      <div class="howto-card-title">まずは決算書を用意する</div>
+      <div class="howto-card-desc">直近1〜3期分の決算書（損益計算書・貸借対照表）があれば、必要な数値はすべて揃います。</div>
+    </div>
+    <div class="howto-card reveal">
+      <div class="howto-step">POINT 02</div>
+      <div class="howto-card-title">業界の倍率を調べる</div>
+      <div class="howto-card-desc">ネットで同業界の取引事例やレポートを検索したり、M&Aの専門会社にヒアリングすることで、業界ごとの一般的なEV/EBITDA倍率などが分かります。</div>
+    </div>
+    <div class="howto-card reveal">
+      <div class="howto-step">POINT 03</div>
+      <div class="howto-card-title">使う手法だけ選ぶ</div>
+      <div class="howto-card-desc">3手法すべてを使う必要はありません。マルチプル法だけでも十分な速算が可能です。EV/EBITDAの倍率1つで査定書が出力できます。</div>
+    </div>
+    <div class="howto-card reveal">
+      <div class="howto-step">POINT 04</div>
+      <div class="howto-card-title">PDFにして社内で共有する</div>
+      <div class="howto-card-desc">算定結果はノーブランドのPDFとして出力されるため、自社の名前を入れてそのまま社内検討資料や経営会議資料として活用いただけます。</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="section-label reveal">PRICING</div>
+  <h2 class="section-title reveal">シンプルな買い切り。</h2>
+  <p class="section-sub reveal" style="margin-left:auto;margin-right:auto;">月額課金なし。一度購入すれば、ずっと使えます。</p>
+  <div class="price-card reveal">
+    <div class="price-label">企業価値算定ツール</div>
+    <div class="price-value"><span class="yen">¥</span>—<span class="tax"></span></div>
+    <div class="price-desc">発売開始時に価格を公開します。<br>事前登録いただいた方には、特別価格でご案内予定です。</div>
+    <div class="price-features">
+      <div class="price-feature">
+        <div class="price-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div>
+        マルチプル法 / DCF法 / 純資産のれん法
+      </div>
+      <div class="price-feature">
+        <div class="price-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div>
+        PDF出力（ノーブランド仕様）
+      </div>
+      <div class="price-feature">
+        <div class="price-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div>
+        平均値・中央値・レンジの自動算出
+      </div>
+      <div class="price-feature">
+        <div class="price-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div>
+        手法の選択式（マルチプルだけでもOK）
+      </div>
+      <div class="price-feature">
+        <div class="price-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div>
+        インストール不要 / ブラウザで完結
+      </div>
+      <div class="price-feature">
+        <div class="price-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div>
+        買い切り / 追加課金なし
+      </div>
+    </div>
+    <a href="#waitlist" class="btn-main" style="width:100%;justify-content:center;">事前登録して特別価格を受け取る</a>
+  </div>
+</section>
+
+<!-- WAITLIST -->
+<section class="waitlist" id="waitlist">
+  <div class="section-label reveal">PRE-REGISTRATION</div>
+  <h2 class="section-title reveal">発売時にご案内します。</h2>
+  <p class="section-sub reveal" style="margin-left:auto;margin-right:auto;">
+    メールアドレスを登録いただければ、発売開始時に特別価格でご案内いたします。
+  </p>
+  <div class="waitlist-form reveal">
+    <input type="email" placeholder="メールアドレスを入力" />
+    <button type="button">事前登録</button>
+  </div>
+  <div class="waitlist-note reveal">登録は無料です。配信停止はいつでも可能です。</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <svg width="100" height="22" viewBox="0 0 280 64" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 8 L50 32 L10 56" fill="none" stroke="#0A0A0A" stroke-width="8" stroke-linejoin="miter"/>
+    <path d="M30 14 L62 32 L30 50" fill="none" stroke="#0A0A0A" stroke-width="7" stroke-linejoin="miter"/>
+    <line x1="2" y1="32" x2="46" y2="32" stroke="#D42020" stroke-width="4"/>
+    <text x="80" y="42" font-family="'DM Sans',sans-serif" font-size="38" font-weight="700" fill="#0A0A0A" letter-spacing="2">JP NEXT</text>
+  </svg>
+  <div class="footer-text">&copy; JP NEXT Inc. All Rights Reserved.</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Demo slides
+  function switchDemo(i) {
+    document.querySelectorAll('.demo-slide').forEach((s, j) => {
+      s.classList.toggle('active', j === i);
+    });
+    document.querySelectorAll('.demo-nav-btn').forEach((b, j) => {
+      b.classList.toggle('active', j === i);
+    });
+  }
+
+  // Auto-advance demo
+  let demoIndex = 0;
+  setInterval(() => {
+    demoIndex = (demoIndex + 1) % 3;
+    switchDemo(demoIndex);
+  }, 5000);
+</script>
+</body>
+</html>
