@@ -18,243 +18,103 @@
     --gray-500: #888888;
     --gray-700: #444444;
   }
-
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body { background: var(--white); color: var(--black); font-family: 'Noto Sans JP', sans-serif; font-weight: 400; overflow-x: hidden; line-height: 1.6; }
 
-  /* ======= NAV ======= */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: rgba(255,255,255,0.97);
-    border-bottom: 1px solid var(--gray-100);
-    backdrop-filter: blur(12px);
-  }
-  .nav-inner {
-    max-width: 1240px; margin: 0 auto; padding: 0 48px;
-    height: 70px; display: flex; justify-content: space-between; align-items: center;
-  }
-  .nav-logo { display: flex; align-items: center; gap: 0; text-decoration: none; }
-  /* SVG logo inline */
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.97); border-bottom: 1px solid var(--gray-100); backdrop-filter: blur(12px); }
+  .nav-inner { max-width: 1240px; margin: 0 auto; padding: 0 48px; height: 70px; display: flex; justify-content: space-between; align-items: center; }
+  .nav-logo { display: flex; align-items: center; text-decoration: none; }
   .nav-logo svg { height: 28px; width: auto; }
   .nav-links { display: flex; align-items: center; gap: 40px; list-style: none; }
   .nav-links a { font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.05em; color: var(--gray-700); text-decoration: none; transition: color 0.2s; }
   .nav-links a:hover { color: var(--black); }
-  .nav-cta {
-    background: var(--red) !important; color: white !important;
-    padding: 10px 24px; font-weight: 700 !important;
-    letter-spacing: 0.05em;
-  }
+  .nav-cta { background: var(--red) !important; color: white !important; padding: 10px 24px; font-weight: 700 !important; }
   .nav-cta:hover { opacity: 0.88 !important; }
 
-  /* ======= HERO ======= */
+  /* HERO — white background */
   .hero {
     min-height: 100vh;
-    background: var(--black);
+    background: var(--white);
     display: flex; align-items: center;
     padding-top: 70px;
     position: relative; overflow: hidden;
+    border-bottom: 3px solid var(--red);
   }
-  .hero-line-v {
-    position: absolute; top: 0; bottom: 0;
-    width: 1px; background: rgba(255,255,255,0.06);
-    left: 50%;
-  }
-  .hero-line-h {
-    position: absolute; left: 0; right: 0;
-    height: 1px; background: rgba(255,255,255,0.06);
-    top: 50%;
-  }
-  .hero-red-bar {
-    position: absolute; left: 0; top: 0; bottom: 0;
-    width: 4px; background: var(--red);
-  }
-  .hero-inner {
-    max-width: 1240px; margin: 0 auto; padding: 100px 48px;
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 80px; align-items: center;
-    position: relative; z-index: 1;
-  }
-  .hero-eyebrow {
-    font-family: 'Outfit', sans-serif;
-    font-size: 11px; font-weight: 700;
-    letter-spacing: 0.25em; text-transform: uppercase;
-    color: var(--red); margin-bottom: 28px;
-    display: flex; align-items: center; gap: 12px;
-  }
+  .hero-line-v { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--gray-100); left: 50%; }
+  .hero-line-h { position: absolute; left: 0; right: 0; height: 1px; background: var(--gray-100); top: 50%; }
+  .hero-red-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--red); }
+  .hero-inner { max-width: 1240px; margin: 0 auto; padding: 100px 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; position: relative; z-index: 1; }
+  .hero-eyebrow { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--red); margin-bottom: 28px; display: flex; align-items: center; gap: 12px; }
   .hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--red); }
-  .hero h1 {
-    font-family: 'Outfit', sans-serif;
-    font-size: clamp(40px, 5vw, 68px);
-    font-weight: 900; line-height: 1.08;
-    color: var(--white);
-    letter-spacing: -0.03em; margin-bottom: 32px;
-  }
+  .hero h1 { font-family: 'Outfit', sans-serif; font-size: clamp(40px, 5vw, 68px); font-weight: 900; line-height: 1.08; color: var(--black); letter-spacing: -0.03em; margin-bottom: 32px; }
   .hero h1 .accent { color: var(--red); }
-  .hero-sub {
-    font-size: 15px; line-height: 2;
-    color: rgba(255,255,255,0.55);
-    margin-bottom: 52px; max-width: 440px;
-  }
+  .hero-sub { font-size: 15px; line-height: 2; color: var(--gray-500); margin-bottom: 52px; max-width: 440px; }
   .hero-cta { display: flex; gap: 16px; align-items: center; }
-  .btn-red {
-    background: var(--red); color: white;
-    padding: 14px 36px; font-family: 'Outfit', sans-serif;
-    font-weight: 700; font-size: 14px;
-    letter-spacing: 0.05em; text-decoration: none;
-    transition: opacity 0.2s; display: inline-block;
-  }
+  .btn-red { background: var(--red); color: white; padding: 14px 36px; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.05em; text-decoration: none; transition: opacity 0.2s; display: inline-block; }
   .btn-red:hover { opacity: 0.88; }
-  .btn-ghost {
-    color: rgba(255,255,255,0.6);
-    padding: 14px 28px; font-family: 'Outfit', sans-serif;
-    font-weight: 600; font-size: 14px; letter-spacing: 0.05em;
-    text-decoration: none; border: 1px solid rgba(255,255,255,0.15);
-    transition: all 0.2s; display: inline-block;
-  }
-  .btn-ghost:hover { color: white; border-color: rgba(255,255,255,0.4); }
+  .btn-ghost-dark { color: var(--gray-700); padding: 14px 28px; font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 14px; letter-spacing: 0.05em; text-decoration: none; border: 1px solid var(--gray-300); transition: all 0.2s; display: inline-block; }
+  .btn-ghost-dark:hover { border-color: var(--black); color: var(--black); }
 
-  /* Hero right: stats */
-  .hero-stats {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
-  }
-  .hero-stat {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.07);
-    padding: 36px 32px;
-    transition: background 0.3s;
-  }
-  .hero-stat:hover { background: rgba(255,255,255,0.07); }
-  .hero-stat-num {
-    font-family: 'Outfit', sans-serif;
-    font-size: 44px; font-weight: 900;
-    color: white; line-height: 1;
-    letter-spacing: -0.03em; margin-bottom: 10px;
-  }
+  /* Hero right stats */
+  .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--gray-100); border: 1px solid var(--gray-100); }
+  .hero-stat { background: var(--white); padding: 36px 32px; transition: background 0.2s; }
+  .hero-stat:hover { background: var(--gray-50); }
+  .hero-stat-num { font-family: 'Outfit', sans-serif; font-size: 44px; font-weight: 900; color: var(--black); line-height: 1; letter-spacing: -0.03em; margin-bottom: 10px; }
   .hero-stat-num span { color: var(--red); }
-  .hero-stat-label {
-    font-size: 12px; color: rgba(255,255,255,0.45);
-    line-height: 1.6; letter-spacing: 0.02em;
-  }
+  .hero-stat-label { font-size: 12px; color: var(--gray-500); line-height: 1.6; }
 
-  /* ======= DIVIDER ======= */
-  .divider-bar {
-    height: 3px; background: var(--red);
-    width: 100%;
-  }
+  .divider-bar { height: 3px; background: var(--red); width: 100%; }
 
-  /* ======= SECTION BASE ======= */
+  /* SECTION BASE */
   .section { padding: 108px 0; }
   .section-inner { max-width: 1240px; margin: 0 auto; padding: 0 48px; }
-  .section-label {
-    font-family: 'Outfit', sans-serif;
-    font-size: 11px; font-weight: 700;
-    letter-spacing: 0.25em; text-transform: uppercase;
-    color: var(--red); margin-bottom: 20px;
-    display: flex; align-items: center; gap: 12px;
-  }
+  .section-label { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--red); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
   .section-label::before { content: ''; width: 28px; height: 1px; background: var(--red); }
-  .section-title {
-    font-family: 'Outfit', sans-serif;
-    font-size: clamp(28px, 3.5vw, 46px);
-    font-weight: 900; letter-spacing: -0.03em;
-    line-height: 1.15; color: var(--black); margin-bottom: 20px;
-  }
+  .section-title { font-family: 'Outfit', sans-serif; font-size: clamp(28px, 3.5vw, 46px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.15; color: var(--black); margin-bottom: 20px; }
   .section-title .accent { color: var(--red); }
   .section-desc { font-size: 15px; line-height: 1.9; color: var(--gray-500); max-width: 560px; }
 
-  /* ======= ABOUT ======= */
+  /* ABOUT */
   .about { background: var(--white); }
   .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: start; }
-
   .about-points { margin-top: 48px; display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--gray-100); }
-  .about-point {
-    display: flex; gap: 28px; align-items: flex-start;
-    padding: 28px 0; border-bottom: 1px solid var(--gray-100);
-    transition: padding-left 0.2s;
-  }
+  .about-point { display: flex; gap: 28px; align-items: flex-start; padding: 28px 0; border-bottom: 1px solid var(--gray-100); transition: padding-left 0.2s; }
   .about-point:hover { padding-left: 6px; }
-  .about-point-num {
-    font-family: 'Outfit', sans-serif; font-size: 11px;
-    font-weight: 800; color: var(--red); letter-spacing: 0.1em;
-    flex-shrink: 0; margin-top: 4px; min-width: 24px;
-  }
+  .about-point-num { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 800; color: var(--red); letter-spacing: 0.1em; flex-shrink: 0; margin-top: 4px; min-width: 24px; }
   .about-point-text h4 { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 15px; color: var(--black); margin-bottom: 6px; }
   .about-point-text p { font-size: 13px; line-height: 1.8; color: var(--gray-500); }
-
-  /* Team card */
   .team-card { border: 1px solid var(--gray-100); background: var(--white); }
-  .team-card-header {
-    background: var(--black); padding: 36px 40px;
-    position: relative; overflow: hidden;
-  }
-  .team-card-header::after {
-    content: ''; position: absolute;
-    right: 40px; top: 50%; transform: translateY(-50%);
-    width: 80px; height: 80px;
-    border: 1px solid rgba(212,32,32,0.3);
-    border-radius: 50%;
-  }
-  .team-card-header::before {
-    content: ''; position: absolute;
-    right: 20px; top: 50%; transform: translateY(-50%);
-    width: 120px; height: 120px;
-    border: 1px solid rgba(212,32,32,0.12);
-    border-radius: 50%;
-  }
+  .team-card-header { background: var(--black); padding: 36px 40px; position: relative; overflow: hidden; }
+  .team-card-header::after { content: ''; position: absolute; right: 40px; top: 50%; transform: translateY(-50%); width: 80px; height: 80px; border: 1px solid rgba(212,32,32,0.3); border-radius: 50%; }
+  .team-card-header::before { content: ''; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); width: 120px; height: 120px; border: 1px solid rgba(212,32,32,0.12); border-radius: 50%; }
   .team-card-header h3 { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 20px; color: white; margin-bottom: 6px; position: relative; z-index: 1; }
   .team-card-header p { font-size: 13px; color: rgba(255,255,255,0.45); position: relative; z-index: 1; }
   .team-members { padding: 0; }
-  .team-member {
-    display: flex; gap: 24px; align-items: flex-start;
-    padding: 28px 40px; border-bottom: 1px solid var(--gray-100);
-    transition: background 0.2s;
-  }
+  .team-member { display: flex; gap: 24px; align-items: flex-start; padding: 28px 40px; border-bottom: 1px solid var(--gray-100); transition: background 0.2s; }
   .team-member:last-child { border-bottom: none; }
   .team-member:hover { background: var(--gray-50); }
-  .member-domain {
-    font-family: 'Outfit', sans-serif; font-size: 11px;
-    font-weight: 800; letter-spacing: 0.1em; color: var(--red);
-    min-width: 60px; margin-top: 3px; flex-shrink: 0;
-  }
+  .member-domain { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; color: var(--red); min-width: 60px; margin-top: 3px; flex-shrink: 0; }
   .member-info h4 { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 14px; color: var(--black); margin-bottom: 5px; }
   .member-info p { font-size: 12px; color: var(--gray-500); line-height: 1.7; }
 
-  /* ======= PRODUCTS ======= */
+  /* PRODUCTS */
   .products { background: var(--gray-50); }
   .products-header { margin-bottom: 64px; }
   .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--gray-300); border: 1px solid var(--gray-300); }
-  .product-card {
-    background: var(--white); padding: 44px 36px;
-    position: relative; overflow: hidden;
-    transition: background 0.25s;
-  }
+  .product-card { background: var(--white); padding: 44px 36px; position: relative; overflow: hidden; transition: background 0.25s; }
   .product-card:hover { background: var(--gray-50); }
-  .product-card::after {
-    content: ''; position: absolute;
-    bottom: 0; left: 0; right: 0; height: 2px;
-    background: var(--red); transform: scaleX(0);
-    transition: transform 0.3s; transform-origin: left;
-  }
+  .product-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--red); transform: scaleX(0); transition: transform 0.3s; transform-origin: left; }
   .product-card:hover::after { transform: scaleX(1); }
-  .product-num {
-    font-family: 'Outfit', sans-serif; font-size: 11px;
-    font-weight: 800; letter-spacing: 0.2em; color: var(--red);
-    margin-bottom: 32px; display: block;
-  }
-  .product-status-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-family: 'Outfit', sans-serif; font-size: 10px;
-    font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--gray-500); border: 1px solid var(--gray-300);
-    padding: 4px 10px; margin-bottom: 20px;
-  }
+  .product-num { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.2em; color: var(--red); margin-bottom: 32px; display: block; }
+  .product-status-badge { display: inline-flex; align-items: center; gap: 6px; font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-500); border: 1px solid var(--gray-300); padding: 4px 10px; margin-bottom: 20px; }
   .product-status-badge .dot { width: 5px; height: 5px; background: var(--red); border-radius: 50%; animation: pulse 2s ease infinite; }
   .product-card h3 { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 20px; color: var(--black); margin-bottom: 14px; line-height: 1.25; }
   .product-card p { font-size: 13px; line-height: 1.85; color: var(--gray-500); margin-bottom: 28px; }
   .product-tag { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 600; color: var(--gray-500); letter-spacing: 0.1em; }
 
-  /* ======= DEV ======= */
+  /* DEV */
   .dev { background: var(--white); }
   .dev-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: start; }
   .dev-features { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--gray-100); border: 1px solid var(--gray-100); }
@@ -263,7 +123,6 @@
   .dev-feature-label { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; color: var(--red); margin-bottom: 10px; }
   .dev-feature h4 { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 14px; color: var(--black); margin-bottom: 6px; }
   .dev-feature p { font-size: 12px; line-height: 1.8; color: var(--gray-500); }
-
   .process-list { list-style: none; margin-top: 8px; }
   .process-item { display: flex; gap: 28px; padding: 32px 0; border-bottom: 1px solid var(--gray-100); align-items: flex-start; transition: padding-left 0.2s; }
   .process-item:first-child { padding-top: 0; }
@@ -273,27 +132,47 @@
   .process-content h4 { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 15px; color: var(--black); margin-bottom: 7px; }
   .process-content p { font-size: 13px; line-height: 1.8; color: var(--gray-500); }
 
-  /* ======= CONTACT ======= */
-  .contact { background: var(--black); padding: 120px 0; position: relative; overflow: hidden; }
-  .contact::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 4px; background: var(--red); }
-  .contact-inner { max-width: 1240px; margin: 0 auto; padding: 0 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-  .contact-left {}
-  .contact .section-label { color: var(--red); }
-  .contact .section-label::before { background: var(--red); }
-  .contact h2 { font-family: 'Outfit', sans-serif; font-size: clamp(32px, 4vw, 52px); font-weight: 900; color: white; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 24px; }
-  .contact h2 .accent { color: var(--red); }
-  .contact p { font-size: 15px; line-height: 1.9; color: rgba(255,255,255,0.5); }
-  .contact-right { display: flex; flex-direction: column; gap: 24px; }
-  .contact-email-block { border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 24px 0; }
-  .contact-email-label { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 8px; }
-  .contact-email { font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 700; color: white; text-decoration: none; display: block; transition: color 0.2s; }
-  .contact-email:hover { color: var(--red); }
-  .contact-phone { font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
-  .contact-phone:hover { color: white; }
-  .contact-actions { display: flex; gap: 12px; }
+  /* CONTACT — white background */
+  .contact { background: var(--white); padding: 108px 0; border-top: 1px solid var(--gray-100); }
+  .contact-top { text-align: center; margin-bottom: 72px; }
+  .contact-top .section-label { justify-content: center; }
+  .contact-top .section-label::before { display: none; }
+  .contact-top h2 { font-family: 'Outfit', sans-serif; font-size: clamp(32px, 4vw, 52px); font-weight: 900; color: var(--black); letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 16px; }
+  .contact-top h2 .accent { color: var(--red); }
+  .contact-top p { font-size: 15px; line-height: 1.9; color: var(--gray-500); }
 
-  /* ======= FOOTER ======= */
-  footer { background: var(--black); border-top: 1px solid rgba(255,255,255,0.08); padding: 40px 0; }
+  /* Form tabs */
+  .form-tabs { display: flex; gap: 0; border-bottom: 2px solid var(--gray-100); margin-bottom: 48px; }
+  .form-tab { font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 700; color: var(--gray-500); padding: 14px 28px; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.2s; letter-spacing: 0.02em; background: none; border-top: none; border-left: none; border-right: none; }
+  .form-tab:hover { color: var(--black); }
+  .form-tab.active { color: var(--red); border-bottom-color: var(--red); }
+
+  .form-panel { display: none; }
+  .form-panel.active { display: block; }
+
+  .form-wrap { max-width: 640px; margin: 0 auto; }
+  .form-desc { font-size: 14px; color: var(--gray-500); line-height: 1.8; margin-bottom: 36px; padding-bottom: 36px; border-bottom: 1px solid var(--gray-100); }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+  .form-group label { font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; color: var(--black); display: flex; align-items: center; gap: 8px; }
+  .form-required { font-size: 10px; font-weight: 800; color: var(--red); letter-spacing: 0.1em; }
+  .form-optional { font-size: 10px; font-weight: 600; color: var(--gray-500); letter-spacing: 0.05em; }
+  .form-group input, .form-group select, .form-group textarea {
+    border: 1px solid var(--gray-300); background: var(--white);
+    padding: 12px 16px; font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px; color: var(--black); outline: none;
+    transition: border-color 0.2s; appearance: none; width: 100%;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--black); }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: var(--gray-300); font-size: 13px; }
+  .form-submit { width: 100%; background: var(--red); color: white; border: none; padding: 16px; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.05em; cursor: pointer; transition: opacity 0.2s; margin-top: 12px; }
+  .form-submit:hover { opacity: 0.88; }
+  .form-note { font-size: 12px; color: var(--gray-500); text-align: center; margin-top: 16px; }
+
+  /* FOOTER */
+  footer { background: var(--black); padding: 40px 0; }
   .footer-inner { max-width: 1240px; margin: 0 auto; padding: 0 48px; display: flex; justify-content: space-between; align-items: center; }
   .footer-logo svg { height: 22px; width: auto; }
   .footer-links { display: flex; gap: 32px; list-style: none; }
@@ -301,7 +180,7 @@
   .footer-links a:hover { color: rgba(255,255,255,0.7); }
   .footer-copy { font-family: 'Outfit', sans-serif; font-size: 11px; color: rgba(255,255,255,0.2); letter-spacing: 0.05em; }
 
-  /* ======= ANIMATIONS ======= */
+  /* ANIMATIONS */
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   .hero-left > * { opacity: 0; animation: fadeUp 0.7s ease forwards; }
@@ -313,15 +192,16 @@
   .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  /* ======= RESPONSIVE ======= */
   @media (max-width: 960px) {
     .nav-links { display: none; }
     .hero-inner { grid-template-columns: 1fr; padding: 60px 24px; }
     .hero-stats { grid-template-columns: 1fr 1fr; }
-    .about-grid, .dev-inner, .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+    .about-grid, .dev-inner { grid-template-columns: 1fr; gap: 48px; }
     .products-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .form-tabs { overflow-x: auto; }
     .section { padding: 72px 0; }
-    .section-inner, .contact-inner, .footer-inner { padding: 0 24px; }
+    .section-inner { padding: 0 24px; }
     .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
     .footer-links { flex-wrap: wrap; justify-content: center; }
   }
@@ -334,11 +214,9 @@
   <div class="nav-inner">
     <a href="#" class="nav-logo">
       <svg viewBox="0 0 280 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Arrow mark -->
         <line x1="8" y1="40" x2="52" y2="40" stroke="#D42020" stroke-width="3.5"/>
         <polyline points="30,16 58,40 30,64" fill="none" stroke="#0D0D0D" stroke-width="4" stroke-linejoin="round"/>
         <polyline points="18,16 46,40 18,64" fill="none" stroke="#0D0D0D" stroke-width="4" stroke-linejoin="round"/>
-        <!-- Text -->
         <text x="72" y="52" font-family="Outfit, sans-serif" font-weight="900" font-size="30" fill="#0D0D0D" letter-spacing="-0.5">JP NEXT</text>
       </svg>
     </a>
@@ -351,7 +229,7 @@
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- HERO (白背景) -->
 <section class="hero">
   <div class="hero-line-v"></div>
   <div class="hero-line-h"></div>
@@ -363,7 +241,7 @@
       <p class="hero-sub">不動産・M&Aの最前線を知る専門家チームが、中小企業の経営課題を解決するプロダクトを開発。買い切り型ツールで、現場が本当に使える仕組みを届けます。</p>
       <div class="hero-cta">
         <a href="#products" class="btn-red">プロダクトを見る</a>
-        <a href="#contact" class="btn-ghost">お問い合わせ</a>
+        <a href="#contact" class="btn-ghost-dark">お問い合わせ</a>
       </div>
     </div>
     <div class="hero-stats">
@@ -469,7 +347,7 @@
     <div class="products-header reveal">
       <span class="section-label">プロダクト</span>
       <h2 class="section-title">現場課題から生まれた<br><span class="accent">買い切り型ツール群。</span></h2>
-      <p class="section-desc" style="margin-top:0;">サブスク不要。一度購入すれば、ずっと使い続けられる設計。</p>
+      <p class="section-desc">サブスク不要。一度購入すれば、ずっと使い続けられる設計。</p>
     </div>
     <div class="products-grid reveal">
       <div class="product-card">
@@ -506,69 +384,171 @@
         <h2 class="section-title">御社の業務に合ったツールを、<span class="accent">一緒に作ります。</span></h2>
         <p class="section-desc">大手SIerより速く、スタートアップより現場を理解している。中小企業が自社で使うツールを安く・スピード感を持って開発します。</p>
         <div class="dev-features">
-          <div class="dev-feature">
-            <div class="dev-feature-label">Speed</div>
-            <h4>スピード開発</h4>
-            <p>要件定義から最短2週間で納品。週次デモで認識ズレを防止。</p>
-          </div>
-          <div class="dev-feature">
-            <div class="dev-feature-label">Cost</div>
-            <h4>リーズナブルな価格</h4>
-            <p>大手SIerの数分の一のコストで同等以上のクオリティを実現。</p>
-          </div>
-          <div class="dev-feature">
-            <div class="dev-feature-label">Knowledge</div>
-            <h4>現場理解</h4>
-            <p>不動産・M&A実務経験者が要件定義から参加。的外れな提案ゼロ。</p>
-          </div>
-          <div class="dev-feature">
-            <div class="dev-feature-label">Support</div>
-            <h4>継続サポート</h4>
-            <p>納品後も使いながら改善。定着まで伴走します。</p>
-          </div>
+          <div class="dev-feature"><div class="dev-feature-label">Speed</div><h4>スピード開発</h4><p>要件定義から最短2週間で納品。週次デモで認識ズレを防止。</p></div>
+          <div class="dev-feature"><div class="dev-feature-label">Cost</div><h4>リーズナブルな価格</h4><p>大手SIerの数分の一のコストで同等以上のクオリティを実現。</p></div>
+          <div class="dev-feature"><div class="dev-feature-label">Knowledge</div><h4>現場理解</h4><p>不動産・M&A実務経験者が要件定義から参加。的外れな提案ゼロ。</p></div>
+          <div class="dev-feature"><div class="dev-feature-label">Support</div><h4>継続サポート</h4><p>納品後も使いながら改善。定着まで伴走します。</p></div>
         </div>
       </div>
       <div class="reveal">
         <span class="section-label">開発フロー</span>
         <ul class="process-list">
-          <li class="process-item">
-            <span class="process-num">01</span>
-            <div class="process-content"><h4>ヒアリング・課題整理</h4><p>「何を作るか」より「何を解決するか」を先に定義。現場の課題を深く理解するところから始めます。</p></div>
-          </li>
-          <li class="process-item">
-            <span class="process-num">02</span>
-            <div class="process-content"><h4>要件定義・設計</h4><p>必要最小限の機能に絞り込み、無駄なコストを排除。シンプルで使いやすい設計を優先します。</p></div>
-          </li>
-          <li class="process-item">
-            <span class="process-num">03</span>
-            <div class="process-content"><h4>スピード開発・週次レビュー</h4><p>週次でデモを共有しながら進行。認識のズレを早期に解消し、手戻りを最小化します。</p></div>
-          </li>
-          <li class="process-item">
-            <span class="process-num">04</span>
-            <div class="process-content"><h4>納品・運用サポート</h4><p>社内展開・定着まで支援。「使われるツール」にするための伴走を続けます。</p></div>
-          </li>
+          <li class="process-item"><span class="process-num">01</span><div class="process-content"><h4>ヒアリング・課題整理</h4><p>「何を作るか」より「何を解決するか」を先に定義。現場の課題を深く理解するところから始めます。</p></div></li>
+          <li class="process-item"><span class="process-num">02</span><div class="process-content"><h4>要件定義・設計</h4><p>必要最小限の機能に絞り込み、無駄なコストを排除。シンプルで使いやすい設計を優先します。</p></div></li>
+          <li class="process-item"><span class="process-num">03</span><div class="process-content"><h4>スピード開発・週次レビュー</h4><p>週次でデモを共有しながら進行。認識のズレを早期に解消し、手戻りを最小化します。</p></div></li>
+          <li class="process-item"><span class="process-num">04</span><div class="process-content"><h4>納品・運用サポート</h4><p>社内展開・定着まで支援。「使われるツール」にするための伴走を続けます。</p></div></li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
+<!-- CONTACT (白背景) -->
 <section class="contact" id="contact">
-  <div class="contact-inner">
-    <div class="contact-left reveal">
+  <div class="section-inner">
+    <div class="contact-top reveal">
       <span class="section-label">お問い合わせ</span>
-      <h2>一緒に、<br><span class="accent">日本を変えよう。</span></h2>
-      <p>プロダクトのご利用、受託開発のご相談、または話を聞いてみたい方、まずはお気軽にご連絡ください。</p>
+      <h2>一緒に、<span class="accent">日本を変えよう。</span></h2>
+      <p>目的に合わせてお問い合わせ内容を選択してください。</p>
     </div>
-    <div class="contact-right reveal">
-      <div class="contact-email-block">
-        <div class="contact-email-label">Email</div>
-        <a href="mailto:info@jpnext.co" class="contact-email">info@jpnext.co</a>
+
+    <div class="reveal">
+      <div class="form-tabs">
+        <button class="form-tab active" onclick="switchTab('general')">全体へのお問い合わせ</button>
+        <button class="form-tab" onclick="switchTab('product')">プロダクト相談</button>
+        <button class="form-tab" onclick="switchTab('dev')">受託開発相談</button>
       </div>
-      <a href="tel:09040670219" class="contact-phone">090-4067-0219</a>
-      <div class="contact-actions">
-        <a href="mailto:info@jpnext.co" class="btn-red">メールで相談する</a>
+
+      <!-- 全体 -->
+      <div class="form-panel active" id="tab-general">
+        <div class="form-wrap">
+          <p class="form-desc">JP NEXTへの全般的なお問い合わせはこちらから。サービス内容のご確認、ご提案、その他ご不明点などお気軽にどうぞ。</p>
+          <form onsubmit="handleSubmit(event, 'general')">
+            <div class="form-row">
+              <div class="form-group">
+                <label>お名前 <span class="form-required">必須</span></label>
+                <input type="text" placeholder="山田 太郎" required>
+              </div>
+              <div class="form-group">
+                <label>会社名 <span class="form-optional">任意</span></label>
+                <input type="text" placeholder="株式会社〇〇">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>メールアドレス <span class="form-required">必須</span></label>
+              <input type="email" placeholder="example@company.com" required>
+            </div>
+            <div class="form-group">
+              <label>電話番号 <span class="form-optional">任意</span></label>
+              <input type="tel" placeholder="090-0000-0000">
+            </div>
+            <div class="form-group">
+              <label>お問い合わせ内容 <span class="form-required">必須</span></label>
+              <textarea placeholder="お問い合わせ内容をご記入ください。" required></textarea>
+            </div>
+            <button type="submit" class="form-submit">送信する</button>
+            <p class="form-note">送信後、担当者より2営業日以内にご連絡いたします。</p>
+          </form>
+        </div>
+      </div>
+
+      <!-- プロダクト -->
+      <div class="form-panel" id="tab-product">
+        <div class="form-wrap">
+          <p class="form-desc">M&A査定ツール・不動産収支シミュレーターなどのプロダクトに関するご相談・ご要望はこちらから。</p>
+          <form onsubmit="handleSubmit(event, 'product')">
+            <div class="form-row">
+              <div class="form-group">
+                <label>お名前 <span class="form-required">必須</span></label>
+                <input type="text" placeholder="山田 太郎" required>
+              </div>
+              <div class="form-group">
+                <label>会社名 <span class="form-optional">任意</span></label>
+                <input type="text" placeholder="株式会社〇〇">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>メールアドレス <span class="form-required">必須</span></label>
+              <input type="email" placeholder="example@company.com" required>
+            </div>
+            <div class="form-group">
+              <label>電話番号 <span class="form-optional">任意</span></label>
+              <input type="tel" placeholder="090-0000-0000">
+            </div>
+            <div class="form-group">
+              <label>ご興味のあるプロダクト <span class="form-optional">任意</span></label>
+              <select>
+                <option value="">選択してください</option>
+                <option>M&A簡易査定ツール</option>
+                <option>不動産収支シミュレーター</option>
+                <option>M&A DDチェックリスト</option>
+                <option>その他・複数</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>ご相談内容 <span class="form-required">必須</span></label>
+              <textarea placeholder="ご興味の背景や活用イメージ、ご要望などをお聞かせください。" required></textarea>
+            </div>
+            <button type="submit" class="form-submit">送信する</button>
+            <p class="form-note">送信後、担当者より2営業日以内にご連絡いたします。</p>
+          </form>
+        </div>
+      </div>
+
+      <!-- 受託開発 -->
+      <div class="form-panel" id="tab-dev">
+        <div class="form-wrap">
+          <p class="form-desc">業務ツールの受託開発に関するご相談はこちらから。どんな小さなご相談でもお気軽にどうぞ。</p>
+          <form onsubmit="handleSubmit(event, 'dev')">
+            <div class="form-row">
+              <div class="form-group">
+                <label>お名前 <span class="form-required">必須</span></label>
+                <input type="text" placeholder="山田 太郎" required>
+              </div>
+              <div class="form-group">
+                <label>会社名 <span class="form-optional">任意</span></label>
+                <input type="text" placeholder="株式会社〇〇">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>メールアドレス <span class="form-required">必須</span></label>
+              <input type="email" placeholder="example@company.com" required>
+            </div>
+            <div class="form-group">
+              <label>電話番号 <span class="form-optional">任意</span></label>
+              <input type="tel" placeholder="090-0000-0000">
+            </div>
+            <div class="form-group">
+              <label>業種 <span class="form-optional">任意</span></label>
+              <select>
+                <option value="">選択してください</option>
+                <option>不動産</option>
+                <option>M&A / 金融</option>
+                <option>建設</option>
+                <option>製造</option>
+                <option>小売 / EC</option>
+                <option>その他</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>予算感 <span class="form-optional">任意</span></label>
+              <select>
+                <option value="">選択してください</option>
+                <option>〜50万円</option>
+                <option>50〜100万円</option>
+                <option>100〜300万円</option>
+                <option>300万円〜</option>
+                <option>未定・要相談</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>開発したいツールの概要 <span class="form-required">必須</span></label>
+              <textarea placeholder="解決したい課題や、作りたいツールのイメージをお聞かせください。" required></textarea>
+            </div>
+            <button type="submit" class="form-submit">送信する</button>
+            <p class="form-note">送信後、担当者より2営業日以内にご連絡いたします。</p>
+          </form>
+        </div>
       </div>
     </div>
   </div>
@@ -596,6 +576,23 @@
 </footer>
 
 <script>
+  // Tab switching
+  function switchTab(tab) {
+    document.querySelectorAll('.form-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.form-panel').forEach(p => p.classList.remove('active'));
+    event.target.classList.add('active');
+    document.getElementById('tab-' + tab).classList.add('active');
+  }
+
+  // Form submit (mailto fallback)
+  function handleSubmit(e, type) {
+    e.preventDefault();
+    const labels = { general: '全体へのお問い合わせ', product: 'プロダクト相談', dev: '受託開発相談' };
+    alert('お問い合わせありがとうございます。\n担当者より2営業日以内にご連絡いたします。');
+    e.target.reset();
+  }
+
+  // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
