@@ -1008,8 +1008,11 @@
     メールアドレスを登録いただければ、発売開始時に特別価格でご案内いたします。
   </p>
   <div class="waitlist-form reveal">
-    <input type="email" placeholder="メールアドレスを入力" />
-    <button type="button">事前登録</button>
+    <form id="waitlist-form" action="https://formspree.io/f/xeelrdgw" method="POST" style="display:flex;width:100%;gap:0;">
+      <input type="hidden" name="_subject" value="【JP NEXT】M&A査定ツール 事前登録">
+      <input type="email" name="email" placeholder="メールアドレスを入力" required style="flex:1;">
+      <button type="submit">事前登録</button>
+    </form>
   </div>
   <div class="waitlist-note reveal">登録は無料です。配信停止はいつでも可能です。</div>
 </section>
@@ -1027,6 +1030,35 @@
 </footer>
 
 <script>
+  // Waitlist form AJAX
+  const waitlistForm = document.getElementById('waitlist-form');
+  if (waitlistForm) {
+    waitlistForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = this.querySelector('button');
+      btn.textContent = '送信中...';
+      btn.disabled = true;
+      try {
+        const res = await fetch(this.action, {
+          method: 'POST',
+          body: new FormData(this),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          this.innerHTML = '<p style="color:#D42020;font-weight:700;font-size:15px;text-align:center;width:100%;padding:16px 0;">登録完了！発売時にご案内いたします。</p>';
+        } else {
+          btn.textContent = '事前登録';
+          btn.disabled = false;
+          alert('送信に失敗しました。再度お試しください。');
+        }
+      } catch {
+        btn.textContent = '事前登録';
+        btn.disabled = false;
+        alert('送信に失敗しました。再度お試しください。');
+      }
+    });
+  }
+
   // Scroll reveal
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
