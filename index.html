@@ -640,28 +640,30 @@
       <div class="form-panel active" id="tab-general">
         <div class="form-wrap">
           <p class="form-desc">JP NEXTへの全般的なお問い合わせはこちらから。サービス内容のご確認、ご提案、その他ご不明点などお気軽にどうぞ。</p>
-          <form onsubmit="handleSubmit(event, 'general')">
+          <form action="https://formspree.io/f/xreayedy" method="POST">
+            <input type="hidden" name="_subject" value="【JP NEXT】全体へのお問い合わせ">
+            <input type="hidden" name="_next" value="https://www.jpnext.co/?sent=true">
             <div class="form-row">
               <div class="form-group">
                 <label>お名前 <span class="form-required">必須</span></label>
-                <input type="text" placeholder="山田 太郎" required>
+                <input type="text" name="お名前" placeholder="山田 太郎" required>
               </div>
               <div class="form-group">
                 <label>会社名 <span class="form-optional">任意</span></label>
-                <input type="text" placeholder="株式会社〇〇">
+                <input type="text" name="会社名" placeholder="株式会社〇〇">
               </div>
             </div>
             <div class="form-group">
               <label>メールアドレス <span class="form-required">必須</span></label>
-              <input type="email" placeholder="example@company.com" required>
+              <input type="email" name="email" placeholder="example@company.com" required>
             </div>
             <div class="form-group">
               <label>電話番号 <span class="form-optional">任意</span></label>
-              <input type="tel" placeholder="090-0000-0000">
+              <input type="tel" name="電話番号" placeholder="090-0000-0000">
             </div>
             <div class="form-group">
               <label>お問い合わせ内容 <span class="form-required">必須</span></label>
-              <textarea placeholder="お問い合わせ内容をご記入ください。" required></textarea>
+              <textarea name="お問い合わせ内容" placeholder="お問い合わせ内容をご記入ください。" required></textarea>
             </div>
             <button type="submit" class="form-submit">送信する</button>
             <p class="form-note">送信後、担当者より2営業日以内にご連絡いたします。</p>
@@ -673,28 +675,30 @@
       <div class="form-panel" id="tab-product">
         <div class="form-wrap">
           <p class="form-desc">M&A査定ツール・不動産収支シミュレーターなどのプロダクトに関するご相談・ご要望はこちらから。</p>
-          <form onsubmit="handleSubmit(event, 'product')">
+          <form action="https://formspree.io/f/xdalwajj" method="POST">
+            <input type="hidden" name="_subject" value="【JP NEXT】プロダクト相談">
+            <input type="hidden" name="_next" value="https://www.jpnext.co/?sent=true">
             <div class="form-row">
               <div class="form-group">
                 <label>お名前 <span class="form-required">必須</span></label>
-                <input type="text" placeholder="山田 太郎" required>
+                <input type="text" name="お名前" placeholder="山田 太郎" required>
               </div>
               <div class="form-group">
                 <label>会社名 <span class="form-optional">任意</span></label>
-                <input type="text" placeholder="株式会社〇〇">
+                <input type="text" name="会社名" placeholder="株式会社〇〇">
               </div>
             </div>
             <div class="form-group">
               <label>メールアドレス <span class="form-required">必須</span></label>
-              <input type="email" placeholder="example@company.com" required>
+              <input type="email" name="email" placeholder="example@company.com" required>
             </div>
             <div class="form-group">
               <label>電話番号 <span class="form-optional">任意</span></label>
-              <input type="tel" placeholder="090-0000-0000">
+              <input type="tel" name="電話番号" placeholder="090-0000-0000">
             </div>
             <div class="form-group">
               <label>ご興味のあるプロダクト <span class="form-optional">任意</span></label>
-              <select>
+              <select name="ご興味のあるプロダクト">
                 <option value="">選択してください</option>
                 <option>M&A簡易査定ツール</option>
                 <option>不動産収支シミュレーター</option>
@@ -704,7 +708,7 @@
             </div>
             <div class="form-group">
               <label>ご相談内容 <span class="form-required">必須</span></label>
-              <textarea placeholder="ご興味の背景や活用イメージ、ご要望などをお聞かせください。" required></textarea>
+              <textarea name="ご相談内容" placeholder="ご興味の背景や活用イメージ、ご要望などをお聞かせください。" required></textarea>
             </div>
             <button type="submit" class="form-submit">送信する</button>
             <p class="form-note">送信後、担当者より2営業日以内にご連絡いたします。</p>
@@ -716,28 +720,30 @@
       <div class="form-panel" id="tab-dev">
         <div class="form-wrap">
           <p class="form-desc">業務ツールの受託開発に関するご相談はこちらから。どんな小さなご相談でもお気軽にどうぞ。</p>
-          <form onsubmit="handleSubmit(event, 'dev')">
+          <form action="https://formspree.io/f/mqedyejv" method="POST">
+            <input type="hidden" name="_subject" value="【JP NEXT】受託開発相談">
+            <input type="hidden" name="_next" value="https://www.jpnext.co/?sent=true">
             <div class="form-row">
               <div class="form-group">
                 <label>お名前 <span class="form-required">必須</span></label>
-                <input type="text" placeholder="山田 太郎" required>
+                <input type="text" name="お名前" placeholder="山田 太郎" required>
               </div>
               <div class="form-group">
                 <label>会社名 <span class="form-optional">任意</span></label>
-                <input type="text" placeholder="株式会社〇〇">
+                <input type="text" name="会社名" placeholder="株式会社〇〇">
               </div>
             </div>
             <div class="form-group">
               <label>メールアドレス <span class="form-required">必須</span></label>
-              <input type="email" placeholder="example@company.com" required>
+              <input type="email" name="email" placeholder="example@company.com" required>
             </div>
             <div class="form-group">
               <label>電話番号 <span class="form-optional">任意</span></label>
-              <input type="tel" placeholder="090-0000-0000">
+              <input type="tel" name="電話番号" placeholder="090-0000-0000">
             </div>
             <div class="form-group">
               <label>業種 <span class="form-optional">任意</span></label>
-              <select>
+              <select name="業種">
                 <option value="">選択してください</option>
                 <option>不動産</option>
                 <option>M&A / 金融</option>
@@ -749,7 +755,7 @@
             </div>
             <div class="form-group">
               <label>予算感 <span class="form-optional">任意</span></label>
-              <select>
+              <select name="予算感">
                 <option value="">選択してください</option>
                 <option>〜50万円</option>
                 <option>50〜100万円</option>
@@ -760,7 +766,7 @@
             </div>
             <div class="form-group">
               <label>開発したいツールの概要 <span class="form-required">必須</span></label>
-              <textarea placeholder="解決したい課題や、作りたいツールのイメージをお聞かせください。" required></textarea>
+              <textarea name="開発したいツールの概要" placeholder="解決したい課題や、作りたいツールのイメージをお聞かせください。" required></textarea>
             </div>
             <button type="submit" class="form-submit">送信する</button>
             <p class="form-note">送信後、担当者より2営業日以内にご連絡いたします。</p>
@@ -794,6 +800,16 @@
 </footer>
 
 <script defer>
+
+  // Thank you message after form submission
+  if (window.location.search.includes('sent=true')) {
+    const msg = document.createElement('div');
+    msg.innerHTML = 'お問い合わせありがとうございます。2営業日以内にご連絡いたします。';
+    msg.style.cssText = 'position:fixed;bottom:32px;right:32px;background:#0D0D0D;color:white;padding:16px 28px;font-family:Outfit,sans-serif;font-size:14px;font-weight:600;z-index:999;border-left:3px solid #D42020;';
+    document.body.appendChild(msg);
+    setTimeout(() => msg.remove(), 5000);
+  }
+
   // Tab switching
   function switchTab(tab) {
     document.querySelectorAll('.form-tab').forEach(t => t.classList.remove('active'));
