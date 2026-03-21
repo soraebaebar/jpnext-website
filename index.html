@@ -168,18 +168,21 @@
       transform: translateY(-4px);
       box-shadow: 0 16px 48px rgba(0,0,0,0.08);
     }
-    .target-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
+    .target-icon-label {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 2px;
       margin-bottom: 20px;
+      background: var(--accent);
+      color: var(--white);
     }
-    .owner .target-icon { background: var(--accent-light); }
-    .career .target-icon { background: var(--gold-light); }
+    .target-icon-label.career-label {
+      background: var(--gold);
+    }
     .target-title {
       font-family: var(--font-serif);
       font-size: 1.4rem;
@@ -434,7 +437,7 @@
   </div>
   <div class="target-grid">
     <a href="/blog/?cat=jigyo" class="target-card owner">
-      <div class="target-icon">🏢</div>
+      <div class="target-icon-label">売り手 / オーナー</div>
       <div class="target-title">事業承継・売却を<br>検討するオーナーへ</div>
       <p class="target-desc">後継者不在・業績好調での売却・引退検討など、M&Aを検討する経営者のための実務情報。</p>
       <ul class="target-list">
@@ -445,7 +448,7 @@
       </ul>
     </a>
     <a href="/blog/?cat=career" class="target-card career">
-      <div class="target-icon">💼</div>
+      <div class="target-icon-label career-label">転職希望者</div>
       <div class="target-title">M&A業界への<br>転職を目指す方へ</div>
       <p class="target-desc">銀行・不動産・コンサルからのM&A転職を考える方のためのキャリア情報。年収・選考・実務まで。</p>
       <ul class="target-list">
@@ -469,7 +472,9 @@
     <div class="articles-grid">
       <!-- 記事カード1 -->
       <article class="article-card">
-        <div class="article-thumb" style="background: var(--accent-light);">📊</div>
+        <div class="article-thumb" style="background: var(--accent); display:flex; align-items:center; justify-content:center;">
+          <span style="font-family:var(--font-serif); font-size:1rem; color:rgba(255,255,255,0.9); letter-spacing:0.1em; font-weight:400;">事業承継</span>
+        </div>
         <div class="article-body">
           <div class="article-meta">
             <span class="tag tag-ma">事業承継</span>
@@ -483,7 +488,9 @@
       </article>
       <!-- 記事カード2 -->
       <article class="article-card">
-        <div class="article-thumb" style="background: var(--gold-light);">🏦</div>
+        <div class="article-thumb" style="background: var(--black); display:flex; align-items:center; justify-content:center;">
+          <span style="font-family:var(--font-serif); font-size:1rem; color:rgba(255,255,255,0.9); letter-spacing:0.1em; font-weight:400;">M&A仲介</span>
+        </div>
         <div class="article-body">
           <div class="article-meta">
             <span class="tag tag-ma">M&A仲介</span>
@@ -497,7 +504,9 @@
       </article>
       <!-- 記事カード3 -->
       <article class="article-card">
-        <div class="article-thumb" style="background: #eef3ff);">💼</div>
+        <div class="article-thumb" style="background: var(--gold); display:flex; align-items:center; justify-content:center;">
+          <span style="font-family:var(--font-serif); font-size:1rem; color:rgba(255,255,255,0.9); letter-spacing:0.1em; font-weight:400;">転職</span>
+        </div>
         <div class="article-body">
           <div class="article-meta">
             <span class="tag tag-transfer">転職</span>
