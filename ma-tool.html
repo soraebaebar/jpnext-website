@@ -1,1089 +1,803 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-  <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>M&A簡易査定ツール | 企業価値を瞬時に算出【買い切り型】JP NEXT</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --white: #FFFFFF;
-    --off-white: #FAFAFA;
-    --black: #0A0A0A;
-    --red: #D42020;
-    --red-dark: #B01818;
-    --gray-50: #F7F7F8;
-    --gray-100: #F0F0F1;
-    --gray-200: #E2E2E4;
-    --gray-300: #CBCBCE;
-    --gray-400: #9C9CA1;
-    --gray-500: #6E6E73;
-    --gray-600: #48484C;
-    --gray-700: #2C2C2E;
-  }
-
-
-  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { font-size: 16px; scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Noto Sans JP', 'DM Sans', sans-serif;
-    background: var(--white);
-    color: var(--black);
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    padding: 18px 48px;
-    display: flex; align-items: center; justify-content: space-between;
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(24px);
-    border-bottom: 1px solid rgba(0,0,0,0.04);
-    transition: all 0.3s;
-  }
-
-  .nav-logo svg { height: 30px; }
-
-  .nav-links { display: flex; align-items: center; gap: 32px; }
-
-  .nav-links a {
-    font-size: 13px; font-weight: 500; color: var(--gray-500);
-    text-decoration: none; letter-spacing: 0.02em; transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--black); }
-
-  .nav-cta {
-    font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
-    color: var(--white) !important; background: var(--black);
-    padding: 10px 24px; transition: background 0.3s;
-  }
-  .nav-cta:hover { background: var(--red) !important; }
-
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 160px 48px 100px;
-    position: relative;
-  }
-
-  .hero::after {
-    content: '';
-    position: absolute;
-    top: 80px; right: -100px;
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(212,32,32,0.04) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--red); margin-bottom: 32px;
-    opacity: 0; animation: fadeUp 0.7s ease 0.1s forwards;
-  }
-
-  .badge::before {
-    content: '';
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--red);
-    animation: pulse 2s ease infinite;
-  }
-
-  .hero h1 {
-    font-size: clamp(36px, 5.5vw, 72px);
-    font-weight: 900; line-height: 1.12;
-    letter-spacing: -0.03em;
-    max-width: 800px;
-    margin-bottom: 28px;
-    opacity: 0; animation: fadeUp 0.7s ease 0.25s forwards;
-  }
-
-  .hero h1 .accent { color: var(--red); }
-
-  .hero-sub {
-    font-size: 16px; font-weight: 300; line-height: 1.9;
-    color: var(--gray-500); max-width: 520px;
-    margin-bottom: 48px;
-    opacity: 0; animation: fadeUp 0.7s ease 0.4s forwards;
-  }
-
-  .hero-actions {
-    display: flex; gap: 12px; align-items: center;
-    opacity: 0; animation: fadeUp 0.7s ease 0.55s forwards;
-  }
-
-  .btn-main {
-    font-family: inherit; font-size: 13px; font-weight: 600;
-    letter-spacing: 0.06em; padding: 16px 36px;
-    background: var(--red); color: var(--white);
-    border: none; cursor: pointer; text-decoration: none;
-    display: inline-flex; align-items: center; gap: 8px;
-    transition: all 0.3s; position: relative; overflow: hidden;
-  }
-  .btn-main:hover { background: var(--red-dark); }
-
-  .btn-outline {
-    font-family: inherit; font-size: 13px; font-weight: 600;
-    letter-spacing: 0.06em; padding: 16px 36px;
-    background: transparent; color: var(--black);
-    border: 1px solid var(--gray-200); cursor: pointer; text-decoration: none;
-    display: inline-flex; align-items: center; gap: 8px;
-    transition: all 0.3s;
-  }
-  .btn-outline:hover { border-color: var(--black); }
-
-  .hero-stat-row {
-    display: flex; gap: 48px; margin-top: 80px;
-    opacity: 0; animation: fadeUp 0.7s ease 0.7s forwards;
-  }
-
-  .hero-stat { }
-  .hero-stat-value {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 32px; font-weight: 700; letter-spacing: -0.02em;
-  }
-  .hero-stat-label {
-    font-size: 11px; font-weight: 500; color: var(--gray-400);
-    letter-spacing: 0.06em; margin-top: 4px;
-  }
-
-  /* ── SECTIONS ── */
-  section { padding: 120px 48px; }
-
-  .section-label {
-    font-size: 11px; font-weight: 600; letter-spacing: 0.2em;
-    text-transform: uppercase; color: var(--red); margin-bottom: 16px;
-  }
-
-  .section-title {
-    font-size: clamp(26px, 3.2vw, 42px);
-    font-weight: 900; letter-spacing: -0.01em;
-    line-height: 1.2; margin-bottom: 20px;
-  }
-
-  .section-sub {
-    font-size: 15px; font-weight: 300; line-height: 1.8;
-    color: var(--gray-500); max-width: 560px; margin-bottom: 56px;
-  }
-
-  /* ── FEATURES ── */
-  .features { background: var(--off-white); }
-
-  .features-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 1px; background: var(--gray-200);
-    max-width: 1100px;
-  }
-
-  .feature-card {
-    background: var(--white); padding: 48px 36px;
-    position: relative; transition: all 0.3s;
-  }
-
-  .feature-card:hover { background: var(--gray-50); }
-
-  .feature-card::before {
-    content: ''; position: absolute; top: 0; left: 0;
-    width: 0; height: 2px; background: var(--red);
-    transition: width 0.4s ease;
-  }
-  .feature-card:hover::before { width: 100%; }
-
-  .feature-num {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 11px; font-weight: 700;
-    letter-spacing: 0.15em; color: var(--red);
-    margin-bottom: 20px;
-  }
-
-  .feature-title {
-    font-size: 18px; font-weight: 700;
-    margin-bottom: 12px; line-height: 1.4;
-  }
-
-  .feature-en {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 10px; font-weight: 500;
-    letter-spacing: 0.1em; color: var(--gray-400);
-    text-transform: uppercase; margin-bottom: 16px;
-  }
-
-  .feature-desc {
-    font-size: 13px; font-weight: 300; line-height: 1.8;
-    color: var(--gray-500);
-  }
-
-  /* ── DEMO ── */
-  .demo { background: var(--white); }
-
-  .demo-container {
-    max-width: 1100px;
-  }
-
-  .demo-window {
-    background: var(--gray-50);
-    border: 1px solid var(--gray-200);
-    overflow: hidden;
-    position: relative;
-  }
-
-  .demo-toolbar {
-    display: flex; align-items: center; gap: 8px;
-    padding: 12px 16px;
-    background: var(--white);
-    border-bottom: 1px solid var(--gray-200);
-  }
-
-  .demo-dot {
-    width: 10px; height: 10px; border-radius: 50%;
-    background: var(--gray-200);
-  }
-
-  .demo-toolbar-title {
-    font-size: 11px; color: var(--gray-400);
-    margin-left: 8px; letter-spacing: 0.04em;
-  }
-
-  .demo-slides {
-    position: relative;
-    min-height: 480px;
-    overflow: hidden;
-  }
-
-  .demo-slide {
-    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-    padding: 40px;
-    opacity: 0; transform: translateX(40px);
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    pointer-events: none;
-    display: flex; flex-direction: column;
-  }
-
-  .demo-slide.active {
-    opacity: 1; transform: translateX(0);
-    pointer-events: auto;
-  }
-
-  .demo-slide-label {
-    font-size: 10px; font-weight: 600; letter-spacing: 0.15em;
-    text-transform: uppercase; color: var(--red); margin-bottom: 12px;
-  }
-
-  .demo-slide-title {
-    font-size: 22px; font-weight: 700; margin-bottom: 8px;
-  }
-
-  .demo-slide-desc {
-    font-size: 13px; color: var(--gray-500); font-weight: 300;
-    line-height: 1.7; margin-bottom: 24px; max-width: 500px;
-  }
-
-  .demo-mockup {
-    flex: 1;
-    background: var(--white);
-    border: 1px solid var(--gray-200);
-    padding: 24px;
-    display: flex; flex-direction: column; gap: 12px;
-  }
-
-  .mock-row {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--gray-100);
-  }
-
-  .mock-label { font-size: 12px; color: var(--gray-500); }
-  .mock-value {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px; font-weight: 600;
-    padding: 6px 12px;
-    background: var(--gray-50);
-    border: 1px solid var(--gray-200);
-    min-width: 100px; text-align: right;
-  }
-
-  .mock-result {
-    margin-top: auto;
-    background: var(--black);
-    padding: 20px 24px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-
-  .mock-result-label {
-    font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
-    text-transform: uppercase; color: rgba(255,255,255,0.4);
-  }
-
-  .mock-result-value {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 24px; font-weight: 700; color: var(--white);
-  }
-
-  .mock-result-value .yen {
-    font-size: 14px; opacity: 0.5; margin-right: 2px;
-  }
-
-  .demo-nav {
-    display: flex; gap: 0;
-    border-top: 1px solid var(--gray-200);
-  }
-
-  .demo-nav-btn {
-    flex: 1;
-    padding: 16px;
-    font-family: inherit; font-size: 12px; font-weight: 600;
-    letter-spacing: 0.06em;
-    background: var(--white); border: none;
-    color: var(--gray-400); cursor: pointer;
-    transition: all 0.2s; position: relative;
-    text-align: center;
-  }
-
-  .demo-nav-btn:not(:last-child) { border-right: 1px solid var(--gray-200); }
-  .demo-nav-btn:hover { color: var(--gray-600); background: var(--gray-50); }
-
-  .demo-nav-btn.active {
-    color: var(--red); background: var(--white);
-  }
-
-  .demo-nav-btn.active::after {
-    content: ''; position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 2px; background: var(--red);
-  }
-
-  .demo-nav-step {
-    display: block;
-    font-size: 9px; font-weight: 500; letter-spacing: 0.1em;
-    color: var(--gray-300); margin-bottom: 2px;
-  }
-
-  .demo-nav-btn.active .demo-nav-step { color: var(--red); opacity: 0.5; }
-
-  /* ── HOW TO USE ── */
-  .howto { background: var(--black); color: var(--white); position: relative; overflow: hidden; }
-
-  .howto::after {
-    content: '';
-    position: absolute; bottom: -150px; left: 50%;
-    transform: translateX(-50%);
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(212,32,32,0.1) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .howto .section-title { color: var(--white); }
-  .howto .section-sub { color: rgba(255,255,255,0.45); }
-
-  .howto-grid {
-    display: grid; grid-template-columns: repeat(2, 1fr);
-    gap: 24px; max-width: 900px;
-  }
-
-  .howto-card {
-    padding: 36px;
-    border: 1px solid rgba(255,255,255,0.08);
-    position: relative; transition: all 0.3s;
-  }
-
-  .howto-card:hover {
-    border-color: rgba(255,255,255,0.15);
-    background: rgba(255,255,255,0.02);
-  }
-
-  .howto-step {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 10px; font-weight: 700;
-    letter-spacing: 0.15em; color: var(--red);
-    margin-bottom: 16px;
-  }
-
-  .howto-card-title {
-    font-size: 16px; font-weight: 700;
-    margin-bottom: 10px; line-height: 1.4;
-  }
-
-  .howto-card-desc {
-    font-size: 13px; font-weight: 300; line-height: 1.8;
-    color: rgba(255,255,255,0.45);
-  }
-
-  /* ── PRICING ── */
-  .pricing { background: var(--white); text-align: center; }
-
-  .price-card {
-    max-width: 480px; margin: 0 auto;
-    border: 2px solid var(--black);
-    padding: 56px 48px;
-    position: relative;
-  }
-
-  .price-card::before {
-    content: 'COMING SOON';
-    position: absolute; top: -14px; left: 50%;
-    transform: translateX(-50%);
-    font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
-    background: var(--red); color: var(--white);
-    padding: 6px 20px;
-  }
-
-  .price-label {
-    font-size: 11px; font-weight: 600; letter-spacing: 0.15em;
-    text-transform: uppercase; color: var(--gray-400);
-    margin-bottom: 12px;
-  }
-
-  .price-value {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 56px; font-weight: 700;
-    letter-spacing: -0.03em; margin-bottom: 4px;
-  }
-
-  .price-value .yen { font-size: 24px; font-weight: 500; vertical-align: top; margin-right: 2px; }
-  .price-value .tax { font-size: 14px; font-weight: 400; color: var(--gray-400); margin-left: 4px; }
-
-  .price-desc {
-    font-size: 13px; color: var(--gray-500); font-weight: 300;
-    line-height: 1.7; margin-bottom: 32px; margin-top: 8px;
-  }
-
-  .price-features {
-    text-align: left; margin-bottom: 36px;
-  }
-
-  .price-feature {
-    display: flex; align-items: flex-start; gap: 12px;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--gray-100);
-    font-size: 13px; color: var(--gray-600);
-  }
-
-  .price-feature:last-child { border-bottom: none; }
-
-  .price-check {
-    flex-shrink: 0; width: 18px; height: 18px;
-    background: var(--red); display: flex;
-    align-items: center; justify-content: center;
-    margin-top: 1px;
-  }
-
-  .price-check svg { width: 10px; height: 10px; }
-
-  /* ── CTA / WAITLIST ── */
-  .waitlist {
-    padding: 140px 48px;
-    text-align: center;
-    background: var(--off-white);
-    position: relative;
-  }
-
-  .waitlist::before {
-    content: '';
-    position: absolute; top: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 1px; height: 80px;
-    background: linear-gradient(to bottom, var(--gray-200), var(--red));
-  }
-
-  .waitlist-form {
-    display: flex; gap: 0; max-width: 480px;
-    margin: 0 auto; margin-top: 40px;
-  }
-
-  .waitlist-form input {
-    flex: 1;
-    font-family: inherit; font-size: 14px; font-weight: 400;
-    padding: 16px 20px;
-    border: 1px solid var(--gray-200);
-    border-right: none;
-    background: var(--white); color: var(--black);
-    outline: none; transition: border-color 0.2s;
-  }
-  .waitlist-form input:focus { border-color: var(--red); }
-  .waitlist-form input::placeholder { color: var(--gray-300); }
-
-  .waitlist-form button {
-    font-family: inherit; font-size: 13px; font-weight: 600;
-    letter-spacing: 0.06em; padding: 16px 32px;
-    background: var(--red); color: var(--white);
-    border: 1px solid var(--red);
-    cursor: pointer; transition: all 0.3s; white-space: nowrap;
-  }
-  .waitlist-form button:hover { background: var(--red-dark); border-color: var(--red-dark); }
-
-  .waitlist-note {
-    font-size: 11px; color: var(--gray-400);
-    margin-top: 12px; letter-spacing: 0.02em;
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    padding: 40px 48px;
-    border-top: 1px solid var(--gray-200);
-    display: flex; align-items: center; justify-content: space-between;
-  }
-
-  footer svg { height: 22px; opacity: 0.4; }
-
-  .footer-text {
-    font-size: 11px; color: var(--gray-400); letter-spacing: 0.04em;
-  }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
-  .reveal {
-    opacity: 0; transform: translateY(28px);
-    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 768px) {
-    nav { padding: 14px 20px; }
-    .nav-links a:not(.nav-cta) { display: none; }
-    section { padding: 80px 20px; }
-    .hero { padding: 120px 20px 60px; }
-    .hero-stat-row { gap: 32px; flex-wrap: wrap; }
-    .features-grid { grid-template-columns: 1fr; }
-    .demo-slides { min-height: 520px; }
-    .demo-slide { padding: 24px; }
-    .howto-grid { grid-template-columns: 1fr; }
-    .price-card { padding: 40px 28px; }
-    .waitlist { padding: 100px 20px; }
-    .waitlist-form { flex-direction: column; }
-    .waitlist-form input { border-right: 1px solid var(--gray-200); border-bottom: none; }
-    footer { padding: 32px 20px; flex-direction: column; gap: 12px; }
-    .hero-actions { flex-direction: column; align-items: flex-start; }
-  }
-</style>
-
-  <!-- ===== SEO: Technical & On-Page ===== -->
-  <meta name="description" content="M&A簡易査定ツール｜売上・利益・業種を入力するだけで企業価値を素早く算出。会社売却を検討中の経営者や、M&Aアドバイザーとの面談前に自社価値を把握したい方に最適。JP NEXTが提供する買い切り型ツール。">
-  <meta name="keywords" content="M&A査定,企業価値評価,会社売却,企業価値計算,EBITDAマルチプル,M&Aアドバイザー,中小企業M&A,バリュエーション,企業価値算定,M&A相場,会社の価値,株式価値,事業譲渡,M&A費用,売却価格">
-  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-  <meta name="author" content="JP NEXT">
-  <meta name="theme-color" content="#D42020">
-  <link rel="canonical" href="https://www.jpnext.co/ma-tool.html">
-
-  <!-- Open Graph / SNS -->
-  <meta property="og:type" content="product">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>無料・企業価値算定ツール｜M&Aアドバイザーが実務で使う手法を搭載 — JP NEXT</title>
+  <meta name="description" content="EV/EBITDA・DCF・純資産のれん法の3手法に対応した企業価値算定ツール。登録不要・完全無料。M&Aアドバイザーが実務で使う手法をそのままブラウザで使えます。">
+  <meta property="og:title" content="無料・企業価値算定ツール — JP NEXT">
+  <meta property="og:description" content="登録不要・完全無料。EV/EBITDA・DCF・純資産のれん法の3手法対応。">
   <meta property="og:url" content="https://www.jpnext.co/ma-tool.html">
-  <meta property="og:title" content="M&A簡易査定ツール | 企業価値を瞬時に算出 — JP NEXT">
-  <meta property="og:description" content="売上・利益・業種を入力するだけで企業価値を算出。M&Aアドバイザー5年以上の実務経験者が設計した、中小企業オーナー向け買い切り型査定ツール。">
-  <meta property="og:image" content="https://www.jpnext.co/ogp-ma-tool.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="M&A簡易査定ツール - 企業価値を瞬時に算出">
-  <meta property="og:site_name" content="JP NEXT">
-  <meta property="og:locale" content="ja_JP">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="M&A簡易査定ツール | 企業価値を瞬時に算出 — JP NEXT">
-  <meta name="twitter:description" content="売上・利益・業種を入力するだけで企業価値を算出。M&Aアドバイザー5年以上の実務経験者が設計した買い切り型査定ツール。">
-  <meta name="twitter:image" content="https://www.jpnext.co/ogp-ma-tool.png">
-
-  <!-- Structured Data: SoftwareApplication -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "@id": "https://www.jpnext.co/ma-tool.html#product",
-    "name": "M&A簡易査定ツール",
-    "alternateName": "M&A企業価値計算ツール",
-    "description": "売上・利益・業種を入力するだけで企業価値を瞬時に算出できるM&A査定ツール。EBITDAマルチプル法など実務で使われる手法で計算。会社売却を検討中の経営者やM&Aアドバイザーとの面談前準備に最適。",
-    "url": "https://www.jpnext.co/ma-tool.html",
-    "applicationCategory": "BusinessApplication",
-    "applicationSubCategory": "Finance",
-    "operatingSystem": "Web Browser",
-    "offers": {
-      "@type": "Offer",
-      "priceCurrency": "JPY",
-      "availability": "https://schema.org/PreOrder",
-      "description": "買い切り型 - サブスクリプション不要"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "JP NEXT",
-      "@id": "https://www.jpnext.co/#organization"
-    },
-    "featureList": [
-      "売上・営業利益・EBITDAから自動計算",
-      "業種別マルチプル対応",
-      "M&A相場の参考値提示",
-      "買い切り型・サブスク不要",
-      "実務経験者監修"
-    ],
-    "screenshot": "https://www.jpnext.co/ogp-ma-tool.png",
-    "inLanguage": "ja"
-  }
-  </script>
-
-  <!-- Structured Data: WebPage with Breadcrumb -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://www.jpnext.co/ma-tool.html#webpage",
-    "url": "https://www.jpnext.co/ma-tool.html",
-    "name": "M&A簡易査定ツール | 企業価値を瞬時に算出 — JP NEXT",
-    "description": "売上・利益・業種を入力するだけで企業価値を算出。M&Aアドバイザー5年以上の実務経験者が設計した、中小企業オーナー向け買い切り型査定ツール。",
-    "inLanguage": "ja",
-    "isPartOf": {"@id": "https://www.jpnext.co/#website"},
-    "breadcrumb": {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": "JP NEXT トップ", "item": "https://www.jpnext.co/"},
-        {"@type": "ListItem", "position": 2, "name": "プロダクト"},
-        {"@type": "ListItem", "position": 3, "name": "M&A簡易査定ツール", "item": "https://www.jpnext.co/ma-tool.html"}
-      ]
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/assets/style.css">
+  <style>
+    /* ── ページヘッダー ── */
+    .tool-page-header {
+      background: var(--black);
+      padding: 56px 24px 48px;
+      border-bottom: 1px solid #222;
     }
-  }
-  </script>
-
-  <!-- Structured Data: FAQ (keyword-rich Q&A for Google Rich Results) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "中小企業のM&Aで企業価値はどうやって決まりますか？",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "中小企業のM&Aでは主にEBITDAマルチプル法（営業利益×業種別倍率）や年買法が使われます。業種・収益性・成長性によって倍率は3〜10倍程度変動します。本ツールでは売上・営業利益・業種を入力するだけで相場感のある企業価値を算出できます。"
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "会社売却の相場はどのくらいですか？",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "中小企業の売却相場は営業利益の3〜8倍程度が一般的ですが、業種・成長率・顧客基盤によって大きく異なります。例えば営業利益3,000万円の会社の場合、9,000万円〜2億4,000万円程度が目安となります。本ツールで業種別の相場感を確認できます。"
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "M&Aアドバイザーに相談する前に何を準備すればいいですか？",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "M&Aアドバイザーとの初回面談前に、直近3期の売上・営業利益・EBITDAを把握しておくことが重要です。本ツールで事前に企業価値の目安を算出しておくことで、面談での交渉や判断がスムーズになります。"
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "このM&A査定ツールは無料ですか？",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "現在Coming Soon（開発中）のツールです。リリース後は買い切り型での提供を予定しています。月額サブスクリプションは不要で、一度購入すれば継続費用なくご利用いただけます。事前登録はお問い合わせフォームからどうぞ。"
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "EBITDAとは何ですか？M&Aでどう使いますか？",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "EBITDAとは「利払い前・税引き前・減価償却前利益」のことで、企業の実質的なキャッシュ創出力を示す指標です。M&Aでは「EBITDAマルチプル法」として、EBITDA×業種別倍率で企業価値を算出する手法が広く使われています。"
-        }
-      }
-    ]
-  }
-  </script>
-
-  <!-- Structured Data: HowTo (ツールの使い方) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    "name": "M&A簡易査定ツールの使い方",
-    "description": "3ステップで企業価値の目安を算出します",
-    "step": [
-      {
-        "@type": "HowToStep",
-        "position": 1,
-        "name": "基本情報を入力",
-        "text": "売上・営業利益（またはEBITDA）・業種を入力します"
-      },
-      {
-        "@type": "HowToStep",
-        "position": 2,
-        "name": "算定結果を確認",
-        "text": "業種別マルチプルをもとに企業価値の目安レンジが表示されます"
-      },
-      {
-        "@type": "HowToStep",
-        "position": 3,
-        "name": "M&Aアドバイザーへ相談",
-        "text": "算定結果を持参してM&Aアドバイザーに相談し、本格的な査定を依頼します"
-      }
-    ],
-    "tool": {
-      "@type": "SoftwareApplication",
-      "name": "M&A簡易査定ツール"
+    .tool-page-header-inner { max-width: var(--max-w); margin: 0 auto; }
+    .tool-free-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: var(--white);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      padding: 5px 14px;
+      border-radius: 2px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
     }
-  }
-  </script>
+    .tool-free-badge::before {
+      content: '';
+      display: block;
+      width: 7px; height: 7px;
+      background: #4ade80;
+      border-radius: 50%;
+    }
+    .tool-page-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      color: var(--white);
+      line-height: 1.25;
+      margin-bottom: 16px;
+    }
+    .tool-page-desc { font-size: 0.95rem; color: var(--gray-400); line-height: 1.9; max-width: 600px; margin-bottom: 32px; }
+    .tool-badges {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .tool-badge-item {
+      font-size: 0.8rem;
+      color: var(--gray-400);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .tool-badge-item::before {
+      content: '✓';
+      color: var(--accent-mid);
+      font-weight: 700;
+    }
 
-  <!-- Performance: Font preload -->
-  <link rel="preload" href="https://fonts.gstatic.com/s/notosansjp/v53/-F6jfjtqLzI2JPCgQBnw7HFyzSD-AsregP8VFBEj75s.woff2" as="font" type="font/woff2" crossorigin>
-  <!-- Google Analytics GA4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P8KB1E1GRV"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-P8KB1E1GRV');
-  </script>
+    /* ── ツール本体ラッパー ── */
+    .tool-wrapper {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 48px 24px 64px;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 40px;
+      align-items: start;
+    }
+
+    /* ── 算定フォーム ── */
+    .calc-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .calc-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--gray-200);
+      background: var(--gray-100);
+    }
+    .calc-tab {
+      flex: 1;
+      padding: 14px 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-align: center;
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: var(--font-sans);
+      color: var(--gray-400);
+      letter-spacing: 0.04em;
+      border-bottom: 2px solid transparent;
+      transition: all var(--transition);
+    }
+    .calc-tab.active {
+      color: var(--accent);
+      background: var(--white);
+      border-bottom-color: var(--accent);
+    }
+    .calc-tab:hover:not(.active) { color: var(--gray-600); }
+
+    .calc-body { padding: 32px; }
+    .calc-section-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    /* 入力グループ */
+    .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+    .input-group { display: flex; flex-direction: column; gap: 6px; }
+    .input-label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--gray-600);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .input-label .hint {
+      font-size: 0.7rem;
+      color: var(--gray-400);
+      font-weight: 400;
+    }
+    .input-field {
+      padding: 10px 14px;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      font-size: 0.95rem;
+      font-family: var(--font-sans);
+      color: var(--black);
+      background: var(--white);
+      transition: border-color var(--transition);
+      width: 100%;
+    }
+    .input-field:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(26,92,58,0.08);
+    }
+    .input-field::placeholder { color: var(--gray-400); }
+
+    /* 倍率スライダー */
+    .slider-row { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+    .slider-label { font-size: 0.82rem; color: var(--gray-600); min-width: 160px; }
+    .slider-wrap { flex: 1; display: flex; align-items: center; gap: 10px; }
+    input[type=range] {
+      flex: 1;
+      accent-color: var(--accent);
+      height: 4px;
+      cursor: pointer;
+    }
+    .slider-val {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--accent);
+      min-width: 48px;
+      text-align: right;
+    }
+
+    /* 結果表示 */
+    .result-area {
+      background: var(--black);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      margin-top: 24px;
+    }
+    .result-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--accent-mid);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .result-main {
+      font-family: var(--font-serif);
+      font-size: 2.4rem;
+      color: var(--white);
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+    .result-range { font-size: 0.85rem; color: var(--gray-600); margin-bottom: 24px; }
+    .result-breakdown {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .result-item {
+      background: #111;
+      border-radius: var(--radius);
+      padding: 14px 16px;
+    }
+    .result-item-label { font-size: 0.72rem; color: var(--gray-600); margin-bottom: 6px; letter-spacing: 0.06em; }
+    .result-item-val { font-size: 1.1rem; font-weight: 700; color: var(--white); }
+    .result-item-val.highlight { color: var(--accent-mid); }
+
+    /* 出力ボタン群 */
+    .output-btns {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    .btn-calc {
+      background: var(--accent);
+      color: var(--white);
+      padding: 13px 28px;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 700;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      transition: all var(--transition);
+      letter-spacing: 0.04em;
+    }
+    .btn-calc:hover { background: var(--accent-mid); transform: translateY(-1px); }
+    .btn-export {
+      background: transparent;
+      color: var(--gray-600);
+      padding: 13px 20px;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      font-size: 0.82rem;
+      font-weight: 500;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .btn-export:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* タブパネル */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* 注意書き */
+    .calc-note {
+      margin-top: 20px;
+      padding: 14px 18px;
+      background: var(--gray-100);
+      border-radius: var(--radius);
+      font-size: 0.78rem;
+      color: var(--gray-600);
+      line-height: 1.7;
+    }
+
+    /* ── サイドバー ── */
+    .tool-sidebar { display: flex; flex-direction: column; gap: 24px; position: sticky; top: 80px; }
+    .sidebar-info-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .sidebar-info-head {
+      background: var(--accent);
+      padding: 14px 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+    .sidebar-info-body { padding: 20px; }
+    .sidebar-info-body p { font-size: 0.85rem; color: var(--gray-600); line-height: 1.8; margin-bottom: 12px; }
+    .sidebar-info-body p:last-child { margin-bottom: 0; }
+    .sidebar-industry-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    .sidebar-industry-table th {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--gray-400);
+      text-align: left;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .sidebar-industry-table td {
+      padding: 9px 0;
+      border-bottom: 1px solid var(--gray-100);
+      color: var(--gray-600);
+    }
+    .sidebar-industry-table td:last-child {
+      text-align: right;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    /* アフィリエイト枠 */
+    .affi-widget {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+    .affi-widget-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--gray-400);
+      border: 1px solid var(--gray-200);
+      padding: 2px 8px;
+      border-radius: 2px;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+    .affi-widget-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 6px; }
+    .affi-widget-desc { font-size: 0.78rem; color: var(--gray-600); line-height: 1.7; margin-bottom: 14px; }
+
+    @media (max-width: 900px) {
+      .tool-wrapper { grid-template-columns: 1fr; }
+      .tool-sidebar { display: none; }
+      .input-grid { grid-template-columns: 1fr; }
+      .result-breakdown { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">
-    <svg width="130" height="30" viewBox="0 0 280 64" xmlns="http://www.w3.org/2000/svg">
-      <path d="M10 8 L50 32 L10 56" fill="none" stroke="#0A0A0A" stroke-width="8" stroke-linejoin="miter"/>
-      <path d="M30 14 L62 32 L30 50" fill="none" stroke="#0A0A0A" stroke-width="7" stroke-linejoin="miter"/>
-      <line x1="2" y1="32" x2="46" y2="32" stroke="#D42020" stroke-width="4"/>
-      <text x="80" y="42" font-family="'DM Sans',sans-serif" font-size="38" font-weight="700" fill="#0A0A0A" letter-spacing="2">JP NEXT</text>
-    </svg>
-  </div>
-  <div class="nav-links">
-    <a href="#features">機能</a>
-    <a href="#demo">デモ</a>
-    <a href="#pricing">価格</a>
-    <a href="#waitlist" class="nav-cta">事前登録</a>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">JP <span>NEXT</span></a>
+    <ul class="nav-links">
+      <li><a href="/blog/">コラム</a></li>
+      <li><a href="/blog/?cat=jigyo">事業承継</a></li>
+      <li><a href="/blog/?cat=career">転職ガイド</a></li>
+      <li><a href="/ma-tool.html">無料ツール</a></li>
+      <li><a href="/#contact" class="nav-cta">無料相談</a></li>
+    </ul>
   </div>
 </nav>
 
-<!-- HERO -->
-<main>
-<nav aria-label="パンくずリスト" style="background:var(--gray-50);padding:12px 48px;border-bottom:1px solid var(--gray-100);font-size:12px;color:var(--gray-400);">
-  <ol style="display:flex;gap:8px;list-style:none;align-items:center;max-width:1240px;margin:0 auto;" itemscope itemtype="https://schema.org/BreadcrumbList">
-    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-      <a itemprop="item" href="https://www.jpnext.co/" style="color:var(--gray-400);text-decoration:none;font-weight:500;"><span itemprop="name">JP NEXT</span></a>
-      <meta itemprop="position" content="1" />
-    </li>
-    <li style="opacity:0.4;">›</li>
-    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-      <span itemprop="name" style="color:var(--gray-500);">M&A簡易査定ツール</span>
-      <meta itemprop="position" content="2" />
-    </li>
-  </ol>
-</nav>
-<section class="hero">
-  <div class="badge">COMING SOON — 発売準備中</div>
-  <h1>企業価値を、<br><span class="accent">その場で</span>算定。</h1>
-  <p class="hero-sub">
-    マルチプル、DCF、純資産のれん ——<br>
-    3つの算定手法を1つのツールに。M&Aの現場で使えるプロ仕様の査定ツール。
-  </p>
-  <div class="hero-actions">
-    <a href="#waitlist" class="btn-main">事前登録する</a>
-    <a href="#demo" class="btn-outline">デモを見る</a>
+<!-- パンくず -->
+<div style="padding:12px 24px; font-size:0.78rem; color:var(--gray-400); border-bottom:1px solid var(--gray-200);">
+  <div style="max-width:var(--max-w); margin:0 auto;">
+    <a href="/" style="color:var(--gray-400);">JP NEXT</a>
+    <span style="margin:0 8px;">›</span>
+    <span>企業価値算定ツール（無料）</span>
   </div>
-  <div class="hero-stat-row">
-    <div class="hero-stat">
-      <div class="hero-stat-value">3</div>
-      <div class="hero-stat-label">算定手法を搭載</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-value">PDF</div>
-      <div class="hero-stat-label">ワンクリック出力</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-value">0</div>
-      <div class="hero-stat-label">インストール不要</div>
+</div>
+
+<!-- ページヘッダー -->
+<div class="tool-page-header">
+  <div class="tool-page-header-inner">
+    <div class="tool-free-badge">完全無料 · 登録不要</div>
+    <h1 class="tool-page-title">企業価値算定ツール</h1>
+    <p class="tool-page-desc">EV/EBITDA・DCF・純資産のれん法の3手法に対応。M&Aアドバイザーが実務で使う計算ロジックをそのままブラウザで無料公開。売却前の事前把握から初回面談準備まで。</p>
+    <div class="tool-badges">
+      <span class="tool-badge-item">登録・ログイン不要</span>
+      <span class="tool-badge-item">3手法対応</span>
+      <span class="tool-badge-item">結果はCSV出力可能</span>
+      <span class="tool-badge-item">スマホ対応</span>
     </div>
   </div>
-</section>
+</div>
 
-<!-- FEATURES -->
-<section class="features" id="features">
-  <div class="section-label reveal">FEATURES</div>
-  <h2 class="section-title reveal">3つの手法を、自由に組み合わせる。</h2>
-  <p class="section-sub reveal">必要な手法だけ選んで算定。EV/EBITDAの倍率1つからでも査定書が出せます。</p>
-  <div class="features-grid">
-    <div class="feature-card reveal">
-      <div class="feature-num">01</div>
-      <div class="feature-title">マルチプル法</div>
-      <div class="feature-en">Multiples Valuation</div>
-      <div class="feature-desc">
-        PSR、EV/EBITDA、EV/営業利益、PERの4指標に対応。入力した倍率のみで自動算出されるため、現場での速算にも対応。
-      </div>
-    </div>
-    <div class="feature-card reveal">
-      <div class="feature-num">02</div>
-      <div class="feature-title">DCF法</div>
-      <div class="feature-en">Discounted Cash Flow</div>
-      <div class="feature-desc">
-        5年間のFCF予測とWACC、永続成長率からターミナルバリューまで算出。ネットデット調整も自動で反映。
-      </div>
-    </div>
-    <div class="feature-card reveal">
-      <div class="feature-num">03</div>
-      <div class="feature-title">純資産のれん法</div>
-      <div class="feature-en">Net Asset + Goodwill</div>
-      <div class="feature-desc">
-        簿価純資産に含み益・含み損・簿外債務を加味した時価純資産を算出し、のれん価値を年数ベースで加算。
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- DEMO -->
-<section class="demo" id="demo">
-  <div class="demo-container">
-    <div class="section-label reveal">DEMO</div>
-    <h2 class="section-title reveal">こうやって使います。</h2>
-    <p class="section-sub reveal">
-      数字を入れるだけ。査定結果はリアルタイムで反映され、PDF出力もワンクリック。
-    </p>
-
-    <div class="demo-window reveal">
-      <div class="demo-toolbar">
-        <div class="demo-dot"></div>
-        <div class="demo-dot"></div>
-        <div class="demo-dot"></div>
-        <span class="demo-toolbar-title">企業価値算定ツール</span>
+<!-- ツール本体 -->
+<div class="tool-wrapper">
+  <main>
+    <div class="calc-card">
+      <div class="calc-tabs">
+        <button class="calc-tab active" onclick="switchTab('multiples', this)">マルチプル法</button>
+        <button class="calc-tab" onclick="switchTab('dcf', this)">DCF法</button>
+        <button class="calc-tab" onclick="switchTab('net-asset', this)">純資産のれん法</button>
       </div>
 
-      <div class="demo-slides">
-        <!-- Slide 1 -->
-        <div class="demo-slide active" id="dslide-0">
-          <div class="demo-slide-label">STEP 01</div>
-          <div class="demo-slide-title">財務数値を入力する</div>
-          <div class="demo-slide-desc">
-            対象会社の売上高やEBITDAなど、基本的な財務数値を入力します。決算書や試算表の数字をそのまま入力するだけです。
-          </div>
-          <div class="demo-mockup">
-            <div class="mock-row"><span class="mock-label">売上高</span><span class="mock-value">1,200,000</span></div>
-            <div class="mock-row"><span class="mock-label">EBITDA</span><span class="mock-value">180,000</span></div>
-            <div class="mock-row"><span class="mock-label">営業利益</span><span class="mock-value">120,000</span></div>
-            <div class="mock-row"><span class="mock-label">有利子負債</span><span class="mock-value">50,000</span></div>
-            <div class="mock-row"><span class="mock-label">現預金</span><span class="mock-value">200,000</span></div>
-          </div>
-        </div>
-
-        <!-- Slide 2 -->
-        <div class="demo-slide" id="dslide-1">
-          <div class="demo-slide-label">STEP 02</div>
-          <div class="demo-slide-title">業界の倍率を入力する</div>
-          <div class="demo-slide-desc">
-            対象会社が属する業界の一般的な倍率を調べて入力するだけ。ネットで調べたり、専門会社にヒアリングすることで適切な倍率が分かります。
-          </div>
-          <div class="demo-mockup">
-            <div class="mock-row"><span class="mock-label">EV / EBITDA 倍率</span><span class="mock-value" style="color:var(--red);font-weight:700;">8.0x</span></div>
-            <div class="mock-row"><span class="mock-label">EV / 営業利益 倍率</span><span class="mock-value" style="color:var(--red);font-weight:700;">10.0x</span></div>
-            <div style="flex:1;"></div>
-            <div style="padding:16px;background:var(--gray-50);border:1px solid var(--gray-100);font-size:12px;color:var(--gray-500);line-height:1.7;">
-              倍率は業界・規模・成長性で異なります。ネットで類似企業の取引事例を調べたり、M&Aの専門会社にヒアリングして、自社の属する業界の適正倍率を確認しましょう。
+      <!-- マルチプル法 -->
+      <div class="tab-panel active" id="panel-multiples">
+        <div class="calc-body">
+          <div class="calc-section-title">財務数値を入力</div>
+          <div class="input-grid">
+            <div class="input-group">
+              <label class="input-label">売上高 <span class="hint">（千円）</span></label>
+              <input class="input-field" type="number" id="m-sales" placeholder="例: 500000" oninput="calcMultiples()">
+            </div>
+            <div class="input-group">
+              <label class="input-label">EBITDA <span class="hint">（千円）</span></label>
+              <input class="input-field" type="number" id="m-ebitda" placeholder="例: 80000" oninput="calcMultiples()">
+            </div>
+            <div class="input-group">
+              <label class="input-label">営業利益 <span class="hint">（千円）</span></label>
+              <input class="input-field" type="number" id="m-ebit" placeholder="例: 60000" oninput="calcMultiples()">
+            </div>
+            <div class="input-group">
+              <label class="input-label">有利子負債 <span class="hint">（千円）</span></label>
+              <input class="input-field" type="number" id="m-debt" placeholder="例: 30000" oninput="calcMultiples()">
+            </div>
+            <div class="input-group">
+              <label class="input-label">現預金 <span class="hint">（千円）</span></label>
+              <input class="input-field" type="number" id="m-cash" placeholder="例: 50000" oninput="calcMultiples()">
             </div>
           </div>
-        </div>
 
-        <!-- Slide 3 -->
-        <div class="demo-slide" id="dslide-2">
-          <div class="demo-slide-label">STEP 03</div>
-          <div class="demo-slide-title">結果を確認し、PDFで出力</div>
-          <div class="demo-slide-desc">
-            各手法の算定結果と、平均値・中央値・レンジを一覧で確認。そのままPDF出力して、社内検討資料や面談資料として活用できます。
-          </div>
-          <div class="demo-mockup">
-            <div class="mock-row"><span class="mock-label">EV/EBITDA ベース</span><span class="mock-value">1,590,000</span></div>
-            <div class="mock-row"><span class="mock-label">EV/営業利益 ベース</span><span class="mock-value">1,350,000</span></div>
-            <div class="mock-row"><span class="mock-label">平均値</span><span class="mock-value" style="font-weight:700;">1,470,000</span></div>
-            <div class="mock-result">
-              <span class="mock-result-label">推定企業価値</span>
-              <span class="mock-result-value"><span class="yen">¥</span>1,350,000 〜 1,590,000 千円</span>
+          <div class="calc-section-title">業界倍率を設定</div>
+          <div class="slider-row">
+            <span class="slider-label">EV / EBITDA 倍率</span>
+            <div class="slider-wrap">
+              <input type="range" id="s-ebitda" min="2" max="20" step="0.5" value="7" oninput="updateSlider('s-ebitda','sv-ebitda'); calcMultiples()">
+              <span class="slider-val" id="sv-ebitda">7.0x</span>
             </div>
           </div>
+          <div class="slider-row">
+            <span class="slider-label">EV / 営業利益 倍率</span>
+            <div class="slider-wrap">
+              <input type="range" id="s-ebit" min="3" max="25" step="0.5" value="10" oninput="updateSlider('s-ebit','sv-ebit'); calcMultiples()">
+              <span class="slider-val" id="sv-ebit">10.0x</span>
+            </div>
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">PSR（売上高倍率）</span>
+            <div class="slider-wrap">
+              <input type="range" id="s-psr" min="0.2" max="5" step="0.1" value="1" oninput="updateSlider('s-psr','sv-psr'); calcMultiples()">
+              <span class="slider-val" id="sv-psr">1.0x</span>
+            </div>
+          </div>
+
+          <div class="result-area" id="result-multiples">
+            <div class="result-label">算定結果（株式価値）</div>
+            <div class="result-main" id="rm-avg">— 千円</div>
+            <div class="result-range" id="rm-range">数値を入力すると算定結果が表示されます</div>
+            <div class="result-breakdown">
+              <div class="result-item">
+                <div class="result-item-label">EV/EBITDA ベース</div>
+                <div class="result-item-val highlight" id="rm-ebitda">—</div>
+              </div>
+              <div class="result-item">
+                <div class="result-item-label">EV/営業利益 ベース</div>
+                <div class="result-item-val highlight" id="rm-ebit">—</div>
+              </div>
+              <div class="result-item">
+                <div class="result-item-label">PSR ベース</div>
+                <div class="result-item-val" id="rm-psr">—</div>
+              </div>
+              <div class="result-item">
+                <div class="result-item-label">中央値</div>
+                <div class="result-item-val" id="rm-median">—</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="output-btns">
+            <button class="btn-calc" onclick="calcMultiples()">再計算</button>
+            <button class="btn-export" onclick="exportCSV()">CSVで出力</button>
+          </div>
+
+          <div class="calc-note">
+            ※ 株式価値 = EV（企業価値）− 有利子負債 + 現預金 で算出しています。本ツールは概算値の参考用途を目的としており、実際のM&A交渉価格を保証するものではありません。
+          </div>
         </div>
       </div>
 
-      <div class="demo-nav">
-        <button class="demo-nav-btn active" onclick="switchDemo(0)">
-          <span class="demo-nav-step">STEP 01</span>数値を入力
-        </button>
-        <button class="demo-nav-btn" onclick="switchDemo(1)">
-          <span class="demo-nav-step">STEP 02</span>倍率を設定
-        </button>
-        <button class="demo-nav-btn" onclick="switchDemo(2)">
-          <span class="demo-nav-step">STEP 03</span>結果 / PDF出力
-        </button>
+      <!-- DCF法 -->
+      <div class="tab-panel" id="panel-dcf">
+        <div class="calc-body">
+          <div class="calc-section-title">キャッシュフロー予測（5年）</div>
+          <div class="input-grid">
+            <div class="input-group">
+              <label class="input-label">1年目 FCF <span class="hint">（千円）</span></label>
+              <input class="input-field" type="number" id="d-fcf1" placeholder="例: 50000" oninput="calcDCF()">
+            </div>
+            <div class="input-group">
+              <label class="input-label">2年目 FCF <span class="hint">（千円）</span></label>
+              <input class="input-field" type="number" id="d-fcf2" placeholder="例: 55000" oninput="calcDCF()">
+            </div>
+            <div class="input-group">
+              <label class="input-label">3年目 FCF <span class="hint">（千円）</span></label>
+              <input class="input-field" type="number" id="d-fcf3" placeholder="例: 60000" oninput="calcDCF()">
+            </div>
+            <div class="input-group">
+              <label class="input-label">4年目 FCF <span class="hint">（千円）</span></label>
+              <input class="input-field" type="number" id="d-fcf4" placeholder="例: 65000" oninput="calcDCF()">
+            </div>
+            <div class="input-group">
+              <label class="input-label">5年目 FCF <span class="hint">（千円）</span></label>
+              <input class="input-field" type="number" id="d-fcf5" placeholder="例: 70000" oninput="calcDCF()">
+            </div>
+            <div class="input-group">
+              <label class="input-label">ネットデット <span class="hint">（有利子負債−現預金）</span></label>
+              <input class="input-field" type="number" id="d-nd" placeholder="例: -20000" oninput="calcDCF()">
+            </div>
+          </div>
+          <div class="calc-section-title">割引率・成長率</div>
+          <div class="slider-row">
+            <span class="slider-label">WACC（割引率）</span>
+            <div class="slider-wrap">
+              <input type="range" id="s-wacc" min="3" max="20" step="0.5" value="8" oninput="updateSlider('s-wacc','sv-wacc'); calcDCF()">
+              <span class="slider-val" id="sv-wacc">8.0%</span>
+            </div>
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">永続成長率</span>
+            <div class="slider-wrap">
+              <input type="range" id="s-growth" min="0" max="5" step="0.5" value="1" oninput="updateSlider('s-growth','sv-growth'); calcDCF()">
+              <span class="slider-val" id="sv-growth">1.0%</span>
+            </div>
+          </div>
+
+          <div class="result-area" id="result-dcf">
+            <div class="result-label">算定結果（株式価値）</div>
+            <div class="result-main" id="rd-equity">— 千円</div>
+            <div class="result-range" id="rd-range">FCFを入力すると算定結果が表示されます</div>
+            <div class="result-breakdown">
+              <div class="result-item">
+                <div class="result-item-label">PV合計（5年）</div>
+                <div class="result-item-val highlight" id="rd-pv">—</div>
+              </div>
+              <div class="result-item">
+                <div class="result-item-label">ターミナルバリュー PV</div>
+                <div class="result-item-val highlight" id="rd-tv">—</div>
+              </div>
+              <div class="result-item">
+                <div class="result-item-label">EV合計</div>
+                <div class="result-item-val" id="rd-ev">—</div>
+              </div>
+              <div class="result-item">
+                <div class="result-item-label">ネットデット調整後</div>
+                <div class="result-item-val" id="rd-nd">—</div>
+              </div>
+            </div>
+          </div>
+          <div class="output-btns">
+            <button class="btn-calc" onclick="calcDCF()">再計算</button>
+            <button class="btn-export" onclick="exportCSV()">CSVで出力</button>
+          </div>
+          <div class="calc-note">
+            ※ ターミナルバリュー = 5年目FCF × (1+g) / (WACC−g) で算出しています。WACCは一般的に中小企業で8〜15%程度が使われますが、業種・リスク水準によって異なります。
+          </div>
+        </div>
       </div>
+
+      <!-- 純資産のれん法 -->
+      <div class="tab-panel" id="panel-net-asset">
+        <div class="calc-body">
+          <div class="calc-section-title">純資産・のれん入力</div>
+          <div class="input-grid">
+            <div class="input-group">
+              <label class="input-label">簿価純資産 <span class="hint">（千円）</span></label>
+              <input class="input-field" type="number" id="n-book" placeholder="例: 200000" oninput="calcNetAsset()">
+            </div>
+            <div class="input-group">
+              <label class="input-label">含み益（不動産等） <span class="hint">（千円）</span></label>
+              <input class="input-field" type="number" id="n-gain" placeholder="例: 50000" oninput="calcNetAsset()">
+            </div>
+            <div class="input-group">
+              <label class="input-label">含み損・簿外債務 <span class="hint">（千円、マイナス入力）</span></label>
+              <input class="input-field" type="number" id="n-loss" placeholder="例: -20000" oninput="calcNetAsset()">
+            </div>
+            <div class="input-group">
+              <label class="input-label">税引後純利益（平均） <span class="hint">（千円）</span></label>
+              <input class="input-field" type="number" id="n-profit" placeholder="例: 40000" oninput="calcNetAsset()">
+            </div>
+            <div class="input-group">
+              <label class="input-label">正常収益力（期待利益率） <span class="hint">（%）</span></label>
+              <input class="input-field" type="number" id="n-rate" placeholder="例: 5" oninput="calcNetAsset()">
+            </div>
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">のれん年数</span>
+            <div class="slider-wrap">
+              <input type="range" id="s-noren" min="1" max="10" step="1" value="3" oninput="updateSlider('s-noren','sv-noren','年'); calcNetAsset()">
+              <span class="slider-val" id="sv-noren">3年</span>
+            </div>
+          </div>
+
+          <div class="result-area">
+            <div class="result-label">算定結果（株式価値）</div>
+            <div class="result-main" id="rn-equity">— 千円</div>
+            <div class="result-range" id="rn-range">数値を入力すると算定結果が表示されます</div>
+            <div class="result-breakdown">
+              <div class="result-item">
+                <div class="result-item-label">時価純資産</div>
+                <div class="result-item-val highlight" id="rn-nav">—</div>
+              </div>
+              <div class="result-item">
+                <div class="result-item-label">超過収益力</div>
+                <div class="result-item-val highlight" id="rn-excess">—</div>
+              </div>
+              <div class="result-item">
+                <div class="result-item-label">のれん価値</div>
+                <div class="result-item-val" id="rn-noren">—</div>
+              </div>
+              <div class="result-item">
+                <div class="result-item-label">合計（株式価値）</div>
+                <div class="result-item-val" id="rn-total">—</div>
+              </div>
+            </div>
+          </div>
+          <div class="output-btns">
+            <button class="btn-calc" onclick="calcNetAsset()">再計算</button>
+            <button class="btn-export" onclick="exportCSV()">CSVで出力</button>
+          </div>
+          <div class="calc-note">
+            ※ 超過収益力 = 税引後純利益 − 時価純資産 × 期待利益率。のれん価値 = 超過収益力 × のれん年数 で算出しています。
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- サイドバー -->
+  <aside class="tool-sidebar">
+    <div class="sidebar-info-card">
+      <div class="sidebar-info-head">業界別 EV/EBITDA 目安</div>
+      <div class="sidebar-info-body">
+        <table class="sidebar-industry-table">
+          <tr><th>業種</th><th>倍率目安</th></tr>
+          <tr><td>IT・SaaS</td><td>8〜15x</td></tr>
+          <tr><td>医療・介護</td><td>7〜12x</td></tr>
+          <tr><td>製造業</td><td>5〜9x</td></tr>
+          <tr><td>小売・飲食</td><td>4〜8x</td></tr>
+          <tr><td>建設・不動産</td><td>4〜7x</td></tr>
+          <tr><td>物流・運輸</td><td>5〜8x</td></tr>
+          <tr><td>その他サービス</td><td>4〜8x</td></tr>
+        </table>
+        <p style="margin-top:14px;">※ 規模・成長率・収益安定性によって大きく変動します。あくまで参考値としてご利用ください。</p>
+      </div>
+    </div>
+
+    <div class="sidebar-info-card">
+      <div class="sidebar-info-head">M&A相談・売却検討の方へ</div>
+      <div class="sidebar-info-body">
+        <p>算定結果をもとに本格的なM&Aを検討する場合は、仲介会社への無料相談がおすすめです。</p>
+      </div>
+    </div>
+
+    <!-- アフィリエイト枠（実装時に各社リンクに差し替え） -->
+    <div class="affi-widget">
+      <div class="affi-widget-label">PR</div>
+      <div class="affi-widget-title">日本M&Aセンター</div>
+      <p class="affi-widget-desc">成約実績No.1。無料相談から対応。オーナー経営者の事業承継・売却を全国でサポート。</p>
+      <a href="#" class="btn btn-primary" style="display:block; text-align:center; padding:11px 20px; font-size:0.82rem;">無料相談を申し込む →</a>
+    </div>
+
+    <div class="affi-widget">
+      <div class="affi-widget-label">PR</div>
+      <div class="affi-widget-title">M&Aキャピタルパートナーズ</div>
+      <p class="affi-widget-desc">中堅・中小企業専門。FA型で売り手の利益を最大化。完全成功報酬制。</p>
+      <a href="#" class="btn btn-outline" style="display:block; text-align:center; padding:11px 20px; font-size:0.82rem;">詳細を見る →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- ボトムCTA -->
+<section style="background:var(--gray-100); padding:56px 24px; border-top:1px solid var(--gray-200);">
+  <div style="max-width:640px; margin:0 auto; text-align:center;">
+    <div class="section-label">関連コンテンツ</div>
+    <h2 class="section-title">算定の次のステップ</h2>
+    <p class="section-desc" style="margin:0 auto 32px;">企業価値の概算が出たら、次は仲介会社への相談か、M&Aプロセスの全体像を把握することをおすすめします。</p>
+    <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+      <a href="/blog/chukaisya-hikaku.html" class="btn btn-primary">M&A仲介会社を比較する</a>
+      <a href="/blog/jigyo-shokei.html" class="btn btn-outline">事業承継の流れを読む</a>
     </div>
   </div>
 </section>
 
-<!-- HOW TO USE -->
-<section class="howto">
-  <div class="section-label reveal">HOW TO USE</div>
-  <h2 class="section-title reveal">はじめての方へ</h2>
-  <p class="section-sub reveal">M&Aや企業価値算定が初めてでも、このステップで進められます。</p>
-  <div class="howto-grid">
-    <div class="howto-card reveal">
-      <div class="howto-step">POINT 01</div>
-      <div class="howto-card-title">まずは決算書を用意する</div>
-      <div class="howto-card-desc">直近1〜3期分の決算書（損益計算書・貸借対照表）があれば、必要な数値はすべて揃います。</div>
-    </div>
-    <div class="howto-card reveal">
-      <div class="howto-step">POINT 02</div>
-      <div class="howto-card-title">業界の倍率を調べる</div>
-      <div class="howto-card-desc">ネットで同業界の取引事例やレポートを検索したり、M&Aの専門会社にヒアリングすることで、業界ごとの一般的なEV/EBITDA倍率などが分かります。</div>
-    </div>
-    <div class="howto-card reveal">
-      <div class="howto-step">POINT 03</div>
-      <div class="howto-card-title">使う手法だけ選ぶ</div>
-      <div class="howto-card-desc">3手法すべてを使う必要はありません。マルチプル法だけでも十分な速算が可能です。EV/EBITDAの倍率1つで査定書が出力できます。</div>
-    </div>
-    <div class="howto-card reveal">
-      <div class="howto-step">POINT 04</div>
-      <div class="howto-card-title">PDFにして社内で共有する</div>
-      <div class="howto-card-desc">算定結果はノーブランドのPDFとして出力されるため、自社の名前を入れてそのまま社内検討資料や経営会議資料として活用いただけます。</div>
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">JP <span>NEXT</span></div>
+    <div class="footer-tagline">M&A・事業承継の実務情報メディア</div>
+    <div class="footer-bottom" style="margin-top:32px;">
+      <span>© 2025 JP NEXT. All rights reserved.</span>
+      <a href="/" style="color:var(--gray-600);">トップへ戻る</a>
     </div>
   </div>
-</section>
-
-<!-- PRICING -->
-<section class="pricing" id="pricing">
-  <div class="section-label reveal">PRICING</div>
-  <h2 class="section-title reveal">シンプルな買い切り。</h2>
-  <p class="section-sub reveal" style="margin-left:auto;margin-right:auto;">月額課金なし。一度購入すれば、ずっと使えます。</p>
-  <div class="price-card reveal">
-    <div class="price-label">企業価値算定ツール</div>
-    <div class="price-value"><span class="yen">¥</span>—<span class="tax"></span></div>
-    <div class="price-desc">発売開始時に価格を公開します。<br>事前登録いただいた方には、特別価格でご案内予定です。</div>
-    <div class="price-features">
-      <div class="price-feature">
-        <div class="price-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div>
-        マルチプル法 / DCF法 / 純資産のれん法
-      </div>
-      <div class="price-feature">
-        <div class="price-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div>
-        PDF出力（ノーブランド仕様）
-      </div>
-      <div class="price-feature">
-        <div class="price-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div>
-        平均値・中央値・レンジの自動算出
-      </div>
-      <div class="price-feature">
-        <div class="price-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div>
-        手法の選択式（マルチプルだけでもOK）
-      </div>
-      <div class="price-feature">
-        <div class="price-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div>
-        インストール不要 / ブラウザで完結
-      </div>
-      <div class="price-feature">
-        <div class="price-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div>
-        買い切り / 追加課金なし
-      </div>
-    </div>
-    <a href="#waitlist" class="btn-main" style="width:100%;justify-content:center;">事前登録して特別価格を受け取る</a>
-  </div>
-</section>
-
-<!-- WAITLIST -->
-<section class="waitlist" id="waitlist">
-  <div class="section-label reveal">PRE-REGISTRATION</div>
-  <h2 class="section-title reveal">発売時にご案内します。</h2>
-  <p class="section-sub reveal" style="margin-left:auto;margin-right:auto;">
-    メールアドレスを登録いただければ、発売開始時に特別価格でご案内いたします。
-  </p>
-  <div class="waitlist-form reveal">
-    <form id="waitlist-form" action="https://formspree.io/f/xeelrdgw" method="POST" style="display:flex;width:100%;gap:0;">
-      <input type="hidden" name="_subject" value="【JP NEXT】M&A査定ツール 事前登録">
-      <input type="email" name="email" placeholder="メールアドレスを入力" required style="flex:1;">
-      <button type="submit">事前登録</button>
-    </form>
-  </div>
-  <div class="waitlist-note reveal">登録は無料です。配信停止はいつでも可能です。</div>
-</section>
-
-<!-- FOOTER -->
-</main>
-<footer>
-  <svg width="100" height="22" viewBox="0 0 280 64" xmlns="http://www.w3.org/2000/svg">
-    <path d="M10 8 L50 32 L10 56" fill="none" stroke="#0A0A0A" stroke-width="8" stroke-linejoin="miter"/>
-    <path d="M30 14 L62 32 L30 50" fill="none" stroke="#0A0A0A" stroke-width="7" stroke-linejoin="miter"/>
-    <line x1="2" y1="32" x2="46" y2="32" stroke="#D42020" stroke-width="4"/>
-    <text x="80" y="42" font-family="'DM Sans',sans-serif" font-size="38" font-weight="700" fill="#0A0A0A" letter-spacing="2">JP NEXT</text>
-  </svg>
-  <div class="footer-text">&copy; JP NEXT Inc. All Rights Reserved.</div>
 </footer>
 
 <script>
-  // Waitlist form AJAX
-  const waitlistForm = document.getElementById('waitlist-form');
-  if (waitlistForm) {
-    waitlistForm.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const btn = this.querySelector('button');
-      btn.textContent = '送信中...';
-      btn.disabled = true;
-      try {
-        const res = await fetch(this.action, {
-          method: 'POST',
-          body: new FormData(this),
-          headers: { 'Accept': 'application/json' }
-        });
-        if (res.ok) {
-          this.innerHTML = '<p style="color:#D42020;font-weight:700;font-size:15px;text-align:center;width:100%;padding:16px 0;">登録完了！発売時にご案内いたします。</p>';
-        } else {
-          btn.textContent = '事前登録';
-          btn.disabled = false;
-          alert('送信に失敗しました。再度お試しください。');
-        }
-      } catch {
-        btn.textContent = '事前登録';
-        btn.disabled = false;
-        alert('送信に失敗しました。再度お試しください。');
-      }
-    });
-  }
+function fmt(n) {
+  if (isNaN(n) || n === null) return '—';
+  return Math.round(n).toLocaleString('ja-JP') + ' 千円';
+}
+function v(id) { return parseFloat(document.getElementById(id).value) || 0; }
 
-  // Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('visible');
-    });
-  }, { threshold: 0.12 });
+function updateSlider(sliderId, valId, unit='x') {
+  const val = parseFloat(document.getElementById(sliderId).value);
+  const display = unit === 'x' ? val.toFixed(1) + 'x' :
+                  unit === '%' ? val.toFixed(1) + '%' :
+                  val + unit;
+  document.getElementById(valId).textContent = display;
+}
 
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+function switchTab(name, btn) {
+  document.querySelectorAll('.calc-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-' + name).classList.add('active');
+}
 
-  // Demo slides
-  function switchDemo(i) {
-    document.querySelectorAll('.demo-slide').forEach((s, j) => {
-      s.classList.toggle('active', j === i);
-    });
-    document.querySelectorAll('.demo-nav-btn').forEach((b, j) => {
-      b.classList.toggle('active', j === i);
-    });
-  }
+function calcMultiples() {
+  const ebitda = v('m-ebitda'), ebit = v('m-ebit'), sales = v('m-sales');
+  const debt = v('m-debt'), cash = v('m-cash');
+  const mEbitda = parseFloat(document.getElementById('s-ebitda').value);
+  const mEbit = parseFloat(document.getElementById('s-ebit').value);
+  const mPsr = parseFloat(document.getElementById('s-psr').value);
+  const nd = debt - cash;
 
-  // Auto-advance demo
-  let demoIndex = 0;
-  setInterval(() => {
-    demoIndex = (demoIndex + 1) % 3;
-    switchDemo(demoIndex);
-  }, 5000);
+  const evEbitda = ebitda > 0 ? ebitda * mEbitda - nd : null;
+  const evEbit = ebit > 0 ? ebit * mEbit - nd : null;
+  const evPsr = sales > 0 ? sales * mPsr - nd : null;
+
+  const vals = [evEbitda, evEbit, evPsr].filter(x => x !== null);
+  if (vals.length === 0) return;
+
+  const avg = vals.reduce((a,b) => a+b, 0) / vals.length;
+  const sorted = [...vals].sort((a,b) => a-b);
+  const median = sorted.length % 2 === 0
+    ? (sorted[sorted.length/2-1] + sorted[sorted.length/2]) / 2
+    : sorted[Math.floor(sorted.length/2)];
+  const min = Math.min(...vals), max = Math.max(...vals);
+
+  document.getElementById('rm-avg').textContent = fmt(avg);
+  document.getElementById('rm-range').textContent = `レンジ: ${fmt(min)} 〜 ${fmt(max)}`;
+  document.getElementById('rm-ebitda').textContent = evEbitda !== null ? fmt(evEbitda) : '—';
+  document.getElementById('rm-ebit').textContent = evEbit !== null ? fmt(evEbit) : '—';
+  document.getElementById('rm-psr').textContent = evPsr !== null ? fmt(evPsr) : '—';
+  document.getElementById('rm-median').textContent = fmt(median);
+}
+
+function calcDCF() {
+  const fcfs = [v('d-fcf1'), v('d-fcf2'), v('d-fcf3'), v('d-fcf4'), v('d-fcf5')];
+  const nd = v('d-nd');
+  const wacc = parseFloat(document.getElementById('s-wacc').value) / 100;
+  const g = parseFloat(document.getElementById('s-growth').value) / 100;
+
+  if (fcfs.every(f => f === 0)) return;
+
+  let pvSum = 0;
+  fcfs.forEach((fcf, i) => { pvSum += fcf / Math.pow(1 + wacc, i + 1); });
+  const tv = fcfs[4] * (1 + g) / (wacc - g);
+  const pvTv = tv / Math.pow(1 + wacc, 5);
+  const ev = pvSum + pvTv;
+  const equity = ev - nd;
+
+  document.getElementById('rd-equity').textContent = fmt(equity);
+  document.getElementById('rd-range').textContent = `EV: ${fmt(ev)}`;
+  document.getElementById('rd-pv').textContent = fmt(pvSum);
+  document.getElementById('rd-tv').textContent = fmt(pvTv);
+  document.getElementById('rd-ev').textContent = fmt(ev);
+  document.getElementById('rd-nd').textContent = fmt(equity);
+}
+
+function calcNetAsset() {
+  const book = v('n-book'), gain = v('n-gain'), loss = v('n-loss');
+  const profit = v('n-profit'), rate = v('n-rate') / 100;
+  const noren = parseInt(document.getElementById('s-noren').value);
+
+  if (book === 0) return;
+
+  const nav = book + gain + loss;
+  const normalProfit = nav * rate;
+  const excess = profit - normalProfit;
+  const norenVal = excess > 0 ? excess * noren : 0;
+  const total = nav + norenVal;
+
+  document.getElementById('rn-equity').textContent = fmt(total);
+  document.getElementById('rn-range').textContent = `時価純資産 ${fmt(nav)} + のれん ${fmt(norenVal)}`;
+  document.getElementById('rn-nav').textContent = fmt(nav);
+  document.getElementById('rn-excess').textContent = fmt(excess);
+  document.getElementById('rn-noren').textContent = fmt(norenVal);
+  document.getElementById('rn-total').textContent = fmt(total);
+}
+
+function exportCSV() {
+  const rows = [['項目', '値（千円）']];
+  const active = document.querySelector('.tab-panel.active');
+  active.querySelectorAll('.result-item').forEach(item => {
+    const label = item.querySelector('.result-item-label').textContent.trim();
+    const val = item.querySelector('.result-item-val').textContent.trim();
+    rows.push([label, val]);
+  });
+  const main = active.closest('.tab-panel').querySelector('.result-main');
+  if (main) rows.unshift(['株式価値（平均/中央）', main.textContent.trim()]);
+
+  const csv = rows.map(r => r.map(c => `"${c}"`).join(',')).join('\n');
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'jpnext_valuation.csv'; a.click();
+}
+
+updateSlider('s-ebitda','sv-ebitda');
+updateSlider('s-ebit','sv-ebit');
+updateSlider('s-psr','sv-psr');
+updateSlider('s-wacc','sv-wacc','%');
+updateSlider('s-growth','sv-growth','%');
+updateSlider('s-noren','sv-noren','年');
 </script>
 </body>
 </html>
