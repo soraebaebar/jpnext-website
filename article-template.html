@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>【記事タイトル】 | JP NEXT</title>
+  <meta name="description" content="記事のディスクリプション（120文字程度）">
+  <meta property="og:title" content="【記事タイトル】 | JP NEXT">
+  <meta property="og:description" content="記事のディスクリプション">
+  <meta property="og:url" content="https://www.jpnext.co/blog/記事スラッグ.html">
+  <meta property="og:image" content="https://www.jpnext.co/ogp.png">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/assets/style.css">
+  <style>
+    /* 記事ヘッダー */
+    .article-header {
+      border-bottom: 1px solid var(--gray-200);
+      padding: 56px 24px 48px;
+      background: var(--gray-100);
+    }
+    .article-header-inner { max-width: 760px; margin: 0 auto; }
+    .article-header-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      font-size: 0.8rem;
+      color: var(--gray-400);
+    }
+    .article-header-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      line-height: 1.4;
+      margin-bottom: 20px;
+      color: var(--black);
+    }
+    .article-header-desc {
+      font-size: 0.95rem;
+      color: var(--gray-600);
+      line-height: 1.9;
+      padding: 20px 24px;
+      background: var(--white);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    /* 本文レイアウト */
+    .article-layout {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 24px;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 56px;
+      align-items: start;
+    }
+
+    /* 記事本文 */
+    .article-content { max-width: 100%; }
+    .article-content h2 {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      margin: 48px 0 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--gray-200);
+      position: relative;
+    }
+    .article-content h2::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 48px;
+      height: 2px;
+      background: var(--accent);
+    }
+    .article-content h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 32px 0 14px;
+      color: var(--black);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .article-content h3::before {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 18px;
+      background: var(--accent);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .article-content p {
+      font-size: 0.95rem;
+      line-height: 1.95;
+      color: #2a2a2a;
+      margin-bottom: 20px;
+    }
+    .article-content ul, .article-content ol {
+      margin: 16px 0 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .article-content li {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: #2a2a2a;
+    }
+    .article-content strong { font-weight: 700; color: var(--black); }
+    .article-content a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    .article-content a:hover { color: var(--accent-mid); }
+
+    /* 情報ボックス */
+    .box-info {
+      background: var(--accent-light);
+      border: 1px solid #b8dcc8;
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+    .box-info-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+    }
+    .box-info p { font-size: 0.88rem; color: var(--accent); margin-bottom: 0; }
+    .box-warning {
+      background: var(--gold-light);
+      border: 1px solid #d4b06a;
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+    .box-warning-title { font-size: 0.8rem; font-weight: 700; color: var(--gold); margin-bottom: 10px; }
+    .box-warning p { font-size: 0.88rem; color: #6b4e1a; margin-bottom: 0; }
+
+    /* 目次 */
+    .toc {
+      background: var(--gray-100);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      margin: 32px 0 40px;
+    }
+    .toc-title { font-size: 0.82rem; font-weight: 700; color: var(--gray-600); margin-bottom: 14px; letter-spacing: 0.06em; }
+    .toc ol { margin: 0 0 0 16px; gap: 6px; }
+    .toc li { font-size: 0.85rem; }
+    .toc a { color: var(--accent); text-decoration: none; }
+    .toc a:hover { text-decoration: underline; }
+
+    /* CTA インライン */
+    .inline-cta {
+      background: var(--black);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      text-align: center;
+      margin: 40px 0;
+    }
+    .inline-cta-title {
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+    .inline-cta-desc { font-size: 0.85rem; color: var(--gray-600); margin-bottom: 24px; }
+
+    /* アフィリエイト枠 */
+    .affi-card {
+      border: 2px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin: 32px 0;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      transition: all var(--transition);
+    }
+    .affi-card:hover { border-color: var(--accent); }
+    .affi-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--gray-400);
+      border: 1px solid var(--gray-200);
+      padding: 2px 8px;
+      border-radius: 2px;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+    .affi-company { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
+    .affi-desc { font-size: 0.82rem; color: var(--gray-600); line-height: 1.6; }
+
+    /* サイドバー（記事用） */
+    .article-sidebar { display: flex; flex-direction: column; gap: 24px; position: sticky; top: 80px; }
+    .sidebar-widget { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); overflow: hidden; }
+    .sidebar-widget-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--white); background: var(--accent); padding: 12px 20px; }
+    .sidebar-widget-body { padding: 20px; }
+    .sidebar-toc-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .sidebar-toc-list li { border-bottom: 1px solid var(--gray-100); }
+    .sidebar-toc-list li:last-child { border-bottom: none; }
+    .sidebar-toc-list a { display: block; padding: 10px 0; font-size: 0.82rem; color: var(--gray-600); transition: color var(--transition); line-height: 1.5; }
+    .sidebar-toc-list a:hover { color: var(--accent); }
+
+    /* ライター情報 */
+    .author-box {
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      margin: 48px 0 32px;
+    }
+    .author-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+    .author-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; }
+    .author-title { font-size: 0.78rem; color: var(--accent); margin-bottom: 10px; }
+    .author-bio { font-size: 0.82rem; color: var(--gray-600); line-height: 1.7; }
+
+    @media (max-width: 900px) {
+      .article-layout { grid-template-columns: 1fr; }
+      .article-sidebar { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">JP <span>NEXT</span></a>
+    <ul class="nav-links">
+      <li><a href="/blog/">コラム</a></li>
+      <li><a href="/blog/?cat=jigyo">事業承継</a></li>
+      <li><a href="/blog/?cat=career">転職ガイド</a></li>
+      <li><a href="/ma-tool.html">無料ツール</a></li>
+      <li><a href="/#contact" class="nav-cta">無料相談</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- パンくず -->
+<div style="padding: 14px 24px; font-size: 0.78rem; color: var(--gray-400); border-bottom: 1px solid var(--gray-200);">
+  <div style="max-width: var(--max-w); margin: 0 auto;">
+    <a href="/" style="color: var(--gray-400);">JP NEXT</a>
+    <span style="margin: 0 8px;">›</span>
+    <a href="/blog/" style="color: var(--gray-400);">コラム</a>
+    <span style="margin: 0 8px;">›</span>
+    <span>記事タイトル</span>
+  </div>
+</div>
+
+<!-- 記事ヘッダー -->
+<div class="article-header">
+  <div class="article-header-inner">
+    <div class="article-header-meta">
+      <span class="tag tag-ma">事業承継</span>
+      <span>2025.01.15</span>
+      <span>読了 8分</span>
+      <span>最終更新: 2025.01.15</span>
+    </div>
+    <h1 class="article-header-title">
+      中小企業の企業価値算定｜M&Aアドバイザーが実務で使う3つの手法を解説
+    </h1>
+    <p class="article-header-desc">
+      この記事では、EV/EBITDA倍率・DCF法・類似会社比較法の3手法について、M&A実務での使われ方と中小企業への適用における注意点を解説します。
+    </p>
+  </div>
+</div>
+
+<!-- 本文 -->
+<div class="article-layout">
+  <article class="article-content">
+
+    <!-- 目次 -->
+    <nav class="toc">
+      <div class="toc-title">目次</div>
+      <ol>
+        <li><a href="#s1">企業価値算定とは何か</a></li>
+        <li><a href="#s2">手法①：EV/EBITDA倍率法</a></li>
+        <li><a href="#s3">手法②：DCF法（割引現在価値法）</a></li>
+        <li><a href="#s4">手法③：類似会社比較法</a></li>
+        <li><a href="#s5">中小企業M&Aで実際に使われる手法</a></li>
+        <li><a href="#s6">無料ツールで今すぐ算定する</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="s1">企業価値算定とは何か</h2>
+    <p>
+      企業価値算定（バリュエーション）とは、M&Aの売買交渉において対象企業がいくらの価値を持つかを数値化するプロセスです。売り手・買い手双方が納得できる「根拠ある価格」を導き出すために行います。
+    </p>
+    <p>
+      中小企業のM&Aにおいては、上場企業と異なり株式市場で価格が決まらないため、アドバイザーが複数の手法を用いて試算し、最終的に当事者間の交渉で成約価格が決まります。
+    </p>
+
+    <div class="box-info">
+      <div class="box-info-title">ポイント</div>
+      <p>企業価値算定はあくまで「交渉の出発点」。最終的な成約価格は売り手・買い手の意向・市場環境・シナジー効果などによって上下します。</p>
+    </div>
+
+    <h2 id="s2">手法①：EV/EBITDA倍率法</h2>
+    <p>
+      中小企業M&Aで最もよく使われる手法です。企業価値（EV）をEBITDA（税引前利益+減価償却費）で割った倍率を業界標準と比較することで、相対的な割安・割高を判断します。
+    </p>
+    <h3>EV/EBITDA倍率の計算式</h3>
+    <p>
+      <strong>企業価値（EV）= EBITDA × 業界倍率</strong><br>
+      中小企業の場合、倍率は業種によって3〜8倍程度が一般的です。製造業・IT・医療など収益の安定性が高い業種ほど倍率が高くなります。
+    </p>
+
+    <!-- アフィリエイト枠サンプル -->
+    <div class="affi-card">
+      <div>
+        <div class="affi-badge">PR</div>
+      </div>
+      <div>
+        <div class="affi-company">日本M&Aセンター</div>
+        <p class="affi-desc">成約実績No.1のM&A仲介会社。無料相談から対応可。オーナー経営者の事業承継・売却をサポート。</p>
+        <a href="#" class="btn btn-primary" style="margin-top: 12px; display: inline-block; padding: 10px 24px; font-size: 0.82rem;">無料相談を申し込む →</a>
+      </div>
+    </div>
+
+    <h2 id="s3">手法②：DCF法（割引現在価値法）</h2>
+    <p>
+      将来のキャッシュフローを現在価値に割り引いて企業価値を算出する手法です。理論的に最も精緻な方法ですが、将来予測の精度に依存するため、中小企業では補完的に使われることが多いです。
+    </p>
+
+    <div class="box-warning">
+      <div class="box-warning-title">注意点</div>
+      <p>DCF法は割引率（WACC）の設定と将来キャッシュフロー予測が結果を大きく左右します。恣意的な前提を置くと実態とかけ離れた数値が出やすいため、EV/EBITDA倍率法との併用が推奨されます。</p>
+    </div>
+
+    <h2 id="s4">手法③：類似会社比較法</h2>
+    <p>
+      対象企業と事業内容・規模が類似する上場企業のバリュエーション指標（PER・PBR・EV/EBITDA等）を参考に企業価値を算出する方法です。市場の実態を反映しやすい一方、非上場中小企業への適用には流動性ディスカウント（20〜30%）が必要です。
+    </p>
+
+    <h2 id="s5">中小企業M&Aで実際に使われる手法</h2>
+    <p>
+      実務上、中小企業M&Aでは<strong>EV/EBITDA倍率法が主軸</strong>となり、DCF法・類似会社比較法を参考として併用するのが一般的です。最終的な交渉価格は算定結果の幅の中で、売り手の希望額・買い手のシナジー効果見込みを加味して決定されます。
+    </p>
+
+    <!-- インラインCTA -->
+    <div class="inline-cta" id="s6">
+      <div class="inline-cta-title">自社の企業価値を無料で算定する</div>
+      <p class="inline-cta-desc">売上・利益・業種を入力するだけ。本格的な算定結果を登録不要・無料で即時表示。</p>
+      <a href="/ma-tool.html" class="btn btn-white" style="display: inline-block;">企業価値算定ツールを使う →</a>
+    </div>
+
+    <!-- ライター情報 -->
+    <div class="author-box">
+      <div class="author-avatar">👤</div>
+      <div>
+        <div class="author-name">JP NEXT 編集部</div>
+        <div class="author-title">M&Aアドバイザー / 実務経験5年+</div>
+        <p class="author-bio">不動産用地仕入れ・M&Aアドバイザリーの実務経験をもとに、現場に即したM&A情報を執筆。中小企業の事業承継とM&A業界転職に特化したコンテンツを制作しています。</p>
+      </div>
+    </div>
+
+    <!-- 関連記事 -->
+    <div>
+      <div class="section-label">関連記事</div>
+      <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 16px;">
+        <a href="/blog/chukaisya-hikaku.html" style="display: flex; align-items: center; gap: 14px; padding: 16px; border: 1px solid var(--gray-200); border-radius: var(--radius); transition: all var(--transition);">
+          <span style="font-size: 1.4rem; flex-shrink:0;">🏦</span>
+          <span style="font-size: 0.88rem; color: var(--gray-600);">日本M&Aセンター・ストライク・M&A総研を比較｜手数料・実績の違い</span>
+        </a>
+        <a href="/blog/jigyo-shokei.html" style="display: flex; align-items: center; gap: 14px; padding: 16px; border: 1px solid var(--gray-200); border-radius: var(--radius); transition: all var(--transition);">
+          <span style="font-size: 1.4rem; flex-shrink:0;">📋</span>
+          <span style="font-size: 0.88rem; color: var(--gray-600);">事業承継のプロセスを全解説｜検討開始から最終契約まで</span>
+        </a>
+      </div>
+    </div>
+
+  </article>
+
+  <!-- サイドバー -->
+  <aside class="article-sidebar">
+    <div class="sidebar-widget">
+      <div class="sidebar-widget-title">この記事の目次</div>
+      <div class="sidebar-widget-body">
+        <ul class="sidebar-toc-list">
+          <li><a href="#s1">企業価値算定とは何か</a></li>
+          <li><a href="#s2">EV/EBITDA倍率法</a></li>
+          <li><a href="#s3">DCF法</a></li>
+          <li><a href="#s4">類似会社比較法</a></li>
+          <li><a href="#s5">実務で使われる手法</a></li>
+          <li><a href="#s6">無料ツールで算定する</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="background: var(--black); border-radius: var(--radius-lg); padding: 24px; text-align: center;">
+      <div style="font-family: var(--font-serif); font-size: 1.05rem; color: var(--white); margin-bottom: 10px;">無料で企業価値を算定</div>
+      <p style="font-size: 0.8rem; color: var(--gray-600); margin-bottom: 20px; line-height: 1.7;">登録不要。売上・利益を入力するだけ。</p>
+      <a href="/ma-tool.html" class="btn btn-primary" style="display: block; text-align: center;">ツールを使う →</a>
+    </div>
+
+    <div class="sidebar-widget">
+      <div class="sidebar-widget-title">関連カテゴリ</div>
+      <div class="sidebar-widget-body">
+        <ul class="sidebar-toc-list">
+          <li><a href="/blog/?cat=jigyo">事業承継コラム</a></li>
+          <li><a href="/blog/?cat=ma">M&A基礎知識</a></li>
+          <li><a href="/blog/?cat=career">転職ガイド</a></li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">JP <span>NEXT</span></div>
+    <div class="footer-tagline">M&A・事業承継の実務情報メディア</div>
+    <div class="footer-bottom" style="margin-top:32px;">
+      <span>© 2025 JP NEXT. All rights reserved.</span>
+      <a href="/" style="color: var(--gray-600);">トップへ戻る</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
