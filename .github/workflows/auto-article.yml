@@ -1,0 +1,41 @@
+name: 自動記事生成（TDnet連携）
+
+on:
+  schedule:
+    # 毎日 朝9時（JST）に実行 = UTC 0:00
+    - cron: '0 0 * * *'
+  # 手動実行も可能
+  workflow_dispatch:
+
+jobs:
+  generate-articles:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Python セットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 記事生成スクリプト実行
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPO: ${{ github.repository }}
+        run: python scripts/generate_article.py
+
+      - name: 生成ファイルをコミット・プッシュ
+        run: |
+          git config user.name  "JP NEXT Bot"
+          git config user.email "bot@jpnext.co"
+          git add blog/ data/
+          # 変更がある場合のみコミット
+          git diff --staged --quiet || git commit -m "auto: TDnet記事生成 $(date +'%Y-%m-%d')"
+          git push
