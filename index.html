@@ -14,126 +14,180 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="stylesheet" href="/assets/style.css">
   <style>
-    /* ヒーロー */
-    .hero {
-      min-height: 88vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    /* ── ヒーロー全幅リニューアル ── */
+    .hero-wrap {
+      min-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 100px 24px 80px;
+    }
+    /* 背景グリッド線 */
+    .hero-wrap::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(26,92,58,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,92,58,0.05) 1px, transparent 1px);
+      background-size: 64px 64px;
+      pointer-events: none;
+    }
+    /* 右下に大きいアクセント円 */
+    .hero-wrap::after {
+      content: '';
+      position: absolute;
+      right: -200px;
+      bottom: -200px;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(26,92,58,0.12);
+      pointer-events: none;
+    }
+    .hero-inner {
       max-width: var(--max-w);
       margin: 0 auto;
-      padding: 80px 24px 60px;
-      gap: 60px;
-      align-items: center;
+      width: 100%;
+      position: relative;
+      z-index: 1;
     }
     .hero-eyebrow {
       font-size: 0.75rem;
       font-weight: 700;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.18em;
       color: var(--accent);
       text-transform: uppercase;
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 24px;
+      gap: 12px;
+      margin-bottom: 28px;
     }
     .hero-eyebrow::before {
       content: '';
       display: block;
-      width: 32px;
+      width: 40px;
       height: 2px;
       background: var(--accent);
     }
     .hero-title {
       font-family: var(--font-serif);
-      font-size: clamp(2.4rem, 5vw, 4rem);
-      line-height: 1.2;
-      letter-spacing: -0.01em;
-      margin-bottom: 24px;
+      font-size: clamp(3rem, 7vw, 6rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 32px;
+      max-width: 800px;
     }
     .hero-title em {
       font-style: normal;
       color: var(--accent);
+      position: relative;
+    }
+    /* アンダーライン装飾 */
+    .hero-title em::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--accent);
+      opacity: 0.3;
+      border-radius: 2px;
     }
     .hero-desc {
-      font-size: 1rem;
+      font-size: 1.05rem;
       color: var(--gray-600);
       line-height: 1.9;
-      margin-bottom: 40px;
-      max-width: 480px;
+      margin-bottom: 48px;
+      max-width: 560px;
     }
     .hero-btns {
       display: flex;
       gap: 16px;
       flex-wrap: wrap;
+      margin-bottom: 64px;
     }
-    .hero-right {
+    /* カウンター行 */
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      align-items: center;
+      padding-top: 40px;
+      border-top: 1px solid var(--gray-200);
+      flex-wrap: wrap;
+    }
+    .hero-stat {
       display: flex;
       flex-direction: column;
-      gap: 16px;
-    }
-    .hero-stat-card {
-      background: var(--white);
-      border: 1px solid var(--gray-200);
-      border-radius: var(--radius-lg);
-      padding: 24px 28px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      transition: all var(--transition);
-    }
-    .hero-stat-card:hover {
-      border-color: var(--accent);
-      transform: translateX(4px);
+      gap: 4px;
     }
     .hero-stat-num {
       font-family: var(--font-serif);
-      font-size: 2.4rem;
+      font-size: 2rem;
       color: var(--accent);
       line-height: 1;
-      min-width: 80px;
     }
     .hero-stat-num span { font-size: 1rem; }
-    .hero-stat-label { font-size: 0.85rem; color: var(--gray-600); line-height: 1.6; }
-    .hero-stat-label strong { display: block; font-size: 0.95rem; color: var(--black); margin-bottom: 2px; }
-    .hero-scroll {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 24px 40px;
-      display: flex;
-      gap: 32px;
-      align-items: center;
-      overflow-x: auto;
-    }
-    .hero-scroll-label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
+    .hero-stat-label {
+      font-size: 0.78rem;
       color: var(--gray-400);
-      white-space: nowrap;
-      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
-    .hero-scroll-divider {
+    .hero-stat-divider {
       width: 1px;
-      height: 24px;
+      height: 40px;
       background: var(--gray-200);
+    }
+    /* スクロールテープ */
+    .hero-tape {
+      overflow: hidden;
+      border-top: 1px solid var(--gray-200);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 14px 0;
+      background: var(--white);
+    }
+    .hero-tape-inner {
+      display: flex;
+      gap: 48px;
+      animation: tape 20s linear infinite;
+      white-space: nowrap;
+    }
+    @keyframes tape {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .hero-tape-item {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--gray-400);
+      letter-spacing: 0.08em;
+      display: flex;
+      align-items: center;
+      gap: 16px;
       flex-shrink: 0;
     }
-    .hero-scroll-item {
-      font-size: 0.82rem;
-      color: var(--gray-600);
-      white-space: nowrap;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .hero-scroll-item::before {
+    .hero-tape-item::before {
       content: '';
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
       border-radius: 50%;
       background: var(--accent);
       flex-shrink: 0;
     }
+    /* アニメーション */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up   { animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) both; }
+    .fade-up-1 { animation-delay: 0.05s; }
+    .fade-up-2 { animation-delay: 0.15s; }
+    .fade-up-3 { animation-delay: 0.25s; }
+    .fade-up-4 { animation-delay: 0.35s; }
+    .fade-up-5 { animation-delay: 0.45s; }
 
     /* ターゲット2本立て */
     .target-section {
@@ -378,8 +432,8 @@
 
 <!-- ヒーロー -->
 <section style="border-bottom: 1px solid var(--gray-200);">
-  <div class="hero">
-    <div class="hero-left">
+  <div class="hero-wrap">
+    <div class="hero-inner">
       <div class="hero-eyebrow fade-up">M&A · 事業承継 · キャリア</div>
       <h1 class="hero-title fade-up fade-up-1">
         日本の中小企業の<br>
@@ -393,41 +447,49 @@
         <a href="/blog/" class="btn btn-primary">記事を読む</a>
         <a href="/ma-tool.html" class="btn btn-outline">無料で企業価値を算定する</a>
       </div>
-    </div>
-    <div class="hero-right">
-      <div class="hero-stat-card fade-up fade-up-1">
-        <div class="hero-stat-num">5<span>年+</span></div>
-        <div class="hero-stat-label">
-          <strong>M&A実務経験</strong>
-          複数のM&A仲介・FA業務経験をもとに実態に即した情報を提供
+      <div class="hero-stats fade-up fade-up-4">
+        <div class="hero-stat">
+          <div class="hero-stat-num">5<span>年+</span></div>
+          <div class="hero-stat-label">M&A実務経験</div>
         </div>
-      </div>
-      <div class="hero-stat-card fade-up fade-up-2">
-        <div class="hero-stat-num">無料</div>
-        <div class="hero-stat-label">
-          <strong>企業価値算定ツール</strong>
-          EV/EBITDA・DCF・類似会社比較。登録不要で即利用可能
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">無料</div>
+          <div class="hero-stat-label">企業価値算定ツール</div>
         </div>
-      </div>
-      <div class="hero-stat-card fade-up fade-up-3">
-        <div class="hero-stat-num">2<span>本立て</span></div>
-        <div class="hero-stat-label">
-          <strong>売り手・転職者 両対応</strong>
-          事業承継を考えるオーナーとM&A転職希望者、両方の導線を用意
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">10<span>社+</span></div>
+          <div class="hero-stat-label">選考経験ベースの情報</div>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">2<span>本立て</span></div>
+          <div class="hero-stat-label">売り手・転職者 両対応</div>
         </div>
       </div>
     </div>
   </div>
-  <div class="hero-scroll">
-    <span class="hero-scroll-label">カバーテーマ</span>
-    <div class="hero-scroll-divider"></div>
-    <span class="hero-scroll-item">事業承継の基本</span>
-    <span class="hero-scroll-item">企業価値算定</span>
-    <span class="hero-scroll-item">M&A仲介会社の選び方</span>
-    <span class="hero-scroll-item">デューデリジェンス</span>
-    <span class="hero-scroll-item">M&A業界転職</span>
-    <span class="hero-scroll-item">年収・キャリアパス</span>
-    <span class="hero-scroll-item">PMI</span>
+  <!-- スクロールテープ -->
+  <div class="hero-tape">
+    <div class="hero-tape-inner">
+      <span class="hero-tape-item">事業承継の基本</span>
+      <span class="hero-tape-item">企業価値算定</span>
+      <span class="hero-tape-item">M&A仲介会社の選び方</span>
+      <span class="hero-tape-item">デューデリジェンス</span>
+      <span class="hero-tape-item">M&A業界転職</span>
+      <span class="hero-tape-item">年収・キャリアパス</span>
+      <span class="hero-tape-item">PMI・統合</span>
+      <span class="hero-tape-item">レーマン方式</span>
+      <span class="hero-tape-item">事業承継の基本</span>
+      <span class="hero-tape-item">企業価値算定</span>
+      <span class="hero-tape-item">M&A仲介会社の選び方</span>
+      <span class="hero-tape-item">デューデリジェンス</span>
+      <span class="hero-tape-item">M&A業界転職</span>
+      <span class="hero-tape-item">年収・キャリアパス</span>
+      <span class="hero-tape-item">PMI・統合</span>
+      <span class="hero-tape-item">レーマン方式</span>
+    </div>
   </div>
 </section>
 
@@ -473,52 +535,42 @@
       <a href="/blog/" class="btn btn-outline" style="padding: 10px 24px; font-size: 0.82rem;">すべて見る →</a>
     </div>
     <div class="articles-grid">
-      <!-- 記事カード1 -->
-      <article class="article-card">
-        <div class="article-thumb" style="background: var(--accent); display:flex; align-items:center; justify-content:center;">
-          <span style="font-family:var(--font-serif); font-size:1rem; color:rgba(255,255,255,0.9); letter-spacing:0.1em; font-weight:400;">事業承継</span>
-        </div>
-        <div class="article-body">
-          <div class="article-meta">
-            <span class="tag tag-ma">事業承継</span>
-            <span>2025.01.15</span>
-          </div>
-          <h3 class="article-title">
-            <a href="/blog/kigyokachi-santei.html">中小企業の企業価値算定｜M&Aアドバイザーが実務で使う3つの手法を解説</a>
-          </h3>
-          <p class="article-excerpt">EV/EBITDA倍率、DCF法、類似会社比較法。それぞれの特徴と、実際の現場での使われ方を解説します。</p>
-        </div>
-      </article>
-      <!-- 記事カード2 -->
-      <article class="article-card">
-        <div class="article-thumb" style="background: var(--black); display:flex; align-items:center; justify-content:center;">
-          <span style="font-family:var(--font-serif); font-size:1rem; color:rgba(255,255,255,0.9); letter-spacing:0.1em; font-weight:400;">M&A仲介</span>
-        </div>
-        <div class="article-body">
-          <div class="article-meta">
-            <span class="tag tag-ma">M&A仲介</span>
-            <span>2025.01.10</span>
-          </div>
-          <h3 class="article-title">
-            <a href="/blog/chukaisya-hikaku.html">日本M&Aセンター・ストライク・M&A総研を比較｜手数料・実績・特徴の違い</a>
-          </h3>
-          <p class="article-excerpt">主要M&A仲介会社の手数料体系・成約実績・得意な規模感を実務目線で比較。どこに依頼すべきか。</p>
-        </div>
-      </article>
-      <!-- 記事カード3 -->
       <article class="article-card">
         <div class="article-thumb" style="background: var(--gold); display:flex; align-items:center; justify-content:center;">
           <span style="font-family:var(--font-serif); font-size:1rem; color:rgba(255,255,255,0.9); letter-spacing:0.1em; font-weight:400;">転職</span>
         </div>
         <div class="article-body">
           <div class="article-meta">
-            <span class="tag tag-transfer">転職</span>
-            <span>2025.01.05</span>
+            <span class="tag tag-transfer">転職ガイド</span>
+            <span>2026.03.23</span>
           </div>
           <h3 class="article-title">
-            <a href="/blog/ma-career.html">M&Aアドバイザーの年収は？未経験転職から1年目の実態を公開</a>
+            <a href="/blog/ma-company-hikaku.html">M&A仲介会社の転職難易度比較｜日本M&Aセンター・ストライク・M&A総研・キャピタルを現役アドバイザーが徹底解説</a>
           </h3>
-          <p class="article-excerpt">固定給・インセンティブの仕組み、1件成約時の報酬感、未経験入社1年目のリアルな数字を解説。</p>
+          <p class="article-excerpt">各社の面接の特徴・難易度・社風を実際の選考経験をもとに比較。会食面接・エージェント活用まで解説。</p>
+        </div>
+      </article>
+      <article class="article-card">
+        <div class="article-thumb" style="background: var(--gold); display:flex; align-items:center; justify-content:center;">
+          <span style="font-family:var(--font-serif); font-size:1rem; color:rgba(255,255,255,0.9); letter-spacing:0.1em; font-weight:400;">転職</span>
+        </div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="tag tag-transfer">転職ガイド</span>
+            <span>2026.03.22</span>
+          </div>
+          <h3 class="article-title">
+            <a href="/blog/ma-career.html">M&Aアドバイザーの年収は？固定給・インセンティブ・インクルード・クレジットの実態を公開</a>
+          </h3>
+          <p class="article-excerpt">固定給360〜420万円・インセンティブ400万〜1億円の実数値を公開。転職前に知るべき報酬の仕組みも解説。</p>
+        </div>
+      </article>
+      <article class="article-card" style="background:var(--black); border-color:var(--black);">
+        <div style="padding:40px 28px; display:flex; flex-direction:column; justify-content:center; flex:1;">
+          <div style="font-size:0.72rem; font-weight:700; letter-spacing:0.14em; color:var(--accent-mid); text-transform:uppercase; margin-bottom:16px;">Free Tool</div>
+          <div style="font-family:var(--font-serif); font-size:1.3rem; color:var(--white); line-height:1.4; margin-bottom:12px;">企業価値を<br>今すぐ無料で算定</div>
+          <p style="font-size:0.82rem; color:var(--gray-600); margin-bottom:24px; line-height:1.7;">登録不要・3手法対応。売上・利益を入力するだけ。</p>
+          <a href="/ma-tool.html" class="btn btn-primary" style="display:block; text-align:center;">ツールを使う →</a>
         </div>
       </article>
     </div>
