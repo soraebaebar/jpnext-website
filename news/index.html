@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M&Aニュース速報｜適時開示情報 — JP NEXT</title>
+  <meta name="description" content="上場企業の適時開示情報をもとにしたM&A・事業承継関連ニュース速報。東証TDnetの開示情報を毎日自動更新。">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P8KB1E1GRV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-P8KB1E1GRV');
+  </script>
+  <style>
+    .news-hero {
+      background: var(--black);
+      padding: 48px 24px 40px;
+      border-bottom: 1px solid #222;
+    }
+    .news-hero-inner { max-width: var(--max-w); margin: 0 auto; }
+    .news-hero-label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em;
+      color: var(--accent-mid); text-transform: uppercase; margin-bottom: 12px;
+    }
+    .news-hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      color: var(--white); margin-bottom: 10px;
+    }
+    .news-hero-desc { font-size: 0.85rem; color: var(--gray-600); }
+    .news-notice {
+      background: var(--gold-light);
+      border-left: 4px solid var(--gold);
+      padding: 14px 20px;
+      font-size: 0.82rem;
+      color: #6b4e1a;
+      margin: 32px 0 0;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .news-layout {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 40px 24px;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .news-list { display: flex; flex-direction: column; gap: 16px; }
+    .news-row {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 20px 24px;
+      transition: all var(--transition);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+    .news-row:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(26,92,58,0.07);
+    }
+    .news-date-badge {
+      background: var(--gray-100);
+      border-radius: 6px;
+      padding: 8px 12px;
+      text-align: center;
+      min-width: 56px;
+      flex-shrink: 0;
+    }
+    .news-date-month { font-size: 0.65rem; color: var(--gray-400); letter-spacing: 0.06em; }
+    .news-date-day { font-family: var(--font-serif); font-size: 1.4rem; color: var(--black); line-height: 1; }
+    .news-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; font-size: 0.75rem; color: var(--gray-400); }
+    .news-title { font-size: 0.95rem; font-weight: 500; line-height: 1.5; margin-bottom: 6px; }
+    .news-title a { color: var(--black); }
+    .news-title a:hover { color: var(--accent); }
+    .news-excerpt { font-size: 0.8rem; color: var(--gray-600); line-height: 1.6; }
+
+    .sidebar-sticky { position: sticky; top: 80px; display: flex; flex-direction: column; gap: 20px; }
+    .sw { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; overflow: hidden; }
+    .sw-head { background: var(--accent); padding: 12px 18px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; color: var(--white); text-transform: uppercase; }
+    .sw-body { padding: 18px; font-size: 0.82rem; color: var(--gray-600); line-height: 1.7; }
+
+    .cta-to-blog {
+      background: var(--accent-light);
+      border: 1px solid #b8dcc8;
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+    }
+    .cta-to-blog-title { font-family: var(--font-serif); font-size: 1.1rem; color: var(--black); margin-bottom: 8px; }
+    .cta-to-blog-desc { font-size: 0.8rem; color: var(--gray-600); margin-bottom: 16px; line-height: 1.7; }
+
+    @media (max-width: 900px) {
+      .news-layout { grid-template-columns: 1fr; }
+      .sidebar-sticky { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">JP <span>NEXT</span></a>
+    <ul class="nav-links">
+      <li><a href="/blog/">コラム</a></li>
+      <li><a href="/news/">M&Aニュース</a></li>
+      <li><a href="/blog/?cat=career">転職ガイド</a></li>
+      <li><a href="/ma-tool.html">無料ツール</a></li>
+      <li><a href="/#contact" class="nav-cta">無料相談</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="news-hero">
+  <div class="news-hero-inner">
+    <div class="news-hero-label">M&A News</div>
+    <h1 class="news-hero-title">M&Aニュース速報</h1>
+    <p class="news-hero-desc">東証TDnet適時開示情報をもとにしたM&A・事業承継関連ニュース。毎日自動更新。</p>
+    <div class="news-notice">
+      このページの記事は上場企業の適時開示情報（東証TDnet）をもとに自動生成されたものです。実務解説記事は<a href="/blog/" style="color:var(--gold);font-weight:700;">コラム</a>をご覧ください。
+    </div>
+  </div>
+</div>
+
+<div class="news-layout">
+  <main>
+    <div class="news-list" id="newsList">
+      <!-- 自動生成記事がここに追加されます -->
+    </div>
+    <div id="empty-state" style="text-align:center;padding:60px 0;color:var(--gray-400);">
+      <p style="font-size:0.9rem;">記事を準備中です。しばらくお待ちください。</p>
+    </div>
+  </main>
+
+  <aside class="sidebar-sticky">
+    <div class="cta-to-blog">
+      <div class="cta-to-blog-title">実務解説記事はこちら</div>
+      <p class="cta-to-blog-desc">M&Aアドバイザーの実務経験をもとにした詳しい解説記事を公開しています。</p>
+      <a href="/blog/" class="btn btn-primary" style="display:block;text-align:center;padding:10px;">コラムを読む →</a>
+    </div>
+
+    <div style="background:var(--black);border-radius:12px;padding:22px;text-align:center;">
+      <div style="font-family:var(--font-serif);font-size:1rem;color:var(--white);margin-bottom:8px;">無料で企業価値を算定</div>
+      <p style="font-size:0.78rem;color:var(--gray-600);margin-bottom:16px;line-height:1.7;">登録不要。売上・利益を入力するだけ。</p>
+      <a href="/ma-tool.html" class="btn btn-primary" style="display:block;text-align:center;padding:10px;font-size:0.82rem;">ツールを使う →</a>
+    </div>
+
+    <div class="sw">
+      <div class="sw-head">このサイトについて</div>
+      <div class="sw-body">
+        <p>JP NEXTはM&A・事業承継の実務経験者が運営するメディアです。</p>
+        <a href="/blog/ma-career.html" style="color:var(--accent);font-size:0.82rem;">→ 運営者のM&A転職体験記</a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">JP <span>NEXT</span></div>
+    <div class="footer-tagline">M&A・事業承継の実務情報メディア</div>
+    <div class="footer-bottom" style="margin-top:32px;">
+      <span>© 2025 JP NEXT. All rights reserved.</span>
+      <a href="/" style="color:var(--gray-600);">トップへ戻る</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const list = document.getElementById('newsList');
+const empty = document.getElementById('empty-state');
+if (list && list.children.length > 0) {
+  empty.style.display = 'none';
+}
+</script>
+</body>
+</html>
