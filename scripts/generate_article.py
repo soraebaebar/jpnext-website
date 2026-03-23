@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-JP NEXT — TDnet自動記事生成スクリプト
-TDnetのRSSからM&A関連ニュースを取得し、Claude APIで記事を生成してblog/に追加する
+JP NEXT — TDnet M&Aニュースまとめ記事生成スクリプト
+前日の適時開示からM&A関連を全件取得し、1本のまとめ記事を毎朝8時に生成する
 """
 
 import os
@@ -18,53 +18,34 @@ ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 GITHUB_TOKEN      = os.environ.get("GITHUB_TOKEN", "")
 GITHUB_REPO       = os.environ.get("GITHUB_REPO", "soraebaebar/jpnext-website")
 
-# TDnet RSS（適時開示一覧）
-TDNET_RSS_URL = "https://www.release.tdnet.info/inbs/I_list_001_{date}.html"
-TDNET_RSS_FEED = "https://www.release.tdnet.info/inbs/I_list_001_x.rss"
+NEWS_DIR    = "news"
+POSTED_JSON = "data/posted.json"
 
-# M&A関連キーワード（いずれかを含む開示をピックアップ）
 MA_KEYWORDS = [
     "M&A", "合併", "買収", "譲渡", "事業承継", "TOB", "株式交換",
     "子会社化", "持分法", "資本業務提携", "会社分割", "吸収合併",
     "連結子会社", "第三者割当", "MBO", "売却", "経営統合",
 ]
 
-POSTED_JSON = "data/posted.json"
-BLOG_DIR    = "blog"
-MAX_ARTICLES_PER_RUN = 3  # 1回の実行で最大3記事まで生成
-
-
-# ── ユーティリティ ────────────────────────────────────
 JST = timezone(timedelta(hours=9))
+
 
 def jst_now():
     return datetime.now(JST)
 
 def load_posted():
-    """投稿済みIDを読み込む"""
     if os.path.exists(POSTED_JSON):
         with open(POSTED_JSON, "r", encoding="utf-8") as f:
             return json.load(f)
-    return {"posted_ids": [], "last_updated": ""}
+    return {"posted_dates": [], "last_updated": ""}
 
 def save_posted(data):
-    """投稿済みIDを保存"""
     os.makedirs("data", exist_ok=True)
     data["last_updated"] = jst_now().isoformat()
     with open(POSTED_JSON, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
-def slugify(text):
-    """タイトルからURLスラッグを生成"""
-    text = re.sub(r'[^\w\s-]', '', text)
-    text = re.sub(r'[\s_-]+', '-', text)
-    text = text.strip('-').lower()
-    if not text or len(text) < 3:
-        text = hashlib.md5(text.encode()).hexdigest()[:8]
-    return text[:60]
-
-def fetch_url(url, timeout=15):
-    """URLからコンテンツを取得"""
+def fetch_url(url, timeout=20):
     req = urllib.request.Request(
         url,
         headers={"User-Agent": "Mozilla/5.0 (compatible; JPNEXTBot/1.0)"}
@@ -73,30 +54,24 @@ def fetch_url(url, timeout=15):
         return resp.read().decode("utf-8", errors="replace")
 
 
-# ── TDnetからニュース取得 ─────────────────────────────
-def fetch_tdnet_news():
-    """やのしんTDnet WEB-APIから適時開示情報を取得"""
-    news_items = []
-    today = jst_now().strftime("%Y%m%d")
+def fetch_yesterday_news():
     yesterday = (jst_now() - timedelta(days=1)).strftime("%Y%m%d")
+    items = []
+    seen = set()
 
-    # やのしんTDnet WEB-API（無料・非公式）
     urls = [
-        f"https://webapi.yanoshin.jp/webapi/tdnet/list/{today}.rss",
         f"https://webapi.yanoshin.jp/webapi/tdnet/list/{yesterday}.rss",
         "https://webapi.yanoshin.jp/webapi/tdnet/list/recent.rss",
     ]
-
-    seen_ids = set()
 
     for url in urls:
         try:
             xml = fetch_url(url)
             root = ET.fromstring(xml)
-            items = root.findall('.//item')
-            print(f"TDnet取得: {url.split('/')[-1]} → {len(items)}件")
+            raw_items = root.findall('.//item')
+            print(f"TDnet取得: {url.split('/')[-1]} -> {len(raw_items)}件")
 
-            for item in items:
+            for item in raw_items:
                 title_el = item.find('title')
                 link_el  = item.find('link')
                 desc_el  = item.find('description')
@@ -105,50 +80,38 @@ def fetch_tdnet_news():
                     continue
 
                 title = title_el.text or ''
-                url_  = link_el.text or '' if link_el is not None else ''
-                desc  = desc_el.text or '' if desc_el is not None else ''
-                desc  = re.sub(r'<[^>]+>', '', desc)
+                link  = link_el.text or '' if link_el is not None else ''
+                desc  = re.sub(r'<[^>]+>', '', desc_el.text or '') if desc_el is not None else ''
 
-                full_text = title + ' ' + desc
-                if not any(kw in full_text for kw in MA_KEYWORDS):
+                if not any(kw in title + desc for kw in MA_KEYWORDS):
                     continue
 
-                item_id = hashlib.md5(f"{title}".encode()).hexdigest()[:16]
-                if item_id in seen_ids:
+                item_id = hashlib.md5(title.encode()).hexdigest()[:12]
+                if item_id in seen:
                     continue
-                seen_ids.add(item_id)
+                seen.add(item_id)
 
-                # 会社名と開示タイトルを分離
-                # 例：「トヨタ自動車（7203）子会社の買収に関するお知らせ」
-                company_match = re.search(r'^(.+?)[（(]\d{4}[）)]', title)
-                if company_match:
-                    company = company_match.group(1).strip()
-                    disclosure_title = title
-                else:
-                    company = '上場企業'
-                    disclosure_title = title
+                company_match = re.search(r'^(.+?)[（(][\d\w]{4}[）)]', title)
+                company = company_match.group(1).strip() if company_match else '上場企業'
 
-                news_items.append({
-                    "id": item_id,
-                    "title": disclosure_title,
+                items.append({
                     "company": company,
-                    "date": today,
-                    "url": url_,
+                    "title": title,
+                    "url": link,
+                    "desc": desc[:200],
                 })
 
-            if news_items:
+            if items:
                 break
 
         except Exception as e:
-            print(f"TDnet取得失敗 ({url}): {e}")
+            print(f"TDnet取得失敗: {e}")
 
-    print(f"M&A関連ニュース: {len(news_items)}件")
-    return news_items
+    print(f"M&A関連: {len(items)}件")
+    return yesterday, items
 
 
-# ── Claude APIで記事生成 ──────────────────────────────
-def call_claude(prompt, max_tokens=3000):
-    """Claude APIを呼び出して記事を生成"""
+def call_claude(prompt, max_tokens=4000):
     if not ANTHROPIC_API_KEY:
         raise ValueError("ANTHROPIC_API_KEY が設定されていません")
 
@@ -169,114 +132,116 @@ def call_claude(prompt, max_tokens=3000):
         method="POST"
     )
 
-    with urllib.request.urlopen(req, timeout=60) as resp:
+    with urllib.request.urlopen(req, timeout=90) as resp:
         result = json.loads(resp.read().decode("utf-8"))
 
     return result["content"][0]["text"]
 
-def generate_article_content(news_item):
-    """Claude APIでM&A解説記事を生成"""
-    prompt = f"""あなたはM&Aアドバイザーの経験を持つ専門ライターです。
-以下の適時開示情報をもとに、jpnext.co（M&A・事業承継メディア）向けの解説記事を書いてください。
 
-【開示情報】
-企業名: {news_item['company']}
-タイトル: {news_item['title']}
-開示日: {news_item['date']}
+def generate_digest(date_str, news_items):
+    y, m, d = date_str[:4], date_str[4:6], date_str[6:]
+    date_label = f"{y}年{m}月{d}日"
+
+    news_list_text = ""
+    for i, item in enumerate(news_items, 1):
+        news_list_text += f"{i}. [{item['company']}] {item['title']}\n"
+        if item['desc']:
+            news_list_text += f"   概要: {item['desc']}\n"
+        news_list_text += "\n"
+
+    prompt = f"""あなたはM&Aアドバイザーの経験を持つ専門ライターです。
+{date_label}に東証TDnetで開示されたM&A関連の適時開示情報をまとめた解説記事を書いてください。
+
+【{date_label}のM&A関連適時開示一覧】
+{news_list_text}
 
 【記事の要件】
-- 読者：事業承継を検討するオーナー経営者 または M&A業界への転職希望者
-- 文字数：800〜1200字
-- 構成：リード文（2〜3行）→ h2見出し2〜3個 → 各200〜300字の本文 → まとめ
-- トーン：実務家目線で信頼感があり、わかりやすい
-- SEO：タイトルにキーワードを含める
+- 読者：事業承継を検討するオーナー経営者・M&A業界への転職希望者・投資家
+- 各開示の解説は3〜5行、「何が起きたか」「M&A的な意味・背景」を簡潔に
+- 適時開示の内容をそのまま転載せず、必ず自分の言葉で解説する
+- トーン：実務家目線でわかりやすく
 
-【出力形式】JSON形式で以下を返してください（コードブロック不要、JSONのみ）:
+【出力形式】JSON形式のみ（コードブロック不要）:
 {{
-  "seo_title": "SEOタイトル（30〜60文字、キーワード含む）",
-  "meta_description": "メタディスクリプション（80〜120文字）",
-  "category": "事業承継" または "M&A仲介" または "転職" のいずれか,
-  "h1": "記事タイトル（わかりやすく）",
-  "lead": "リード文（2〜3文）",
-  "sections": [
-    {{"h2": "見出し", "body": "本文"}},
-    {{"h2": "見出し", "body": "本文"}},
-    {{"h2": "見出し", "body": "本文"}}
+  "seo_title": "{date_label}のM&Aニュースまとめ｜適時開示{len(news_items)}件を解説",
+  "meta_description": "メタディスクリプション80〜120文字",
+  "h1": "{date_label}のM&Aニュース｜適時開示まとめ",
+  "lead": "リード文3〜4文",
+  "items": [
+    {{
+      "company": "会社名",
+      "disclosure_title": "開示タイトル",
+      "commentary": "解説文3〜5行"
+    }}
   ],
-  "summary": "まとめ（3〜5文）",
-  "read_time": 読了時間（分、整数）
+  "summary": "本日のまとめ・所感3〜5文"
 }}"""
 
-    raw = call_claude(prompt)
-
-    # JSON抽出
+    raw = call_claude(prompt, max_tokens=4000)
     raw = re.sub(r'^```json\s*', '', raw.strip())
     raw = re.sub(r'\s*```$', '', raw.strip())
-
     return json.loads(raw)
 
 
-# ── HTML記事ファイル生成 ──────────────────────────────
-def build_article_html(news_item, article, slug):
-    """記事データからHTMLファイルを生成"""
-    date_display = f"{news_item['date'][:4]}.{news_item['date'][4:6]}.{news_item['date'][6:]}"
+def build_digest_html(date_str, digest, news_items):
+    y, m, d = date_str[:4], date_str[4:6], date_str[6:]
+    date_label = f"{y}年{m}月{d}日"
+    date_display = f"{y}.{m}.{d}"
 
-    tag_class = {
-        "事業承継": "tag-ma",
-        "M&A仲介": "tag-ma",
-        "転職": "tag-transfer",
-    }.get(article.get("category", "事業承継"), "tag-ma")
-
-    thumb_bg = {
-        "事業承継": "var(--accent)",
-        "M&A仲介": "var(--black)",
-        "転職": "var(--gold)",
-    }.get(article.get("category", "事業承継"), "var(--accent)")
-
-    sections_html = ""
-    for sec in article.get("sections", []):
-        sections_html += f"""
-        <h2 id="{slugify(sec['h2'])}">{sec['h2']}</h2>
-        <p>{sec['body']}</p>"""
-
-    toc_items = ""
-    for sec in article.get("sections", []):
-        toc_items += f'<li><a href="#{slugify(sec["h2"])}">{sec["h2"]}</a></li>\n'
+    items_html = ""
+    for i, item in enumerate(digest.get("items", []), 1):
+        source = next((n for n in news_items if item.get("company", "") in n["title"]), None)
+        source_url = source["url"] if source else "#"
+        items_html += f"""
+    <div class="disclosure-item">
+      <div class="disclosure-num">{i:02d}</div>
+      <div class="disclosure-body">
+        <div class="disclosure-company">{item.get('company','')}</div>
+        <div class="disclosure-title">{item.get('disclosure_title','')}</div>
+        <p class="disclosure-commentary">{item.get('commentary','')}</p>
+        <a href="{source_url}" target="_blank" rel="noopener" class="disclosure-source">適時開示を見る →</a>
+      </div>
+    </div>"""
 
     return f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{article['seo_title']} | JP NEXT</title>
-  <meta name="description" content="{article['meta_description']}">
-  <meta property="og:title" content="{article['seo_title']}">
-  <meta property="og:description" content="{article['meta_description']}">
-  <meta property="og:url" content="https://www.jpnext.co/blog/{slug}.html">
-  <link rel="canonical" href="https://www.jpnext.co/blog/{slug}.html">
+  <title>{digest['seo_title']} | JP NEXT</title>
+  <meta name="description" content="{digest['meta_description']}">
+  <meta property="og:title" content="{digest['seo_title']}">
+  <meta property="og:url" content="https://www.jpnext.co/news/ma-{date_str}.html">
+  <link rel="canonical" href="https://www.jpnext.co/news/ma-{date_str}.html">
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P8KB1E1GRV"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','G-P8KB1E1GRV');</script>
   <style>
-    .article-header {{ background:var(--gray-100); padding:56px 24px 48px; border-bottom:1px solid var(--gray-200); }}
-    .article-header-inner {{ max-width:760px; margin:0 auto; }}
-    .article-meta {{ display:flex; align-items:center; gap:12px; margin-bottom:20px; font-size:0.8rem; color:var(--gray-400); }}
-    .article-title {{ font-family:var(--font-serif); font-size:clamp(1.6rem,3.5vw,2.2rem); line-height:1.4; margin-bottom:20px; }}
-    .article-lead {{ font-size:0.95rem; color:var(--gray-600); line-height:1.9; padding:20px 24px; background:var(--white); border-left:4px solid var(--accent); border-radius:0 4px 4px 0; }}
-    .article-layout {{ max-width:960px; margin:0 auto; padding:48px 24px; display:grid; grid-template-columns:1fr 260px; gap:48px; align-items:start; }}
-    .article-content h2 {{ font-family:var(--font-serif); font-size:1.4rem; margin:40px 0 16px; padding-bottom:10px; border-bottom:2px solid var(--gray-200); position:relative; }}
-    .article-content h2::after {{ content:''; position:absolute; bottom:-2px; left:0; width:40px; height:2px; background:var(--accent); }}
-    .article-content p {{ font-size:0.95rem; line-height:1.95; color:#2a2a2a; margin-bottom:18px; }}
-    .toc {{ background:var(--gray-100); border-radius:12px; padding:22px 26px; margin:28px 0 36px; }}
-    .toc-title {{ font-size:0.78rem; font-weight:700; color:var(--gray-600); margin-bottom:12px; letter-spacing:0.06em; }}
-    .toc ol {{ margin:0 0 0 16px; }}
-    .toc li {{ font-size:0.85rem; margin-bottom:6px; }}
-    .toc a {{ color:var(--accent); }}
-    .source-box {{ background:var(--gray-100); border-radius:8px; padding:16px 20px; margin:32px 0; font-size:0.82rem; color:var(--gray-600); }}
-    .sidebar-sticky {{ position:sticky; top:80px; display:flex; flex-direction:column; gap:20px; }}
-    .sw {{ background:var(--white); border:1px solid var(--gray-200); border-radius:12px; overflow:hidden; }}
-    .sw-head {{ background:var(--accent); padding:12px 18px; font-size:0.72rem; font-weight:700; letter-spacing:0.1em; color:var(--white); text-transform:uppercase; }}
-    .sw-body {{ padding:18px; font-size:0.82rem; color:var(--gray-600); line-height:1.7; }}
-    @media(max-width:900px){{ .article-layout{{grid-template-columns:1fr;}} .sidebar-sticky{{display:none;}} }}
+    .news-header{{background:var(--black);padding:48px 24px 40px;border-bottom:1px solid #222;}}
+    .news-header-inner{{max-width:760px;margin:0 auto;}}
+    .news-date-label{{font-size:0.72rem;font-weight:700;letter-spacing:0.14em;color:var(--accent-mid);text-transform:uppercase;margin-bottom:12px;}}
+    .news-h1{{font-family:var(--font-serif);font-size:clamp(1.6rem,3.5vw,2.2rem);color:var(--white);line-height:1.4;margin-bottom:14px;}}
+    .news-lead{{font-size:0.9rem;color:var(--gray-400);line-height:1.9;}}
+    .news-meta{{display:flex;gap:16px;margin-top:16px;font-size:0.75rem;color:var(--gray-600);}}
+    .news-layout{{max-width:900px;margin:0 auto;padding:36px 24px;display:grid;grid-template-columns:1fr 240px;gap:40px;align-items:start;}}
+    .notice-box{{background:var(--gold-light);border-left:4px solid var(--gold);padding:12px 16px;border-radius:0 6px 6px 0;margin-bottom:24px;font-size:0.8rem;color:#6b4e1a;line-height:1.7;}}
+    .disclosure-list{{display:flex;flex-direction:column;gap:0;}}
+    .disclosure-item{{display:grid;grid-template-columns:44px 1fr;gap:14px;padding:22px 0;border-bottom:1px solid var(--gray-200);}}
+    .disclosure-item:last-child{{border-bottom:none;}}
+    .disclosure-num{{font-family:var(--font-serif);font-size:1.5rem;color:var(--accent);line-height:1;padding-top:4px;}}
+    .disclosure-company{{font-size:0.75rem;font-weight:700;color:var(--accent);letter-spacing:0.06em;margin-bottom:4px;}}
+    .disclosure-title{{font-size:0.9rem;font-weight:500;color:var(--black);line-height:1.5;margin-bottom:8px;}}
+    .disclosure-commentary{{font-size:0.86rem;color:var(--gray-600);line-height:1.85;margin-bottom:8px;}}
+    .disclosure-source{{font-size:0.76rem;color:var(--accent);}}
+    .summary-box{{background:var(--gray-100);border-radius:10px;padding:22px 26px;margin-top:28px;}}
+    .summary-title{{font-size:0.75rem;font-weight:700;color:var(--gray-600);letter-spacing:0.08em;margin-bottom:10px;text-transform:uppercase;}}
+    .summary-box p{{font-size:0.88rem;color:var(--gray-600);line-height:1.85;}}
+    .sidebar-sticky{{position:sticky;top:80px;display:flex;flex-direction:column;gap:16px;}}
+    .sw{{background:var(--white);border:1px solid var(--gray-200);border-radius:10px;overflow:hidden;}}
+    .sw-head{{background:var(--accent);padding:10px 16px;font-size:0.68rem;font-weight:700;letter-spacing:0.1em;color:var(--white);text-transform:uppercase;}}
+    .sw-body{{padding:14px;font-size:0.8rem;color:var(--gray-600);line-height:1.7;}}
+    @media(max-width:900px){{.news-layout{{grid-template-columns:1fr;}}.sidebar-sticky{{display:none;}}}}
   </style>
 </head>
 <body>
@@ -285,79 +250,67 @@ def build_article_html(news_item, article, slug):
     <a href="/" class="nav-logo">JP <span>NEXT</span></a>
     <ul class="nav-links">
       <li><a href="/blog/">コラム</a></li>
-      <li><a href="/blog/?cat=jigyo">事業承継</a></li>
+      <li><a href="/news/">M&Aニュース</a></li>
       <li><a href="/blog/?cat=career">転職ガイド</a></li>
       <li><a href="/ma-tool.html">無料ツール</a></li>
       <li><a href="/#contact" class="nav-cta">無料相談</a></li>
     </ul>
   </div>
 </nav>
-
-<div style="padding:12px 24px;font-size:0.78rem;color:var(--gray-400);border-bottom:1px solid var(--gray-200);">
+<div style="padding:10px 24px;font-size:0.75rem;color:var(--gray-400);border-bottom:1px solid var(--gray-200);">
   <div style="max-width:var(--max-w);margin:0 auto;">
-    <a href="/" style="color:var(--gray-400);">JP NEXT</a> › <a href="/blog/" style="color:var(--gray-400);">コラム</a> › {article['h1'][:30]}...
+    <a href="/" style="color:var(--gray-400);">JP NEXT</a> › <a href="/news/" style="color:var(--gray-400);">M&Aニュース</a> › {date_label}のまとめ
   </div>
 </div>
-
-<div class="article-header">
-  <div class="article-header-inner">
-    <div class="article-meta">
-      <span class="tag {tag_class}">{article.get('category','事業承継')}</span>
-      <span>{date_display}</span>
-      <span>読了 {article.get('read_time', 5)}分</span>
+<div class="news-header">
+  <div class="news-header-inner">
+    <div class="news-date-label">M&A News Digest — {date_display}</div>
+    <h1 class="news-h1">{digest['h1']}</h1>
+    <p class="news-lead">{digest['lead']}</p>
+    <div class="news-meta">
+      <span>適時開示 {len(news_items)}件</span>
+      <span>掲載日: {date_display}</span>
+      <span>出典: 東証TDnet</span>
     </div>
-    <h1 class="article-title">{article['h1']}</h1>
-    <p class="article-lead">{article['lead']}</p>
   </div>
 </div>
-
-<div class="article-layout">
-  <article class="article-content">
-    <nav class="toc">
-      <div class="toc-title">目次</div>
-      <ol>{toc_items}</ol>
-    </nav>
-    {sections_html}
-    <h2>まとめ</h2>
-    <p>{article['summary']}</p>
-
-    <div class="source-box">
-      出典：<a href="{news_item['url']}" target="_blank" rel="noopener">{news_item['company']} 適時開示（{date_display}）</a>
+<div class="news-layout">
+  <main>
+    <div class="notice-box">この記事は東証TDnetの適時開示情報をもとに作成しています。各社の開示原文は「適時開示を見る」からご確認ください。実務解説は<a href="/blog/" style="color:var(--gold);font-weight:700;">コラム</a>へ。</div>
+    <div class="disclosure-list">{items_html}</div>
+    <div class="summary-box">
+      <div class="summary-title">本日のまとめ・所感</div>
+      <p>{digest['summary']}</p>
     </div>
-
-    <div style="background:var(--black);border-radius:12px;padding:28px;text-align:center;margin:40px 0;">
-      <div style="font-family:var(--font-serif);font-size:1.2rem;color:var(--white);margin-bottom:10px;">自社の企業価値を無料で算定する</div>
-      <p style="font-size:0.82rem;color:var(--gray-600);margin-bottom:20px;">登録不要。売上・利益を入力するだけで即時算定。</p>
-      <a href="/ma-tool.html" class="btn btn-primary" style="display:inline-block;">企業価値算定ツールを使う →</a>
+    <div style="background:var(--black);border-radius:10px;padding:22px;text-align:center;margin-top:28px;">
+      <div style="font-family:var(--font-serif);font-size:1.05rem;color:var(--white);margin-bottom:8px;">自社の企業価値を無料で算定する</div>
+      <p style="font-size:0.78rem;color:var(--gray-600);margin-bottom:14px;">登録不要。売上・利益を入力するだけ。</p>
+      <a href="/ma-tool.html" class="btn btn-primary" style="display:inline-block;padding:9px 24px;">ツールを使う →</a>
     </div>
-  </article>
-
+  </main>
   <aside class="sidebar-sticky">
-    <div class="sw">
-      <div class="sw-head">無料ツール</div>
-      <div class="sw-body">
-        <p>企業価値を今すぐ無料で算定。登録不要・3手法対応。</p>
-        <a href="/ma-tool.html" class="btn btn-primary" style="display:block;text-align:center;margin-top:12px;padding:10px;">ツールを使う →</a>
-      </div>
+    <div style="background:var(--black);border-radius:10px;padding:18px;text-align:center;">
+      <div style="font-family:var(--font-serif);font-size:0.95rem;color:var(--white);margin-bottom:6px;">無料で企業価値を算定</div>
+      <p style="font-size:0.75rem;color:var(--gray-600);margin-bottom:12px;line-height:1.6;">登録不要・3手法対応</p>
+      <a href="/ma-tool.html" class="btn btn-primary" style="display:block;text-align:center;padding:8px;font-size:0.8rem;">ツールを使う →</a>
     </div>
     <div class="sw">
-      <div class="sw-head">関連記事</div>
+      <div class="sw-head">実務解説コラム</div>
       <div class="sw-body">
-        <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;">
-          <li><a href="/blog/kigyokachi-santei.html" style="color:var(--accent);font-size:0.82rem;">企業価値算定の3手法を解説</a></li>
-          <li><a href="/blog/chukaisya-hikaku.html" style="color:var(--accent);font-size:0.82rem;">M&A仲介会社比較</a></li>
-          <li><a href="/blog/jigyo-shokei.html" style="color:var(--accent);font-size:0.82rem;">事業承継のプロセス</a></li>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+          <li><a href="/blog/ma-career.html" style="color:var(--accent);font-size:0.78rem;">M&Aアドバイザーの年収実態</a></li>
+          <li><a href="/blog/kigyokachi-santei.html" style="color:var(--accent);font-size:0.78rem;">企業価値算定の3手法</a></li>
+          <li><a href="/news/" style="color:var(--accent);font-size:0.78rem;">M&Aニュース一覧 →</a></li>
         </ul>
       </div>
     </div>
   </aside>
 </div>
-
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-logo">JP <span>NEXT</span></div>
     <div class="footer-tagline">M&A・事業承継の実務情報メディア</div>
-    <div class="footer-bottom" style="margin-top:32px;">
+    <div class="footer-bottom" style="margin-top:28px;">
       <span>© 2025 JP NEXT. All rights reserved.</span>
       <a href="/" style="color:var(--gray-600);">トップへ戻る</a>
     </div>
@@ -367,107 +320,89 @@ def build_article_html(news_item, article, slug):
 </html>"""
 
 
-# ── blog/index.html の記事一覧を更新 ─────────────────
-def update_blog_index(new_articles):
-    """blog/index.htmlの記事一覧に新記事を追加"""
-    index_path = os.path.join(BLOG_DIR, "index.html")
+def update_news_index(date_str, digest, news_items):
+    index_path = os.path.join(NEWS_DIR, "index.html")
     if not os.path.exists(index_path):
-        print(f"blog/index.html が見つかりません: {index_path}")
+        print("news/index.html が見つかりません")
         return
 
     with open(index_path, "r", encoding="utf-8") as f:
         html = f.read()
 
-    insert_marker = '<div class="articles-list" id="articleList">'
+    insert_marker = '<div class="news-list" id="newsList">'
     if insert_marker not in html:
-        print("articles-list マーカーが見つかりません")
+        print("マーカーが見つかりません")
         return
 
-    for news_item, article, slug in reversed(new_articles):
-        date_display = f"{news_item['date'][:4]}.{news_item['date'][4:6]}.{news_item['date'][6:]}"
-        cat = article.get("category", "事業承継")
-        tag_class = "tag-transfer" if cat == "転職" else "tag-ma"
-        thumb_bg = {"事業承継": "var(--accent)", "M&A仲介": "var(--black)", "転職": "var(--gold)"}.get(cat, "var(--accent)")
-        data_cat = {"事業承継": "jigyo", "M&A仲介": "ma", "転職": "career"}.get(cat, "jigyo")
-
-        new_card = f"""
-      <article class="article-row" data-cat="{data_cat}">
-        <div class="article-row-thumb" style="background:{thumb_bg};">
-          <span style="font-family:var(--font-serif);font-size:0.9rem;color:rgba(255,255,255,0.9);letter-spacing:0.1em;">{cat}</span>
+    y, m, d = date_str[:4], date_str[4:6], date_str[6:]
+    new_card = f"""
+      <article class="news-row">
+        <div class="news-date-badge">
+          <div class="news-date-month">{m}月</div>
+          <div class="news-date-day">{d}</div>
         </div>
-        <div class="article-row-body">
-          <div class="article-row-meta">
-            <span class="tag {tag_class}">{cat}</span>
-            <span>{date_display}</span>
-            <span>読了 {article.get('read_time', 5)}分</span>
+        <div>
+          <div class="news-meta">
+            <span class="tag tag-ma">適時開示まとめ</span>
+            <span>{len(news_items)}件</span>
           </div>
-          <h2 class="article-row-title">
-            <a href="/blog/{slug}.html">{article['h1']}</a>
-          </h2>
-          <p class="article-row-excerpt">{article['lead'][:80]}...</p>
+          <div class="news-title">
+            <a href="/news/ma-{date_str}.html">{digest['h1']}</a>
+          </div>
+          <p class="news-excerpt">{digest['lead'][:80]}...</p>
         </div>
       </article>"""
 
-        html = html.replace(insert_marker, insert_marker + new_card)
+    html = html.replace(insert_marker, insert_marker + new_card)
+    html = html.replace(
+        '<div id="empty-state" style="text-align:center;padding:60px 0;color:var(--gray-400);">',
+        '<div id="empty-state" style="display:none;text-align:center;padding:60px 0;color:var(--gray-400);">'
+    )
 
     with open(index_path, "w", encoding="utf-8") as f:
         f.write(html)
+    print("news/index.html を更新しました")
 
-    print(f"blog/index.html を更新しました（{len(new_articles)}記事追加）")
 
-
-# ── メイン処理 ────────────────────────────────────────
 def main():
-    print(f"=== JP NEXT 自動記事生成 {jst_now().strftime('%Y-%m-%d %H:%M')} ===")
+    print(f"=== JP NEXT M&Aニュースまとめ生成 {jst_now().strftime('%Y-%m-%d %H:%M')} ===")
 
-    posted_data = load_posted()
-    posted_ids  = set(posted_data.get("posted_ids", []))
+    posted_data  = load_posted()
+    posted_dates = set(posted_data.get("posted_dates", []))
 
-    # TDnetからニュース取得
-    news_items = fetch_tdnet_news()
-    print(f"M&A関連ニュース: {len(news_items)}件")
+    yesterday, news_items = fetch_yesterday_news()
 
     if not news_items:
-        print("新着ニュースなし。終了します。")
+        print("M&A関連の適時開示なし。終了します。")
         return
 
-    # 未投稿のみフィルタ
-    new_items = [n for n in news_items if n["id"] not in posted_ids]
-    print(f"未投稿: {len(new_items)}件")
-
-    if not new_items:
-        print("新規投稿対象なし。終了します。")
+    if yesterday in posted_dates:
+        print(f"{yesterday}分は既に生成済み。終了します。")
         return
 
-    new_items = new_items[:MAX_ARTICLES_PER_RUN]
-    os.makedirs(BLOG_DIR, exist_ok=True)
+    print(f"\n{yesterday}のM&A適時開示 {len(news_items)}件でまとめ記事を生成中...")
 
-    generated = []
-    for news_item in new_items:
-        print(f"\n記事生成中: {news_item['company']} — {news_item['title'][:40]}...")
-        try:
-            article = generate_article_content(news_item)
-            slug    = f"tdnet-{news_item['date']}-{slugify(news_item['title'])}"
-            html    = build_article_html(news_item, article, slug)
+    try:
+        digest = generate_digest(yesterday, news_items)
+        html   = build_digest_html(yesterday, digest, news_items)
 
-            filepath = os.path.join(BLOG_DIR, f"{slug}.html")
-            with open(filepath, "w", encoding="utf-8") as f:
-                f.write(html)
+        os.makedirs(NEWS_DIR, exist_ok=True)
+        filepath = os.path.join(NEWS_DIR, f"ma-{yesterday}.html")
 
-            posted_ids.add(news_item["id"])
-            generated.append((news_item, article, slug))
-            print(f"  → 生成完了: {filepath}")
+        with open(filepath, "w", encoding="utf-8") as f:
+            f.write(html)
 
-        except Exception as e:
-            print(f"  → 生成失敗: {e}")
+        update_news_index(yesterday, digest, news_items)
 
-    if generated:
-        update_blog_index(generated)
-        posted_data["posted_ids"] = list(posted_ids)
+        posted_dates.add(yesterday)
+        posted_data["posted_dates"] = list(posted_dates)
         save_posted(posted_data)
-        print(f"\n完了: {len(generated)}記事を生成しました")
-    else:
-        print("\n生成できた記事がありませんでした")
+
+        print(f"\n完了: {filepath} ({len(news_items)}件分)")
+
+    except Exception as e:
+        print(f"\n生成失敗: {e}")
+        raise
 
 
 if __name__ == "__main__":
