@@ -75,124 +75,75 @@ def fetch_url(url, timeout=15):
 
 # ── TDnetからニュース取得 ─────────────────────────────
 def fetch_tdnet_news():
-    """複数ソースからM&A関連ニュースを取得"""
+    """やのしんTDnet WEB-APIから適時開示情報を取得"""
     news_items = []
-
-    # ソース1: Google News RSS
-    gnews_items = fetch_from_google_news()
-    news_items.extend(gnews_items)
-    print(f"Google News: {len(gnews_items)}件取得")
-
-    # ソース2: TDnet RSS
-    tdnet_items = fetch_from_tdnet_rss()
-    news_items.extend(tdnet_items)
-    print(f"TDnet RSS: {len(tdnet_items)}件取得")
-
-    return news_items
-
-def fetch_from_tdnet_rss():
-    """TDnet RSSフィードからM&A関連ニュースを取得"""
-    items = []
     today = jst_now().strftime("%Y%m%d")
+    yesterday = (jst_now() - timedelta(days=1)).strftime("%Y%m%d")
 
-    rss_urls = [
-        "https://www.release.tdnet.info/inbs/I_list_001_x.rss",
-        f"https://www.release.tdnet.info/inbs/I_list_001_{today}.rss",
+    # やのしんTDnet WEB-API（無料・非公式）
+    urls = [
+        f"https://webapi.yanoshin.jp/webapi/tdnet/list/{today}.rss",
+        f"https://webapi.yanoshin.jp/webapi/tdnet/list/{yesterday}.rss",
+        "https://webapi.yanoshin.jp/webapi/tdnet/list/recent.rss",
     ]
 
-    for rss_url in rss_urls:
-        try:
-            xml = fetch_url(rss_url)
-            root = ET.fromstring(xml)
-
-            entries = root.findall('.//item') or root.findall('.//{http://www.w3.org/2005/Atom}entry')
-
-            for entry in entries:
-                title_el = entry.find('title') or entry.find('{http://www.w3.org/2005/Atom}title')
-                link_el  = entry.find('link')  or entry.find('{http://www.w3.org/2005/Atom}link')
-                desc_el  = entry.find('description') or entry.find('{http://www.w3.org/2005/Atom}summary')
-
-                if title_el is None:
-                    continue
-
-                title = title_el.text or ''
-                url   = (link_el.text or link_el.get('href', '')) if link_el is not None else ''
-                desc  = desc_el.text or '' if desc_el is not None else ''
-
-                if not any(kw in title + desc for kw in MA_KEYWORDS):
-                    continue
-
-                company_match = re.search(r'【([^】]+)】', title)
-                company = company_match.group(1) if company_match else '開示企業'
-                item_id = hashlib.md5(f"{today}_{title}".encode()).hexdigest()[:16]
-
-                items.append({
-                    "id": item_id,
-                    "title": title,
-                    "company": company,
-                    "date": today,
-                    "url": url or f"https://www.release.tdnet.info/inbs/I_list_001_{today}.html",
-                })
-
-            if items:
-                break
-
-        except Exception as e:
-            print(f"TDnet RSS取得失敗: {e}")
-
-    return items
-
-def fetch_from_google_news():
-    """Google NewsのRSSからM&A関連ニュースを取得"""
-    items = []
-    today = jst_now().strftime("%Y%m%d")
     seen_ids = set()
 
-    keywords = ["M&A 買収 日本", "事業承継 売却", "TOB 株式公開買付", "企業買収 合併"]
-
-    for kw in keywords:
+    for url in urls:
         try:
-            encoded = urllib.parse.quote(kw)
-            rss_url = f"https://news.google.com/rss/search?q={encoded}&hl=ja&gl=JP&ceid=JP:ja"
-            xml = fetch_url(rss_url)
+            xml = fetch_url(url)
             root = ET.fromstring(xml)
+            items = root.findall('.//item')
+            print(f"TDnet取得: {url.split('/')[-1]} → {len(items)}件")
 
-            for entry in root.findall('.//item')[:4]:
-                title_el = entry.find('title')
-                link_el  = entry.find('link')
-                desc_el  = entry.find('description')
+            for item in items:
+                title_el = item.find('title')
+                link_el  = item.find('link')
+                desc_el  = item.find('description')
 
                 if title_el is None:
                     continue
 
                 title = title_el.text or ''
-                url   = link_el.text or '' if link_el is not None else ''
-                desc  = re.sub(r'<[^>]+>', '', desc_el.text or '') if desc_el is not None else ''
+                url_  = link_el.text or '' if link_el is not None else ''
+                desc  = desc_el.text or '' if desc_el is not None else ''
+                desc  = re.sub(r'<[^>]+>', '', desc)
 
-                if not any(kw2 in title + desc for kw2 in MA_KEYWORDS):
+                full_text = title + ' ' + desc
+                if not any(kw in full_text for kw in MA_KEYWORDS):
                     continue
 
-                item_id = hashlib.md5(f"{today}_{title}".encode()).hexdigest()[:16]
+                item_id = hashlib.md5(f"{title}".encode()).hexdigest()[:16]
                 if item_id in seen_ids:
                     continue
                 seen_ids.add(item_id)
 
-                source_match = re.search(r' - ([^-]+)$', title)
-                company = source_match.group(1).strip() if source_match else 'M&Aニュース'
-                clean_title = re.sub(r' - [^-]+$', '', title).strip()
+                # 会社名と開示タイトルを分離
+                # 例：「トヨタ自動車（7203）子会社の買収に関するお知らせ」
+                company_match = re.search(r'^(.+?)[（(]\d{4}[）)]', title)
+                if company_match:
+                    company = company_match.group(1).strip()
+                    disclosure_title = title
+                else:
+                    company = '上場企業'
+                    disclosure_title = title
 
-                items.append({
+                news_items.append({
                     "id": item_id,
-                    "title": clean_title,
+                    "title": disclosure_title,
                     "company": company,
                     "date": today,
-                    "url": url,
+                    "url": url_,
                 })
 
-        except Exception as e:
-            print(f"Google News取得失敗 ({kw}): {e}")
+            if news_items:
+                break
 
-    return items
+        except Exception as e:
+            print(f"TDnet取得失敗 ({url}): {e}")
+
+    print(f"M&A関連ニュース: {len(news_items)}件")
+    return news_items
 
 
 # ── Claude APIで記事生成 ──────────────────────────────
