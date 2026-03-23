@@ -3,598 +3,184 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JP NEXT | M&A・事業承継の情報メディア</title>
-  <meta name="description" content="M&A・事業承継を検討するオーナー経営者と、M&A業界への転職を目指すビジネスパーソンのための実務情報メディア。企業価値算定ツール無料提供。">
-  <meta property="og:title" content="JP NEXT | M&A・事業承継の情報メディア">
-  <meta property="og:description" content="実務経験者が作るM&A情報メディア。事業承継・企業売却の基礎知識から企業価値算定まで。">
-  <meta property="og:url" content="https://www.jpnext.co/">
-  <meta property="og:image" content="https://www.jpnext.co/ogp.png">
+  <title>M&Aニュース速報｜適時開示情報 — JP NEXT</title>
+  <meta name="description" content="上場企業の適時開示情報をもとにしたM&A・事業承継関連ニュース速報。東証TDnetの開示情報を毎日自動更新。">
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P8KB1E1GRV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-P8KB1E1GRV');
+  </script>
   <style>
-    /* ヒーロー */
-    .hero {
-      min-height: 88vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 80px 24px 60px;
-      gap: 60px;
-      align-items: center;
-    }
-    .hero-eyebrow {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      color: var(--accent);
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 24px;
-    }
-    .hero-eyebrow::before {
-      content: '';
-      display: block;
-      width: 32px;
-      height: 2px;
-      background: var(--accent);
-    }
-    .hero-title {
-      font-family: var(--font-serif);
-      font-size: clamp(2.4rem, 5vw, 4rem);
-      line-height: 1.2;
-      letter-spacing: -0.01em;
-      margin-bottom: 24px;
-    }
-    .hero-title em {
-      font-style: normal;
-      color: var(--accent);
-    }
-    .hero-desc {
-      font-size: 1rem;
-      color: var(--gray-600);
-      line-height: 1.9;
-      margin-bottom: 40px;
-      max-width: 480px;
-    }
-    .hero-btns {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    .hero-right {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .hero-stat-card {
-      background: var(--white);
-      border: 1px solid var(--gray-200);
-      border-radius: var(--radius-lg);
-      padding: 24px 28px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      transition: all var(--transition);
-    }
-    .hero-stat-card:hover {
-      border-color: var(--accent);
-      transform: translateX(4px);
-    }
-    .hero-stat-num {
-      font-family: var(--font-serif);
-      font-size: 2.4rem;
-      color: var(--accent);
-      line-height: 1;
-      min-width: 80px;
-    }
-    .hero-stat-num span { font-size: 1rem; }
-    .hero-stat-label { font-size: 0.85rem; color: var(--gray-600); line-height: 1.6; }
-    .hero-stat-label strong { display: block; font-size: 0.95rem; color: var(--black); margin-bottom: 2px; }
-    .hero-scroll {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 24px 40px;
-      display: flex;
-      gap: 32px;
-      align-items: center;
-      overflow-x: auto;
-    }
-    .hero-scroll-label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      color: var(--gray-400);
-      white-space: nowrap;
-      text-transform: uppercase;
-    }
-    .hero-scroll-divider {
-      width: 1px;
-      height: 24px;
-      background: var(--gray-200);
-      flex-shrink: 0;
-    }
-    .hero-scroll-item {
-      font-size: 0.82rem;
-      color: var(--gray-600);
-      white-space: nowrap;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .hero-scroll-item::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      flex-shrink: 0;
-    }
-
-    /* ターゲット2本立て */
-    .target-section {
-      background: var(--gray-100);
-      padding: 80px 24px;
-    }
-    .target-grid {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      margin-top: 48px;
-    }
-    .target-card {
-      background: var(--white);
-      border-radius: var(--radius-lg);
-      padding: 40px;
-      border: 1px solid var(--gray-200);
-      transition: all var(--transition);
-      position: relative;
-      overflow: hidden;
-    }
-    .target-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 4px;
-      height: 100%;
-    }
-    .target-card.owner::before { background: var(--accent); }
-    .target-card.career::before { background: var(--gold); }
-    .target-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.08);
-    }
-    .target-icon-label {
-      display: inline-block;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      padding: 5px 14px;
-      border-radius: 2px;
-      margin-bottom: 20px;
-      background: var(--accent);
-      color: var(--white);
-    }
-    .target-icon-label.career-label {
-      background: var(--gold);
-    }
-    .target-title {
-      font-family: var(--font-serif);
-      font-size: 1.4rem;
-      margin-bottom: 12px;
-    }
-    .target-desc { font-size: 0.9rem; color: var(--gray-600); line-height: 1.8; margin-bottom: 24px; }
-    .target-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .target-list li {
-      font-size: 0.85rem;
-      color: var(--gray-600);
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      padding: 10px 14px;
-      background: var(--gray-100);
-      border-radius: var(--radius);
-    }
-    .target-list li::before {
-      content: '→';
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-    .owner .target-list li::before { color: var(--accent); }
-    .career .target-list li::before { color: var(--gold); }
-
-    /* 記事一覧 */
-    .articles-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-top: 48px;
-    }
-    .article-card {
-      background: var(--white);
-      border: 1px solid var(--gray-200);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      transition: all var(--transition);
-      display: flex;
-      flex-direction: column;
-    }
-    .article-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(26,92,58,0.1);
-    }
-    .article-thumb {
-      height: 180px;
-      background: var(--gray-100);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.4rem;
-      border-bottom: 1px solid var(--gray-200);
-    }
-    .article-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
-    .article-meta {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 12px;
-      font-size: 0.75rem;
-      color: var(--gray-400);
-    }
-    .article-title {
-      font-family: var(--font-serif);
-      font-size: 1.05rem;
-      line-height: 1.5;
-      margin-bottom: 12px;
-      flex: 1;
-    }
-    .article-title a:hover { color: var(--accent); }
-    .article-excerpt { font-size: 0.82rem; color: var(--gray-600); line-height: 1.7; }
-
-    /* ツールCTA */
-    .tool-cta {
+    .news-hero {
       background: var(--black);
-      padding: 80px 24px;
+      padding: 48px 24px 40px;
+      border-bottom: 1px solid #222;
+    }
+    .news-hero-inner { max-width: var(--max-w); margin: 0 auto; }
+    .news-hero-label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em;
+      color: var(--accent-mid); text-transform: uppercase; margin-bottom: 12px;
+    }
+    .news-hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      color: var(--white); margin-bottom: 10px;
+    }
+    .news-hero-desc { font-size: 0.85rem; color: var(--gray-600); }
+    .news-notice {
+      background: var(--gold-light);
+      border-left: 4px solid var(--gold);
+      padding: 14px 20px;
+      font-size: 0.82rem;
+      color: #6b4e1a;
+      margin: 32px 0 0;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .news-layout {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 40px 24px;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .news-list { display: flex; flex-direction: column; gap: 16px; }
+    .news-row {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 20px 24px;
+      transition: all var(--transition);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+    .news-row:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(26,92,58,0.07);
+    }
+    .news-date-badge {
+      background: var(--gray-100);
+      border-radius: 6px;
+      padding: 8px 12px;
+      text-align: center;
+      min-width: 56px;
+      flex-shrink: 0;
+    }
+    .news-date-month { font-size: 0.65rem; color: var(--gray-400); letter-spacing: 0.06em; }
+    .news-date-day { font-family: var(--font-serif); font-size: 1.4rem; color: var(--black); line-height: 1; }
+    .news-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; font-size: 0.75rem; color: var(--gray-400); }
+    .news-title { font-size: 0.95rem; font-weight: 500; line-height: 1.5; margin-bottom: 6px; }
+    .news-title a { color: var(--black); }
+    .news-title a:hover { color: var(--accent); }
+    .news-excerpt { font-size: 0.8rem; color: var(--gray-600); line-height: 1.6; }
+
+    .sidebar-sticky { position: sticky; top: 80px; display: flex; flex-direction: column; gap: 20px; }
+    .sw { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; overflow: hidden; }
+    .sw-head { background: var(--accent); padding: 12px 18px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; color: var(--white); text-transform: uppercase; }
+    .sw-body { padding: 18px; font-size: 0.82rem; color: var(--gray-600); line-height: 1.7; }
+
+    .cta-to-blog {
+      background: var(--accent-light);
+      border: 1px solid #b8dcc8;
+      border-radius: 12px;
+      padding: 24px;
       text-align: center;
     }
-    .tool-cta-inner { max-width: 640px; margin: 0 auto; }
-    .tool-cta-label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      color: var(--accent-mid);
-      text-transform: uppercase;
-      margin-bottom: 16px;
-    }
-    .tool-cta-title {
-      font-family: var(--font-serif);
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
-      color: var(--white);
-      line-height: 1.3;
-      margin-bottom: 16px;
-    }
-    .tool-cta-desc { font-size: 0.9rem; color: var(--gray-400); margin-bottom: 40px; line-height: 1.8; }
-    .tool-features {
-      display: flex;
-      justify-content: center;
-      gap: 32px;
-      margin-bottom: 40px;
-      flex-wrap: wrap;
-    }
-    .tool-feature {
-      font-size: 0.82rem;
-      color: var(--gray-400);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .tool-feature::before {
-      content: '✓';
-      color: var(--accent-mid);
-      font-weight: 700;
-    }
-    .btn-white {
-      background: var(--white);
-      color: var(--black);
-      padding: 16px 40px;
-      font-size: 0.95rem;
-    }
-    .btn-white:hover {
-      background: var(--gray-100);
-      transform: translateY(-2px);
-    }
-
-    /* 転職ガイドCTA */
-    .career-cta {
-      background: var(--gold-light);
-      padding: 64px 24px;
-    }
-    .career-cta-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      gap: 40px;
-    }
-    .career-cta-title {
-      font-family: var(--font-serif);
-      font-size: 1.8rem;
-      color: var(--black);
-      margin-bottom: 10px;
-    }
-    .career-cta-desc { font-size: 0.9rem; color: var(--gray-600); }
-    .btn-gold {
-      background: var(--gold);
-      color: var(--white);
-      white-space: nowrap;
-    }
-    .btn-gold:hover { background: #9a7d24; transform: translateY(-1px); }
-
-    /* アニメーション */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .fade-up { animation: fadeUp 0.7s ease both; }
-    .fade-up-1 { animation-delay: 0.1s; }
-    .fade-up-2 { animation-delay: 0.2s; }
-    .fade-up-3 { animation-delay: 0.3s; }
-    .fade-up-4 { animation-delay: 0.4s; }
+    .cta-to-blog-title { font-family: var(--font-serif); font-size: 1.1rem; color: var(--black); margin-bottom: 8px; }
+    .cta-to-blog-desc { font-size: 0.8rem; color: var(--gray-600); margin-bottom: 16px; line-height: 1.7; }
 
     @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 48px; }
-      .hero-right { display: none; }
-      .target-grid { grid-template-columns: 1fr; }
-      .articles-grid { grid-template-columns: 1fr; }
-      .career-cta-inner { grid-template-columns: 1fr; }
+      .news-layout { grid-template-columns: 1fr; }
+      .sidebar-sticky { display: none; }
     }
   </style>
 </head>
 <body>
 
-<!-- ナビゲーション -->
 <nav class="nav">
   <div class="nav-inner">
     <a href="/" class="nav-logo">JP <span>NEXT</span></a>
     <ul class="nav-links">
       <li><a href="/blog/">コラム</a></li>
-      <li><a href="/blog/?cat=jigyo">事業承継</a></li>
+      <li><a href="/news/">M&Aニュース</a></li>
       <li><a href="/blog/?cat=career">転職ガイド</a></li>
       <li><a href="/ma-tool.html">無料ツール</a></li>
-      <li><a href="#contact" class="nav-cta">無料相談</a></li>
+      <li><a href="/#contact" class="nav-cta">無料相談</a></li>
     </ul>
   </div>
 </nav>
 
-<!-- ヒーロー -->
-<section style="border-bottom: 1px solid var(--gray-200);">
-  <div class="hero">
-    <div class="hero-left">
-      <div class="hero-eyebrow fade-up">M&A · 事業承継 · キャリア</div>
-      <h1 class="hero-title fade-up fade-up-1">
-        日本の中小企業の<br>
-        <em>次の一手</em>を、<br>
-        ともに考える。
-      </h1>
-      <p class="hero-desc fade-up fade-up-2">
-        事業承継を検討するオーナー経営者と、M&A業界への転職を目指すビジネスパーソンのための実務情報メディア。現場経験者による、本当に使える情報を届けます。
-      </p>
-      <div class="hero-btns fade-up fade-up-3">
-        <a href="/blog/" class="btn btn-primary">記事を読む</a>
-        <a href="/ma-tool.html" class="btn btn-outline">無料で企業価値を算定する</a>
+<div class="news-hero">
+  <div class="news-hero-inner">
+    <div class="news-hero-label">M&A News</div>
+    <h1 class="news-hero-title">M&Aニュース速報</h1>
+    <p class="news-hero-desc">東証TDnet適時開示情報をもとにしたM&A・事業承継関連ニュース。毎日自動更新。</p>
+    <div class="news-notice">
+      このページの記事は上場企業の適時開示情報（東証TDnet）をもとに自動生成されたものです。実務解説記事は<a href="/blog/" style="color:var(--gold);font-weight:700;">コラム</a>をご覧ください。
+    </div>
+  </div>
+</div>
+
+<div class="news-layout">
+  <main>
+    <div class="news-list" id="newsList">
+      <!-- 自動生成記事がここに追加されます -->
+    </div>
+    <div id="empty-state" style="text-align:center;padding:60px 0;color:var(--gray-400);">
+      <p style="font-size:0.9rem;">記事を準備中です。しばらくお待ちください。</p>
+    </div>
+  </main>
+
+  <aside class="sidebar-sticky">
+    <div class="cta-to-blog">
+      <div class="cta-to-blog-title">実務解説記事はこちら</div>
+      <p class="cta-to-blog-desc">M&Aアドバイザーの実務経験をもとにした詳しい解説記事を公開しています。</p>
+      <a href="/blog/" class="btn btn-primary" style="display:block;text-align:center;padding:10px;">コラムを読む →</a>
+    </div>
+
+    <div style="background:var(--black);border-radius:12px;padding:22px;text-align:center;">
+      <div style="font-family:var(--font-serif);font-size:1rem;color:var(--white);margin-bottom:8px;">無料で企業価値を算定</div>
+      <p style="font-size:0.78rem;color:var(--gray-600);margin-bottom:16px;line-height:1.7;">登録不要。売上・利益を入力するだけ。</p>
+      <a href="/ma-tool.html" class="btn btn-primary" style="display:block;text-align:center;padding:10px;font-size:0.82rem;">ツールを使う →</a>
+    </div>
+
+    <div class="sw">
+      <div class="sw-head">このサイトについて</div>
+      <div class="sw-body">
+        <p>JP NEXTはM&A・事業承継の実務経験者が運営するメディアです。</p>
+        <a href="/blog/ma-career.html" style="color:var(--accent);font-size:0.82rem;">→ 運営者のM&A転職体験記</a>
       </div>
     </div>
-    <div class="hero-right">
-      <div class="hero-stat-card fade-up fade-up-1">
-        <div class="hero-stat-num">5<span>年+</span></div>
-        <div class="hero-stat-label">
-          <strong>M&A実務経験</strong>
-          複数のM&A仲介・FA業務経験をもとに実態に即した情報を提供
-        </div>
-      </div>
-      <div class="hero-stat-card fade-up fade-up-2">
-        <div class="hero-stat-num">無料</div>
-        <div class="hero-stat-label">
-          <strong>企業価値算定ツール</strong>
-          EV/EBITDA・DCF・類似会社比較。登録不要で即利用可能
-        </div>
-      </div>
-      <div class="hero-stat-card fade-up fade-up-3">
-        <div class="hero-stat-num">2<span>本立て</span></div>
-        <div class="hero-stat-label">
-          <strong>売り手・転職者 両対応</strong>
-          事業承継を考えるオーナーとM&A転職希望者、両方の導線を用意
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="hero-scroll">
-    <span class="hero-scroll-label">カバーテーマ</span>
-    <div class="hero-scroll-divider"></div>
-    <span class="hero-scroll-item">事業承継の基本</span>
-    <span class="hero-scroll-item">企業価値算定</span>
-    <span class="hero-scroll-item">M&A仲介会社の選び方</span>
-    <span class="hero-scroll-item">デューデリジェンス</span>
-    <span class="hero-scroll-item">M&A業界転職</span>
-    <span class="hero-scroll-item">年収・キャリアパス</span>
-    <span class="hero-scroll-item">PMI</span>
-  </div>
-</section>
+  </aside>
+</div>
 
-<!-- ターゲット2本立て -->
-<section class="target-section">
-  <div style="max-width: var(--max-w); margin: 0 auto;">
-    <div class="section-label">あなたに合った情報を</div>
-    <h2 class="section-title">どちらをお探しですか？</h2>
-    <p class="section-desc">JP NEXTは2つの読者層に向けた情報を提供しています。</p>
-  </div>
-  <div class="target-grid">
-    <a href="/blog/?cat=jigyo" class="target-card owner">
-      <div class="target-icon-label">売り手 / オーナー</div>
-      <div class="target-title">事業承継・売却を<br>検討するオーナーへ</div>
-      <p class="target-desc">後継者不在・業績好調での売却・引退検討など、M&Aを検討する経営者のための実務情報。</p>
-      <ul class="target-list">
-        <li>自社の企業価値はいくらか知りたい</li>
-        <li>M&A仲介会社の選び方がわからない</li>
-        <li>売却までのプロセスを把握したい</li>
-        <li>従業員・取引先への影響が心配</li>
-      </ul>
-    </a>
-    <a href="/blog/?cat=career" class="target-card career">
-      <div class="target-icon-label career-label">転職希望者</div>
-      <div class="target-title">M&A業界への<br>転職を目指す方へ</div>
-      <p class="target-desc">銀行・不動産・コンサルからのM&A転職を考える方のためのキャリア情報。年収・選考・実務まで。</p>
-      <ul class="target-list">
-        <li>M&Aアドバイザーの年収・働き方を知りたい</li>
-        <li>未経験からM&Aに転職できるか知りたい</li>
-        <li>日本M&Aセンター・ストライク等を比較したい</li>
-        <li>選考対策・面接でのアピール方法を知りたい</li>
-      </ul>
-    </a>
-  </div>
-</section>
-
-<!-- 最新記事 -->
-<section class="section">
-  <div class="section-inner">
-    <div class="section-label">最新コラム</div>
-    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 0;">
-      <h2 class="section-title">新着記事</h2>
-      <a href="/blog/" class="btn btn-outline" style="padding: 10px 24px; font-size: 0.82rem;">すべて見る →</a>
-    </div>
-    <div class="articles-grid">
-      <!-- 記事カード1 -->
-      <article class="article-card">
-        <div class="article-thumb" style="background: var(--accent); display:flex; align-items:center; justify-content:center;">
-          <span style="font-family:var(--font-serif); font-size:1rem; color:rgba(255,255,255,0.9); letter-spacing:0.1em; font-weight:400;">事業承継</span>
-        </div>
-        <div class="article-body">
-          <div class="article-meta">
-            <span class="tag tag-ma">事業承継</span>
-            <span>2025.01.15</span>
-          </div>
-          <h3 class="article-title">
-            <a href="/blog/kigyokachi-santei.html">中小企業の企業価値算定｜M&Aアドバイザーが実務で使う3つの手法を解説</a>
-          </h3>
-          <p class="article-excerpt">EV/EBITDA倍率、DCF法、類似会社比較法。それぞれの特徴と、実際の現場での使われ方を解説します。</p>
-        </div>
-      </article>
-      <!-- 記事カード2 -->
-      <article class="article-card">
-        <div class="article-thumb" style="background: var(--black); display:flex; align-items:center; justify-content:center;">
-          <span style="font-family:var(--font-serif); font-size:1rem; color:rgba(255,255,255,0.9); letter-spacing:0.1em; font-weight:400;">M&A仲介</span>
-        </div>
-        <div class="article-body">
-          <div class="article-meta">
-            <span class="tag tag-ma">M&A仲介</span>
-            <span>2025.01.10</span>
-          </div>
-          <h3 class="article-title">
-            <a href="/blog/chukaisya-hikaku.html">日本M&Aセンター・ストライク・M&A総研を比較｜手数料・実績・特徴の違い</a>
-          </h3>
-          <p class="article-excerpt">主要M&A仲介会社の手数料体系・成約実績・得意な規模感を実務目線で比較。どこに依頼すべきか。</p>
-        </div>
-      </article>
-      <!-- 記事カード3 -->
-      <article class="article-card">
-        <div class="article-thumb" style="background: var(--gold); display:flex; align-items:center; justify-content:center;">
-          <span style="font-family:var(--font-serif); font-size:1rem; color:rgba(255,255,255,0.9); letter-spacing:0.1em; font-weight:400;">転職</span>
-        </div>
-        <div class="article-body">
-          <div class="article-meta">
-            <span class="tag tag-transfer">転職</span>
-            <span>2025.01.05</span>
-          </div>
-          <h3 class="article-title">
-            <a href="/blog/ma-career.html">M&Aアドバイザーの年収は？未経験転職から1年目の実態を公開</a>
-          </h3>
-          <p class="article-excerpt">固定給・インセンティブの仕組み、1件成約時の報酬感、未経験入社1年目のリアルな数字を解説。</p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- 企業価値算定ツールCTA -->
-<section class="tool-cta">
-  <div class="tool-cta-inner">
-    <div class="tool-cta-label">Free Tool</div>
-    <h2 class="tool-cta-title">自社の企業価値を<br>今すぐ無料で算定する</h2>
-    <p class="tool-cta-desc">売上・利益・業種を入力するだけ。M&Aアドバイザーが実務で使う手法をもとに設計した、本格的な企業価値算定ツールを無料提供。登録不要。</p>
-    <div class="tool-features">
-      <span class="tool-feature">EV/EBITDA倍率</span>
-      <span class="tool-feature">DCF感応度分析</span>
-      <span class="tool-feature">類似会社比較</span>
-      <span class="tool-feature">Excel/PDF出力</span>
-    </div>
-    <a href="/ma-tool.html" class="btn btn-white">無料で試す →</a>
-  </div>
-</section>
-
-<!-- 転職ガイドCTA -->
-<section class="career-cta">
-  <div class="career-cta-inner">
-    <div>
-      <div class="section-label">転職ガイド</div>
-      <div class="career-cta-title">M&A業界転職の<br>全手順をまとめました</div>
-      <p class="career-cta-desc">志望動機・選考対策・入社後のキャリアパスまで。実務経験者が書く転職ガイド。</p>
-    </div>
-    <a href="/blog/?cat=career" class="btn btn-gold">転職ガイドを読む →</a>
-  </div>
-</section>
-
-<!-- フッター -->
-<footer class="footer" id="contact">
+<footer class="footer">
   <div class="footer-inner">
     <div class="footer-logo">JP <span>NEXT</span></div>
     <div class="footer-tagline">M&A・事業承継の実務情報メディア</div>
-    <div class="footer-grid">
-      <div>
-        <div class="footer-col-title">JP NEXTについて</div>
-        <p style="font-size:0.85rem; color: var(--gray-600); line-height:1.8; max-width:320px;">
-          不動産・M&Aの実務経験者が運営するメディアです。「現場を知る者だけが書ける情報」をコンセプトに、オーナー経営者とM&A転職希望者に向けた実践的なコンテンツを提供しています。
-        </p>
-      </div>
-      <div>
-        <div class="footer-col-title">コンテンツ</div>
-        <ul class="footer-links">
-          <li><a href="/blog/">最新記事</a></li>
-          <li><a href="/blog/?cat=jigyo">事業承継コラム</a></li>
-          <li><a href="/blog/?cat=career">転職ガイド</a></li>
-          <li><a href="/ma-tool.html">企業価値算定ツール</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="footer-col-title">M&A情報</div>
-        <ul class="footer-links">
-          <li><a href="/blog/kigyokachi-santei.html">企業価値算定とは</a></li>
-          <li><a href="/blog/chukaisya-hikaku.html">仲介会社比較</a></li>
-          <li><a href="/blog/jigyo-shokei.html">事業承継の流れ</a></li>
-          <li><a href="/blog/dd-checklist.html">DDチェックリスト</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="footer-col-title">サイト情報</div>
-        <ul class="footer-links">
-          <li><a href="/about.html">運営者情報</a></li>
-          <li><a href="/privacy.html">プライバシーポリシー</a></li>
-          <li><a href="/affiliate.html">アフィリエイト開示</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
+    <div class="footer-bottom" style="margin-top:32px;">
       <span>© 2025 JP NEXT. All rights reserved.</span>
-      <span>実務経験者が作るM&A情報メディア</span>
+      <a href="/" style="color:var(--gray-600);">トップへ戻る</a>
     </div>
   </div>
 </footer>
 
+<script>
+const list = document.getElementById('newsList');
+const empty = document.getElementById('empty-state');
+if (list && list.children.length > 0) {
+  empty.style.display = 'none';
+}
+</script>
 </body>
 </html>
