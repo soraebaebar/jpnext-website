@@ -2,9 +2,7 @@ name: 自動記事生成（TDnet連携）
 
 on:
   schedule:
-    # 毎日 朝9時（JST）に実行 = UTC 0:00
-    - cron: '0 0 * * *'
-  # 手動実行も可能
+    - cron: '*/30 * * * *'
   workflow_dispatch:
 
 jobs:
@@ -36,6 +34,5 @@ jobs:
           git config user.name  "JP NEXT Bot"
           git config user.email "bot@jpnext.co"
           git add blog/ data/
-          # 変更がある場合のみコミット
-          git diff --staged --quiet || git commit -m "auto: TDnet記事生成 $(date +'%Y-%m-%d')"
+          git diff --staged --quiet || git commit -m "auto: TDnet記事生成 $(date +'%Y-%m-%d %H:%M')"
           git push
