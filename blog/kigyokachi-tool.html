@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>企業価値算定ツールの使い方｜3手法で即時算定・登録不要 | JP NEXT</title>
+  <meta name="description" content="JP NEXTの無料企業価値算定ツールの使い方を解説。EV/EBITDA法・DCF法・純資産のれん法の3手法で即時算定。売上・利益を入力するだけ。登録不要。">
+  <meta property="og:title" content="企業価値算定ツールの使い方｜3手法で即時算定・登録不要">
+  <meta property="og:url" content="https://www.jpnext.co/blog/kigyokachi-tool.html">
+  <link rel="canonical" href="https://www.jpnext.co/blog/kigyokachi-tool.html">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P8KB1E1GRV"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P8KB1E1GRV');</script>
+  <style>
+    .article-header{background:var(--gray-100);padding:56px 24px 48px;border-bottom:1px solid var(--gray-200);}
+    .article-header-inner{max-width:760px;margin:0 auto;}
+    .article-meta{display:flex;align-items:center;gap:12px;margin-bottom:20px;font-size:0.8rem;color:var(--gray-400);flex-wrap:wrap;}
+    .article-title{font-family:var(--font-serif);font-size:clamp(1.6rem,3.5vw,2.2rem);line-height:1.4;margin-bottom:20px;}
+    .article-lead{font-size:0.95rem;color:var(--gray-600);line-height:1.9;padding:20px 24px;background:var(--white);border-left:4px solid var(--accent);border-radius:0 4px 4px 0;}
+    .article-layout{max-width:960px;margin:0 auto;padding:48px 24px;display:grid;grid-template-columns:1fr 260px;gap:48px;align-items:start;}
+    .article-content h2{font-family:var(--font-serif);font-size:1.5rem;margin:48px 0 18px;padding-bottom:12px;border-bottom:2px solid var(--gray-200);position:relative;}
+    .article-content h2::after{content:'';position:absolute;bottom:-2px;left:0;width:40px;height:2px;background:var(--accent);}
+    .article-content h3{font-size:1.05rem;font-weight:700;margin:28px 0 12px;display:flex;align-items:center;gap:8px;}
+    .article-content h3::before{content:'';display:block;width:4px;height:16px;background:var(--accent);border-radius:2px;flex-shrink:0;}
+    .article-content p{font-size:0.95rem;line-height:1.95;color:#2a2a2a;margin-bottom:18px;}
+    .article-content ul{margin:0 0 20px 20px;}
+    .article-content li{font-size:0.95rem;line-height:1.8;color:#2a2a2a;margin-bottom:6px;}
+    .article-content strong{font-weight:700;color:var(--black);}
+    .toc{background:var(--gray-100);border-radius:12px;padding:24px 28px;margin:28px 0 40px;}
+    .toc-title{font-size:0.78rem;font-weight:700;color:var(--gray-600);margin-bottom:14px;letter-spacing:0.06em;}
+    .toc ol{margin:0 0 0 16px;}
+    .toc li{font-size:0.85rem;margin-bottom:8px;}
+    .toc a{color:var(--accent);}
+    .info-box{background:var(--accent-light);border:1px solid #b8dcc8;border-radius:8px;padding:20px 24px;margin:24px 0;}
+    .info-title{font-size:0.8rem;font-weight:700;color:var(--accent);margin-bottom:10px;letter-spacing:0.06em;}
+    .info-box p{font-size:0.88rem;color:var(--accent);margin-bottom:0;}
+    .step-box{background:var(--white);border:1px solid var(--gray-200);border-radius:12px;padding:24px 28px;margin:20px 0;display:grid;grid-template-columns:48px 1fr;gap:16px;align-items:start;}
+    .step-circle{width:48px;height:48px;border-radius:50%;background:var(--accent);color:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-size:1.1rem;font-weight:700;flex-shrink:0;}
+    .step-content-title{font-size:1rem;font-weight:700;margin-bottom:8px;}
+    .step-content-desc{font-size:0.88rem;color:var(--gray-600);line-height:1.8;}
+    .feature-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:24px 0;}
+    .feature-item{background:var(--gray-100);border-radius:8px;padding:20px;text-align:center;}
+    .feature-icon{font-size:1.8rem;margin-bottom:8px;}
+    .feature-label{font-size:0.88rem;font-weight:700;color:var(--black);margin-bottom:4px;}
+    .feature-desc{font-size:0.78rem;color:var(--gray-600);line-height:1.6;}
+    .author-box{border:1px solid var(--gray-200);border-radius:12px;padding:28px;display:flex;gap:20px;align-items:flex-start;margin:48px 0 32px;}
+    .author-avatar{width:56px;height:56px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:0.9rem;color:var(--white);flex-shrink:0;font-weight:700;}
+    .author-name{font-weight:700;font-size:0.95rem;margin-bottom:4px;}
+    .author-title{font-size:0.78rem;color:var(--accent);margin-bottom:10px;}
+    .author-bio{font-size:0.82rem;color:var(--gray-600);line-height:1.7;}
+    .sidebar-sticky{position:sticky;top:80px;display:flex;flex-direction:column;gap:20px;}
+    .sw{background:var(--white);border:1px solid var(--gray-200);border-radius:12px;overflow:hidden;}
+    .sw-head{background:var(--accent);padding:12px 18px;font-size:0.72rem;font-weight:700;letter-spacing:0.1em;color:var(--white);text-transform:uppercase;}
+    .sw-body{padding:18px;font-size:0.82rem;color:var(--gray-600);line-height:1.7;}
+    @media(max-width:900px){.article-layout{grid-template-columns:1fr;}.sidebar-sticky{display:none;}.feature-grid{grid-template-columns:1fr 1fr;}}
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">JP <span>NEXT</span></a>
+    <ul class="nav-links">
+      <li><a href="/blog/">コラム</a></li>
+      <li><a href="/news/">M&Aニュース</a></li>
+      <li><a href="/blog/?cat=career">転職ガイド</a></li>
+      <li><a href="/ma-tool.html">無料ツール</a></li>
+      <li><a href="/#contact" class="nav-cta">無料相談</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div style="padding:12px 24px;font-size:0.78rem;color:var(--gray-400);border-bottom:1px solid var(--gray-200);">
+  <div style="max-width:var(--max-w);margin:0 auto;">
+    <a href="/" style="color:var(--gray-400);">JP NEXT</a> ›
+    <a href="/blog/" style="color:var(--gray-400);">コラム</a> ›
+    <a href="/blog/?cat=tool" style="color:var(--gray-400);">ツール解説</a> ›
+    企業価値算定ツールの使い方
+  </div>
+</div>
+
+<div class="article-header">
+  <div class="article-header-inner">
+    <div class="article-meta">
+      <span class="tag tag-news">ツール解説</span>
+      <span>2026.03.23</span>
+      <span>読了 5分</span>
+    </div>
+    <h1 class="article-title">企業価値算定ツールの使い方｜EV/EBITDA・DCF・純資産のれん法の3手法で即時算定</h1>
+    <p class="article-lead">JP NEXTの無料企業価値算定ツールは、売上・利益などの基本情報を入力するだけで、3つの手法による企業価値の概算が即時表示されます。登録不要・完全無料。M&Aを検討中のオーナーが最初に使うべきツールです。</p>
+  </div>
+</div>
+
+<div class="article-layout">
+  <article class="article-content">
+
+    <nav class="toc">
+      <div class="toc-title">目次</div>
+      <ol>
+        <li><a href="#s1">このツールでできること</a></li>
+        <li><a href="#s2">使い方：3ステップで算定完了</a></li>
+        <li><a href="#s3">手法①：EV/EBITDA法タブの使い方</a></li>
+        <li><a href="#s4">手法②：DCF法タブの使い方</a></li>
+        <li><a href="#s5">手法③：純資産のれん法タブの使い方</a></li>
+        <li><a href="#s6">算定結果の見方・活用方法</a></li>
+        <li><a href="#s7">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="s1">このツールでできること</h2>
+
+    <div class="feature-grid">
+      <div class="feature-item">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-label">即時算定</div>
+        <div class="feature-desc">入力と同時にリアルタイムで結果が表示</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🔓</div>
+        <div class="feature-label">登録不要</div>
+        <div class="feature-desc">会員登録・メールアドレス不要で使える</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📊</div>
+        <div class="feature-label">3手法対応</div>
+        <div class="feature-desc">EV/EBITDA・DCF・純資産のれん法</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">💰</div>
+        <div class="feature-label">完全無料</div>
+        <div class="feature-desc">すべての機能を無料で利用可能</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📥</div>
+        <div class="feature-label">結果を出力</div>
+        <div class="feature-desc">CSV・Excelへのエクスポートに対応</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🔒</div>
+        <div class="feature-label">秘密厳守</div>
+        <div class="feature-desc">入力情報はサーバーに保存されない</div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <div class="info-title">このツールは概算算定ツールです</div>
+      <p>このツールで算定できるのはあくまで概算です。正確な企業価値算定はM&A仲介会社・FA・公認会計士への相談が必要です。M&Aを本格的に検討する際の「まず自社の価値感を掴む」ための参考としてご活用ください。</p>
+    </div>
+
+    <h2 id="s2">使い方：3ステップで算定完了</h2>
+
+    <div class="step-box">
+      <div class="step-circle">1</div>
+      <div>
+        <div class="step-content-title">ツールページを開く</div>
+        <p class="step-content-desc">下のボタンから企業価値算定ツールを開きます。ページを開いたらすぐに使えます。ログイン・会員登録は不要です。</p>
+        <a href="/ma-tool.html" class="btn btn-primary" style="display:inline-block;padding:8px 20px;font-size:0.82rem;margin-top:8px;">ツールを開く →</a>
+      </div>
+    </div>
+
+    <div class="step-box">
+      <div class="step-circle">2</div>
+      <div>
+        <div class="step-content-title">算定手法のタブを選ぶ</div>
+        <p class="step-content-desc">画面上部に「EV/EBITDA法」「DCF法」「純資産のれん法」の3つのタブがあります。まずは最もシンプルな「EV/EBITDA法」から試すのがおすすめです。</p>
+      </div>
+    </div>
+
+    <div class="step-box">
+      <div class="step-circle">3</div>
+      <div>
+        <div class="step-content-title">数値を入力して結果を確認</div>
+        <p class="step-content-desc">売上・営業利益・EBITDAなどの基本情報を入力すると、右側にリアルタイムで算定結果が表示されます。スライダーで倍率を調整して価格レンジを確認できます。</p>
+      </div>
+    </div>
+
+    <h2 id="s3">手法①：EV/EBITDA法タブの使い方</h2>
+    <p>最もよく使われる手法です。EBITDAと業界倍率を入力するだけで企業価値が算定できます。</p>
+
+    <h3>入力項目</h3>
+    <ul>
+      <li><strong>売上高</strong>：直近の年間売上高を入力</li>
+      <li><strong>営業利益</strong>：直近の年間営業利益を入力</li>
+      <li><strong>EBITDA</strong>：営業利益＋減価償却費（自動計算補助あり）</li>
+      <li><strong>EV/EBITDA倍率</strong>：スライダーで業界相場に合わせて調整</li>
+      <li><strong>純有利子負債</strong>：借入金－現預金</li>
+    </ul>
+
+    <h3>結果の見方</h3>
+    <p>「EV（企業価値）」と「株式価値」が表示されます。M&Aの売却価格は通常「株式価値」＝売却金額の目安になります。倍率スライダーを動かして、楽観シナリオ・中間シナリオ・悲観シナリオを確認してみてください。</p>
+
+    <h2 id="s4">手法②：DCF法タブの使い方</h2>
+    <p>将来のキャッシュフローをもとに算定する手法です。事業計画がある場合に特に有効です。</p>
+
+    <h3>入力項目</h3>
+    <ul>
+      <li><strong>1〜5年目のフリーキャッシュフロー</strong>：各年の予想FCFを入力</li>
+      <li><strong>WACC</strong>：スライダーで5〜15%の範囲で調整（中小企業は8〜12%程度が目安）</li>
+      <li><strong>永続成長率</strong>：ターミナルバリューの計算に使用（0〜2%程度）</li>
+    </ul>
+
+    <h2 id="s5">手法③：純資産のれん法タブの使い方</h2>
+    <p>中小M&Aで最もよく使われる実務的な手法です。</p>
+
+    <h3>入力項目</h3>
+    <ul>
+      <li><strong>簿価純資産</strong>：貸借対照表の純資産合計</li>
+      <li><strong>含み損益</strong>：不動産・株式などの時価と簿価の差額</li>
+      <li><strong>年間利益</strong>：直近の経常利益または営業利益</li>
+      <li><strong>のれん年数</strong>：スライダーで3〜7年の範囲で調整</li>
+    </ul>
+
+    <h2 id="s6">算定結果の見方・活用方法</h2>
+    <p>3手法で算定した結果が出たら、数字を以下のように活用してください。</p>
+    <ul>
+      <li><strong>価格レンジの把握</strong>：3手法の結果を比較して、売却価格の上限・下限・中間値のイメージを掴む</li>
+      <li><strong>仲介会社への相談準備</strong>：算定結果を持参することで、仲介会社との初回面談がスムーズになる</li>
+      <li><strong>希望価格の根拠作り</strong>：「なぜこの価格で売りたいのか」を数字で説明できるようになる</li>
+    </ul>
+
+    <div style="background:var(--black);border-radius:12px;padding:28px;text-align:center;margin:28px 0;">
+      <div style="font-family:var(--font-serif);font-size:1.3rem;color:var(--white);margin-bottom:10px;">今すぐ算定してみる</div>
+      <p style="font-size:0.85rem;color:var(--gray-600);margin-bottom:20px;">登録不要・完全無料。入力情報はサーバーに保存されません。</p>
+      <a href="/ma-tool.html" class="btn btn-primary" style="display:inline-block;padding:12px 32px;">企業価値算定ツールを使う →</a>
+    </div>
+
+    <h2 id="s7">よくある質問</h2>
+
+    <h3>入力した数字は外部に漏れますか？</h3>
+    <p>入力した数値はブラウザ上でのみ処理され、サーバーには一切送信・保存されません。機密情報を安心して入力いただけます。</p>
+
+    <h3>算定結果はそのまま売却価格になりますか？</h3>
+    <p>このツールの結果はあくまで概算です。実際の売却価格は買い手との交渉で決まります。M&Aを本格検討する場合は、仲介会社・FAへの相談をおすすめします。</p>
+
+    <h3>スマートフォンでも使えますか？</h3>
+    <p>はい、スマートフォン・タブレットでもご利用いただけます。</p>
+
+    <div class="author-box">
+      <div class="author-avatar">JP</div>
+      <div>
+        <div class="author-name">JP NEXT 編集部</div>
+        <div class="author-title">不動産仕入営業出身 / M&Aアドバイザー実務経験者</div>
+        <p class="author-bio">不動産仕入営業を経て、M&A業界に転職。10社以上の選考経験と実務をもとに、売り手オーナー・転職希望者向けの実務情報を発信しています。</p>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-label">関連記事</div>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;">
+        <a href="/blog/kigyokachi-santei.html" style="display:flex;align-items:center;gap:14px;padding:16px;border:1px solid var(--gray-200);border-radius:8px;">
+          <div style="width:48px;height:48px;background:var(--accent);border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+            <span style="font-family:var(--font-serif);font-size:0.7rem;color:rgba(255,255,255,0.9);">算定</span>
+          </div>
+          <span style="font-size:0.88rem;color:var(--gray-600);">中小企業の企業価値算定｜M&Aアドバイザーが実務で使う3つの手法を解説</span>
+        </a>
+        <a href="/blog/jigyo-shokei.html" style="display:flex;align-items:center;gap:14px;padding:16px;border:1px solid var(--gray-200);border-radius:8px;">
+          <div style="width:48px;height:48px;background:var(--black);border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+            <span style="font-family:var(--font-serif);font-size:0.7rem;color:rgba(255,255,255,0.9);">承継</span>
+          </div>
+          <span style="font-size:0.88rem;color:var(--gray-600);">事業承継とは？流れ・期間・費用をM&Aアドバイザーが全解説</span>
+        </a>
+      </div>
+    </div>
+
+  </article>
+
+  <aside class="sidebar-sticky">
+    <div style="background:var(--black);border-radius:12px;padding:22px;text-align:center;">
+      <div style="font-family:var(--font-serif);font-size:1rem;color:var(--white);margin-bottom:8px;">今すぐ算定する</div>
+      <p style="font-size:0.78rem;color:var(--gray-600);margin-bottom:16px;line-height:1.7;">登録不要・完全無料</p>
+      <a href="/ma-tool.html" class="btn btn-primary" style="display:block;text-align:center;padding:10px;font-size:0.82rem;">ツールを使う →</a>
+    </div>
+    <div class="sw">
+      <div class="sw-head">この記事の目次</div>
+      <div class="sw-body" style="padding:12px 18px;">
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:0;">
+          <li style="border-bottom:1px solid var(--gray-100);"><a href="#s1" style="display:block;padding:9px 0;font-size:0.78rem;color:var(--gray-600);">できること</a></li>
+          <li style="border-bottom:1px solid var(--gray-100);"><a href="#s2" style="display:block;padding:9px 0;font-size:0.78rem;color:var(--gray-600);">3ステップで算定</a></li>
+          <li style="border-bottom:1px solid var(--gray-100);"><a href="#s3" style="display:block;padding:9px 0;font-size:0.78rem;color:var(--gray-600);">①EV/EBITDA法</a></li>
+          <li style="border-bottom:1px solid var(--gray-100);"><a href="#s4" style="display:block;padding:9px 0;font-size:0.78rem;color:var(--gray-600);">②DCF法</a></li>
+          <li style="border-bottom:1px solid var(--gray-100);"><a href="#s5" style="display:block;padding:9px 0;font-size:0.78rem;color:var(--gray-600);">③純資産のれん法</a></li>
+          <li style="border-bottom:1px solid var(--gray-100);"><a href="#s6" style="display:block;padding:9px 0;font-size:0.78rem;color:var(--gray-600);">結果の見方</a></li>
+          <li><a href="#s7" style="display:block;padding:9px 0;font-size:0.78rem;color:var(--gray-600);">よくある質問</a></li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">JP <span>NEXT</span></div>
+    <div class="footer-tagline">M&A・事業承継の実務情報メディア</div>
+    <div class="footer-bottom" style="margin-top:32px;">
+      <span>© 2026 JP NEXT. All rights reserved.</span>
+      <a href="/" style="color:var(--gray-600);">トップへ戻る</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
