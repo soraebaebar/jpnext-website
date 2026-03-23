@@ -75,58 +75,122 @@ def fetch_url(url, timeout=15):
 
 # ── TDnetからニュース取得 ─────────────────────────────
 def fetch_tdnet_news():
-    """TDnet適時開示RSSからM&A関連ニュースを取得"""
+    """複数ソースからM&A関連ニュースを取得"""
     news_items = []
 
-    # 今日と昨日の開示を確認
-    for days_ago in range(0, 2):
-        target_date = (jst_now() - timedelta(days=days_ago)).strftime("%Y%m%d")
-        url = f"https://www.release.tdnet.info/inbs/I_list_001_{target_date}.html"
+    # ソース1: Google News RSS
+    gnews_items = fetch_from_google_news()
+    news_items.extend(gnews_items)
+    print(f"Google News: {len(gnews_items)}件取得")
 
-        try:
-            html = fetch_url(url)
-            items = parse_tdnet_html(html, target_date)
-            news_items.extend(items)
-            print(f"TDnet {target_date}: {len(items)}件取得")
-        except Exception as e:
-            print(f"TDnet {target_date} 取得失敗: {e}")
+    # ソース2: TDnet RSS
+    tdnet_items = fetch_from_tdnet_rss()
+    news_items.extend(tdnet_items)
+    print(f"TDnet RSS: {len(tdnet_items)}件取得")
 
     return news_items
 
-def parse_tdnet_html(html, date_str):
-    """TDnet HTMLから適時開示情報をパース"""
+def fetch_from_tdnet_rss():
+    """TDnet RSSフィードからM&A関連ニュースを取得"""
     items = []
+    today = jst_now().strftime("%Y%m%d")
 
-    # タイトル行を抽出（簡易パーサー）
-    pattern = re.compile(
-        r'<td[^>]*class="kjTitle"[^>]*>.*?<a[^>]*href="([^"]+)"[^>]*>([^<]+)</a>.*?'
-        r'<td[^>]*class="kjName"[^>]*>([^<]+)</td>',
-        re.DOTALL
-    )
+    rss_urls = [
+        "https://www.release.tdnet.info/inbs/I_list_001_x.rss",
+        f"https://www.release.tdnet.info/inbs/I_list_001_{today}.rss",
+    ]
 
-    for match in pattern.finditer(html):
-        href, title, company = match.group(1), match.group(2).strip(), match.group(3).strip()
+    for rss_url in rss_urls:
+        try:
+            xml = fetch_url(rss_url)
+            root = ET.fromstring(xml)
 
-        # M&A関連キーワードチェック
-        if not any(kw in title for kw in MA_KEYWORDS):
-            continue
+            entries = root.findall('.//item') or root.findall('.//{http://www.w3.org/2005/Atom}entry')
 
-        # IDを生成（日付+タイトルのハッシュ）
-        item_id = hashlib.md5(f"{date_str}_{title}_{company}".encode()).hexdigest()[:16]
+            for entry in entries:
+                title_el = entry.find('title') or entry.find('{http://www.w3.org/2005/Atom}title')
+                link_el  = entry.find('link')  or entry.find('{http://www.w3.org/2005/Atom}link')
+                desc_el  = entry.find('description') or entry.find('{http://www.w3.org/2005/Atom}summary')
 
-        # PDFリンク構築
-        if href.startswith("/"):
-            pdf_url = f"https://www.release.tdnet.info{href}"
-        else:
-            pdf_url = href
+                if title_el is None:
+                    continue
 
-        items.append({
-            "id": item_id,
-            "title": title,
-            "company": company,
-            "date": date_str,
-            "url": pdf_url,
-        })
+                title = title_el.text or ''
+                url   = (link_el.text or link_el.get('href', '')) if link_el is not None else ''
+                desc  = desc_el.text or '' if desc_el is not None else ''
+
+                if not any(kw in title + desc for kw in MA_KEYWORDS):
+                    continue
+
+                company_match = re.search(r'【([^】]+)】', title)
+                company = company_match.group(1) if company_match else '開示企業'
+                item_id = hashlib.md5(f"{today}_{title}".encode()).hexdigest()[:16]
+
+                items.append({
+                    "id": item_id,
+                    "title": title,
+                    "company": company,
+                    "date": today,
+                    "url": url or f"https://www.release.tdnet.info/inbs/I_list_001_{today}.html",
+                })
+
+            if items:
+                break
+
+        except Exception as e:
+            print(f"TDnet RSS取得失敗: {e}")
+
+    return items
+
+def fetch_from_google_news():
+    """Google NewsのRSSからM&A関連ニュースを取得"""
+    items = []
+    today = jst_now().strftime("%Y%m%d")
+    seen_ids = set()
+
+    keywords = ["M&A 買収 日本", "事業承継 売却", "TOB 株式公開買付", "企業買収 合併"]
+
+    for kw in keywords:
+        try:
+            encoded = urllib.parse.quote(kw)
+            rss_url = f"https://news.google.com/rss/search?q={encoded}&hl=ja&gl=JP&ceid=JP:ja"
+            xml = fetch_url(rss_url)
+            root = ET.fromstring(xml)
+
+            for entry in root.findall('.//item')[:4]:
+                title_el = entry.find('title')
+                link_el  = entry.find('link')
+                desc_el  = entry.find('description')
+
+                if title_el is None:
+                    continue
+
+                title = title_el.text or ''
+                url   = link_el.text or '' if link_el is not None else ''
+                desc  = re.sub(r'<[^>]+>', '', desc_el.text or '') if desc_el is not None else ''
+
+                if not any(kw2 in title + desc for kw2 in MA_KEYWORDS):
+                    continue
+
+                item_id = hashlib.md5(f"{today}_{title}".encode()).hexdigest()[:16]
+                if item_id in seen_ids:
+                    continue
+                seen_ids.add(item_id)
+
+                source_match = re.search(r' - ([^-]+)$', title)
+                company = source_match.group(1).strip() if source_match else 'M&Aニュース'
+                clean_title = re.sub(r' - [^-]+$', '', title).strip()
+
+                items.append({
+                    "id": item_id,
+                    "title": clean_title,
+                    "company": company,
+                    "date": today,
+                    "url": url,
+                })
+
+        except Exception as e:
+            print(f"Google News取得失敗 ({kw}): {e}")
 
     return items
 
