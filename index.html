@@ -13,8 +13,173 @@
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="stylesheet" href="/assets/style.css">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P8KB1E1GRV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-P8KB1E1GRV');
+  </script>
   <style>
-    /* ── ヒーロー全幅リニューアル ── */
+    /* ══════════════════════════════════════
+       ハンバーガーメニュー
+    ══════════════════════════════════════ */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 40px;
+      height: 40px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 6px;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    .hamburger:hover { background: rgba(26,92,58,0.08); }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--black);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+      transform-origin: center;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* モバイルメニューオーバーレイ */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--white);
+      z-index: 999;
+      flex-direction: column;
+      padding: 80px 32px 40px;
+      overflow-y: auto;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      width: 40px; height: 40px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--black);
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 6px;
+    }
+    .mobile-menu-close:hover { background: var(--gray-100); }
+    .mobile-menu-logo {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      margin-bottom: 40px;
+      color: var(--black);
+    }
+    .mobile-menu-logo span { color: var(--accent); }
+    .mobile-nav-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      flex: 1;
+    }
+    .mobile-nav-links li a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gray-200);
+      transition: color 0.2s;
+    }
+    .mobile-nav-links li a::after {
+      content: '→';
+      font-size: 0.85rem;
+      color: var(--gray-400);
+    }
+    .mobile-nav-links li a:hover { color: var(--accent); }
+    .mobile-nav-cta {
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .mobile-nav-cta a {
+      display: block;
+      text-align: center;
+      padding: 16px;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .mobile-cta-primary {
+      background: var(--accent);
+      color: var(--white) !important;
+    }
+    .mobile-cta-primary:hover { background: #164d30 !important; }
+    .mobile-cta-outline {
+      border: 1.5px solid var(--accent);
+      color: var(--accent) !important;
+    }
+
+    /* ══════════════════════════════════════
+       固定相談ボタン（スマホ）
+    ══════════════════════════════════════ */
+    .fixed-cta {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 900;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.97);
+      border-top: 1px solid var(--gray-200);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .fixed-cta-inner {
+      display: flex;
+      gap: 10px;
+    }
+    .fixed-cta a {
+      flex: 1;
+      display: block;
+      text-align: center;
+      padding: 14px 8px;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .fixed-cta-main {
+      background: var(--accent);
+      color: var(--white) !important;
+    }
+    .fixed-cta-sub {
+      background: var(--black);
+      color: var(--white) !important;
+    }
+
+    /* ══════════════════════════════════════
+       ヒーロー
+    ══════════════════════════════════════ */
     .hero-wrap {
       min-height: 92vh;
       display: flex;
@@ -24,7 +189,6 @@
       overflow: hidden;
       padding: 100px 24px 80px;
     }
-    /* 背景グリッド線 */
     .hero-wrap::before {
       content: '';
       position: absolute;
@@ -35,7 +199,6 @@
       background-size: 64px 64px;
       pointer-events: none;
     }
-    /* 右下に大きいアクセント円 */
     .hero-wrap::after {
       content: '';
       position: absolute;
@@ -74,7 +237,7 @@
     }
     .hero-title {
       font-family: var(--font-serif);
-      font-size: clamp(3rem, 7vw, 6rem);
+      font-size: clamp(2.4rem, 7vw, 6rem);
       line-height: 1.15;
       letter-spacing: -0.02em;
       margin-bottom: 32px;
@@ -85,7 +248,6 @@
       color: var(--accent);
       position: relative;
     }
-    /* アンダーライン装飾 */
     .hero-title em::after {
       content: '';
       position: absolute;
@@ -110,7 +272,6 @@
       flex-wrap: wrap;
       margin-bottom: 64px;
     }
-    /* カウンター行 */
     .hero-stats {
       display: flex;
       gap: 48px;
@@ -141,6 +302,7 @@
       height: 40px;
       background: var(--gray-200);
     }
+
     /* スクロールテープ */
     .hero-tape {
       overflow: hidden;
@@ -177,30 +339,20 @@
       background: var(--accent);
       flex-shrink: 0;
     }
-    /* アニメーション */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(32px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .fade-up   { animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) both; }
-    .fade-up-1 { animation-delay: 0.05s; }
-    .fade-up-2 { animation-delay: 0.15s; }
-    .fade-up-3 { animation-delay: 0.25s; }
-    .fade-up-4 { animation-delay: 0.35s; }
-    .fade-up-5 { animation-delay: 0.45s; }
 
-    /* ターゲット2本立て */
+    /* ══════════════════════════════════════
+       ターゲット2本立て
+    ══════════════════════════════════════ */
     .target-section {
       background: var(--gray-100);
       padding: 80px 24px;
     }
     .target-grid {
       max-width: var(--max-w);
-      margin: 0 auto;
+      margin: 48px auto 0;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 24px;
-      margin-top: 48px;
     }
     .target-card {
       background: var(--white);
@@ -210,6 +362,8 @@
       transition: all var(--transition);
       position: relative;
       overflow: hidden;
+      text-decoration: none;
+      display: block;
     }
     .target-card::before {
       content: '';
@@ -236,13 +390,12 @@
       background: var(--accent);
       color: var(--white);
     }
-    .target-icon-label.career-label {
-      background: var(--gold);
-    }
+    .target-icon-label.career-label { background: var(--gold); }
     .target-title {
       font-family: var(--font-serif);
       font-size: 1.4rem;
       margin-bottom: 12px;
+      color: var(--black);
     }
     .target-desc { font-size: 0.9rem; color: var(--gray-600); line-height: 1.8; margin-bottom: 24px; }
     .target-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
@@ -264,7 +417,9 @@
     .owner .target-list li::before { color: var(--accent); }
     .career .target-list li::before { color: var(--gold); }
 
-    /* 記事一覧 */
+    /* ══════════════════════════════════════
+       記事一覧
+    ══════════════════════════════════════ */
     .articles-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -310,10 +465,13 @@
       margin-bottom: 12px;
       flex: 1;
     }
+    .article-title a { color: var(--black); text-decoration: none; }
     .article-title a:hover { color: var(--accent); }
     .article-excerpt { font-size: 0.82rem; color: var(--gray-600); line-height: 1.7; }
 
-    /* ツールCTA */
+    /* ══════════════════════════════════════
+       ツールCTA
+    ══════════════════════════════════════ */
     .tool-cta {
       background: var(--black);
       padding: 80px 24px;
@@ -350,23 +508,18 @@
       align-items: center;
       gap: 6px;
     }
-    .tool-feature::before {
-      content: '✓';
-      color: var(--accent-mid);
-      font-weight: 700;
-    }
+    .tool-feature::before { content: '✓'; color: var(--accent-mid); font-weight: 700; }
     .btn-white {
       background: var(--white);
       color: var(--black);
       padding: 16px 40px;
       font-size: 0.95rem;
     }
-    .btn-white:hover {
-      background: var(--gray-100);
-      transform: translateY(-2px);
-    }
+    .btn-white:hover { background: var(--gray-100); transform: translateY(-2px); }
 
-    /* 転職ガイドCTA */
+    /* ══════════════════════════════════════
+       転職ガイドCTA
+    ══════════════════════════════════════ */
     .career-cta {
       background: var(--gold-light);
       padding: 64px 24px;
@@ -386,27 +539,120 @@
       margin-bottom: 10px;
     }
     .career-cta-desc { font-size: 0.9rem; color: var(--gray-600); }
-    .btn-gold {
-      background: var(--gold);
-      color: var(--white);
-      white-space: nowrap;
-    }
+    .btn-gold { background: var(--gold); color: var(--white); white-space: nowrap; }
     .btn-gold:hover { background: #9a7d24; transform: translateY(-1px); }
 
-    /* アニメーション */
+    /* ══════════════════════════════════════
+       アニメーション
+    ══════════════════════════════════════ */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
+      to   { opacity: 1; transform: translateY(0); }
     }
-    .fade-up { animation: fadeUp 0.7s ease both; }
-    .fade-up-1 { animation-delay: 0.1s; }
-    .fade-up-2 { animation-delay: 0.2s; }
-    .fade-up-3 { animation-delay: 0.3s; }
-    .fade-up-4 { animation-delay: 0.4s; }
+    .fade-up   { animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) both; }
+    .fade-up-1 { animation-delay: 0.05s; }
+    .fade-up-2 { animation-delay: 0.15s; }
+    .fade-up-3 { animation-delay: 0.25s; }
+    .fade-up-4 { animation-delay: 0.35s; }
+    .fade-up-5 { animation-delay: 0.45s; }
+
+    /* ══════════════════════════════════════
+       スマホ対応（〜768px）
+    ══════════════════════════════════════ */
+    @media (max-width: 768px) {
+      /* ハンバーガー表示 / PCナビ非表示 */
+      .hamburger { display: flex; }
+      .nav-links { display: none !important; }
+
+      /* 固定CTAバー表示 */
+      .fixed-cta { display: block; }
+
+      /* ページ下部に固定CTAのスペース確保 */
+      body { padding-bottom: 80px; }
+
+      /* ヒーロー */
+      .hero-wrap {
+        min-height: auto;
+        padding: 80px 20px 60px;
+      }
+      .hero-title {
+        font-size: clamp(2rem, 9vw, 3rem);
+        margin-bottom: 24px;
+      }
+      .hero-desc {
+        font-size: 0.95rem;
+        margin-bottom: 32px;
+      }
+      .hero-btns {
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 40px;
+      }
+      .hero-btns .btn {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        padding: 16px 24px;
+        font-size: 0.95rem;
+      }
+      .hero-stats {
+        gap: 24px;
+        padding-top: 28px;
+      }
+      .hero-stat-num { font-size: 1.6rem; }
+      .hero-stat-divider { display: none; }
+
+      /* ターゲットカード：縦並び・スマホ最適化 */
+      .target-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-top: 32px;
+      }
+      .target-card {
+        padding: 28px 24px;
+      }
+      .target-title { font-size: 1.2rem; }
+      .target-desc { margin-bottom: 16px; }
+      .target-list li { font-size: 0.82rem; padding: 9px 12px; }
+
+      /* 記事グリッド */
+      .articles-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-top: 28px;
+      }
+      .article-thumb { height: 140px; }
+
+      /* ツールCTA */
+      .tool-features {
+        gap: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0 8px;
+      }
+      .btn-white { width: 100%; padding: 16px; font-size: 1rem; }
+
+      /* 転職CTAセクション */
+      .career-cta-inner {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .career-cta-title { font-size: 1.4rem; }
+      .btn-gold {
+        width: 100%;
+        text-align: center;
+        padding: 16px;
+        font-size: 1rem;
+      }
+
+      /* セクション */
+      .target-section { padding: 56px 20px; }
+      .section { padding: 56px 20px; }
+      .tool-cta { padding: 56px 20px; }
+      .career-cta { padding: 48px 20px; }
+    }
 
     @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 48px; }
-      .hero-right { display: none; }
       .target-grid { grid-template-columns: 1fr; }
       .articles-grid { grid-template-columns: 1fr; }
       .career-cta-inner { grid-template-columns: 1fr; }
@@ -415,7 +661,28 @@
 </head>
 <body>
 
-<!-- ナビゲーション -->
+<!-- ══════════════════════════════════════
+     モバイルメニューオーバーレイ
+══════════════════════════════════════ -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" id="mobileMenuClose" aria-label="閉じる">✕</button>
+  <div class="mobile-menu-logo">JP <span>NEXT</span></div>
+  <ul class="mobile-nav-links">
+    <li><a href="/blog/">コラム</a></li>
+    <li><a href="/news/">M&Aニュース</a></li>
+    <li><a href="/blog/?cat=jigyo">事業承継</a></li>
+    <li><a href="/blog/?cat=career">転職ガイド</a></li>
+    <li><a href="/ma-tool.html">無料ツール</a></li>
+  </ul>
+  <div class="mobile-nav-cta">
+    <a href="/contact.html" class="mobile-cta-primary">無料相談・依頼はこちら →</a>
+    <a href="/ma-tool.html" class="mobile-cta-outline">企業価値を無料算定する</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     ナビゲーション
+══════════════════════════════════════ -->
 <nav class="nav">
   <div class="nav-inner">
     <a href="/" class="nav-logo">JP <span>NEXT</span></a>
@@ -427,10 +694,18 @@
       <li><a href="/ma-tool.html">無料ツール</a></li>
       <li><a href="/contact.html" class="nav-cta">相談・依頼</a></li>
     </ul>
+    <!-- ハンバーガーボタン（スマホのみ表示） -->
+    <button class="hamburger" id="hamburgerBtn" aria-label="メニュー">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </div>
 </nav>
 
-<!-- ヒーロー -->
+<!-- ══════════════════════════════════════
+     ヒーロー
+══════════════════════════════════════ -->
 <section style="border-bottom: 1px solid var(--gray-200);">
   <div class="hero-wrap">
     <div class="hero-inner">
@@ -493,7 +768,9 @@
   </div>
 </section>
 
-<!-- ターゲット2本立て -->
+<!-- ══════════════════════════════════════
+     ターゲット2本立て
+══════════════════════════════════════ -->
 <section class="target-section">
   <div style="max-width: var(--max-w); margin: 0 auto;">
     <div class="section-label">あなたに合った情報を</div>
@@ -526,7 +803,9 @@
   </div>
 </section>
 
-<!-- 最新記事 -->
+<!-- ══════════════════════════════════════
+     最新記事
+══════════════════════════════════════ -->
 <section class="section">
   <div class="section-inner">
     <div class="section-label">最新コラム</div>
@@ -536,7 +815,7 @@
     </div>
     <div class="articles-grid">
       <article class="article-card">
-        <div class="article-thumb" style="background: var(--gold); display:flex; align-items:center; justify-content:center;">
+        <div class="article-thumb" style="background: var(--gold);">
           <span style="font-family:var(--font-serif); font-size:1rem; color:rgba(255,255,255,0.9); letter-spacing:0.1em; font-weight:400;">転職</span>
         </div>
         <div class="article-body">
@@ -551,7 +830,7 @@
         </div>
       </article>
       <article class="article-card">
-        <div class="article-thumb" style="background: var(--gold); display:flex; align-items:center; justify-content:center;">
+        <div class="article-thumb" style="background: var(--gold);">
           <span style="font-family:var(--font-serif); font-size:1rem; color:rgba(255,255,255,0.9); letter-spacing:0.1em; font-weight:400;">転職</span>
         </div>
         <div class="article-body">
@@ -577,7 +856,9 @@
   </div>
 </section>
 
-<!-- 企業価値算定ツールCTA -->
+<!-- ══════════════════════════════════════
+     企業価値算定ツールCTA
+══════════════════════════════════════ -->
 <section class="tool-cta">
   <div class="tool-cta-inner">
     <div class="tool-cta-label">Free Tool</div>
@@ -593,7 +874,9 @@
   </div>
 </section>
 
-<!-- 転職ガイドCTA -->
+<!-- ══════════════════════════════════════
+     転職ガイドCTA
+══════════════════════════════════════ -->
 <section class="career-cta">
   <div class="career-cta-inner">
     <div>
@@ -605,7 +888,9 @@
   </div>
 </section>
 
-<!-- フッター -->
+<!-- ══════════════════════════════════════
+     フッター
+══════════════════════════════════════ -->
 <footer class="footer" id="contact">
   <div class="footer-inner">
     <div class="footer-logo">JP <span>NEXT</span></div>
@@ -651,6 +936,46 @@
     </div>
   </div>
 </footer>
+
+<!-- ══════════════════════════════════════
+     固定相談CTAバー（スマホ）
+══════════════════════════════════════ -->
+<div class="fixed-cta">
+  <div class="fixed-cta-inner">
+    <a href="/contact.html" class="fixed-cta-main">📋 無料相談する</a>
+    <a href="/ma-tool.html" class="fixed-cta-sub">🔢 価値を算定</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     JavaScript（ハンバーガーメニュー）
+══════════════════════════════════════ -->
+<script>
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileMenuClose = document.getElementById('mobileMenuClose');
+
+  hamburgerBtn.addEventListener('click', () => {
+    hamburgerBtn.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+
+  mobileMenuClose.addEventListener('click', () => {
+    hamburgerBtn.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+
+  // メニュー内リンクをタップしたら閉じる
+  document.querySelectorAll('.mobile-nav-links a, .mobile-nav-cta a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburgerBtn.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+</script>
 
 </body>
 </html>
