@@ -5,13 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>コラム一覧 | JP NEXT — M&A・事業承継メディア</title>
   <meta name="description" content="M&A・事業承継・転職に関する実務情報コラム。企業価値算定・仲介会社比較・転職ガイドなど実務経験者が執筆。">
-  <meta property="og:title" content="コラム一覧 | JP NEXT">
-  <meta property="og:image" content="https://www.jpnext.co/ogp.png">
-  <meta property="og:url" content="https://www.jpnext.co/blog/">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/assets/style.css">
+
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-P8KB1E1GRV"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -25,17 +22,10 @@
       padding: 64px 24px 56px;
       border-bottom: 1px solid #222;
     }
-    .blog-hero-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-    }
+    .blog-hero-inner { max-width: var(--max-w); margin: 0 auto; }
     .blog-hero-label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      color: var(--accent-mid);
-      text-transform: uppercase;
-      margin-bottom: 16px;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em;
+      color: var(--accent-mid); text-transform: uppercase; margin-bottom: 16px;
     }
     .blog-hero-title {
       font-family: var(--font-serif);
@@ -43,10 +33,7 @@
       color: var(--white);
       margin-bottom: 12px;
     }
-    .blog-hero-desc {
-      font-size: 0.9rem;
-      color: var(--gray-600);
-    }
+    .blog-hero-desc { font-size: 0.9rem; color: var(--gray-600); }
 
     /* フィルター */
     .filter-bar {
@@ -80,11 +67,7 @@
       transition: all var(--transition);
     }
     .filter-btn:hover { color: var(--accent); }
-    .filter-btn.active {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-      font-weight: 700;
-    }
+    .filter-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 700; }
 
     /* メインレイアウト */
     .blog-layout {
@@ -98,11 +81,7 @@
     }
 
     /* 記事リスト */
-    .articles-list {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
+    .articles-list { display: flex; flex-direction: column; gap: 24px; }
     .article-row {
       display: grid;
       grid-template-columns: 160px 1fr;
@@ -138,7 +117,6 @@
       margin-bottom: 10px;
       font-size: 0.75rem;
       color: var(--gray-400);
-      flex-wrap: wrap;
     }
     .article-row-title {
       font-family: var(--font-serif);
@@ -147,45 +125,10 @@
       margin-bottom: 10px;
     }
     .article-row-title a:hover { color: var(--accent); }
-    .article-row-excerpt {
-      font-size: 0.82rem;
-      color: var(--gray-600);
-      line-height: 1.7;
-    }
-
-    /* ニュース記事専用スタイル */
-    .article-row.news-row-item {
-      border-left: 3px solid var(--accent-mid);
-    }
-    .article-row.news-row-item:hover {
-      border-color: var(--accent-mid);
-      border-left-color: var(--accent);
-    }
-    .news-auto-badge {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--gray-400);
-      border: 1px solid var(--gray-200);
-      padding: 2px 6px;
-      border-radius: 2px;
-    }
-
-    /* ローディング */
-    .news-loading {
-      text-align: center;
-      padding: 32px;
-      color: var(--gray-400);
-      font-size: 0.85rem;
-    }
+    .article-row-excerpt { font-size: 0.82rem; color: var(--gray-600); line-height: 1.7; }
 
     /* サイドバー */
-    .sidebar {
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-    }
+    .sidebar { display: flex; flex-direction: column; gap: 32px; }
     .sidebar-widget {
       background: var(--white);
       border: 1px solid var(--gray-200);
@@ -214,18 +157,8 @@
       color: var(--white);
       margin-bottom: 10px;
     }
-    .sidebar-tool-cta-desc {
-      font-size: 0.8rem;
-      color: var(--gray-600);
-      margin-bottom: 20px;
-      line-height: 1.7;
-    }
-    .sidebar-links {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
+    .sidebar-tool-cta-desc { font-size: 0.8rem; color: var(--gray-600); margin-bottom: 20px; line-height: 1.7; }
+    .sidebar-links { list-style: none; display: flex; flex-direction: column; gap: 0; }
     .sidebar-links li { border-bottom: 1px solid var(--gray-100); }
     .sidebar-links li:last-child { border-bottom: none; }
     .sidebar-links a {
@@ -247,25 +180,25 @@
   </style>
 </head>
 <body>
+
 <nav class="nav">
   <div class="nav-inner">
     <a href="/" class="nav-logo">JP <span>NEXT</span></a>
     <ul class="nav-links">
       <li><a href="/blog/">コラム</a></li>
-      <li><a href="/news/">M&Aニュース</a></li>
       <li><a href="/blog/?cat=jigyo">事業承継</a></li>
       <li><a href="/blog/?cat=career">転職ガイド</a></li>
       <li><a href="/ma-tool.html">無料ツール</a></li>
-      <li><a href="/#contact" class="nav-cta">無料相談</a></li>
+      <li><a href="/contact.html" class="nav-cta">相談・依頼</a></li>
     </ul>
   </div>
 </nav>
 
 <div class="blog-hero">
   <div class="blog-hero-inner">
-    <div class="blog-hero-label">Column & News</div>
+    <div class="blog-hero-label">Column</div>
     <h1 class="blog-hero-title">M&A・事業承継コラム</h1>
-    <p class="blog-hero-desc">実務経験者が書く、現場に即したM&A情報。事業承継から転職まで。M&Aニュースも毎日更新。</p>
+    <p class="blog-hero-desc">実務経験者が書く、現場に即したM&A情報。事業承継から転職まで。</p>
   </div>
 </div>
 
@@ -276,7 +209,6 @@
     <button class="filter-btn" onclick="filterArticles('ma', this)">M&A基礎</button>
     <button class="filter-btn" onclick="filterArticles('career', this)">転職ガイド</button>
     <button class="filter-btn" onclick="filterArticles('tool', this)">ツール解説</button>
-    <button class="filter-btn" onclick="filterArticles('news', this)">M&Aニュース</button>
   </div>
 </div>
 
@@ -284,7 +216,6 @@
   <main>
     <div class="articles-list" id="articleList">
 
-      <!-- ===== 手書きコラム記事 ===== -->
       <article class="article-row" data-cat="jigyo">
         <div class="article-row-thumb" style="background: var(--accent);">
           <span style="font-family:var(--font-serif); font-size:0.9rem; color:rgba(255,255,255,0.9); letter-spacing:0.1em;">事業承継</span>
@@ -299,23 +230,6 @@
             <a href="/blog/jigyo-shokei.html">事業承継とは？流れ・期間・費用をM&Aアドバイザーが全解説</a>
           </h2>
           <p class="article-row-excerpt">相談から成約まで平均8ヶ月。手数料・仲介会社の選び方・失敗パターン・弁護士の必要性まで現役アドバイザーが包み隠さず解説。</p>
-        </div>
-      </article>
-
-      <article class="article-row" data-cat="jigyo">
-        <div class="article-row-thumb" style="background: var(--accent);">
-          <span style="font-family:var(--font-serif); font-size:0.9rem; color:rgba(255,255,255,0.9); letter-spacing:0.1em;">事業承継</span>
-        </div>
-        <div class="article-row-body">
-          <div class="article-row-meta">
-            <span class="tag tag-ma">事業承継</span>
-            <span>2026.03.23</span>
-            <span>読了 15分</span>
-          </div>
-          <h2 class="article-row-title">
-            <a href="/blog/chukaisya-hikaku.html">M&A仲介会社の比較・選び方｜日本M&Aセンター・ストライク・M&A総研・キャピタルを現役アドバイザーが解説</a>
-          </h2>
-          <p class="article-row-excerpt">主要仲介会社の特徴・手数料・担当者の見極め方を実務経験から解説。複数社に相談すべき理由と失敗しない選び方。</p>
         </div>
       </article>
 
@@ -370,23 +284,6 @@
         </div>
       </article>
 
-      <article class="article-row" data-cat="jigyo">
-        <div class="article-row-thumb" style="background: var(--accent);">
-          <span style="font-family:var(--font-serif); font-size:0.9rem; color:rgba(255,255,255,0.9); letter-spacing:0.1em;">事業承継</span>
-        </div>
-        <div class="article-row-body">
-          <div class="article-row-meta">
-            <span class="tag tag-ma">事業承継</span>
-            <span>2026.03.23</span>
-            <span>読了 12分</span>
-          </div>
-          <h2 class="article-row-title">
-            <a href="/blog/dd-checklist.html">M&AデューデリジェンスDDチェックリスト｜売り手が準備すべき書類一覧</a>
-          </h2>
-          <p class="article-row-excerpt">財務・法務・税務・人事の各分野で準備すべき書類をチェックリスト形式で解説。DD後の価格引き下げを防ぐポイントも。</p>
-        </div>
-      </article>
-
       <article class="article-row" data-cat="tool">
         <div class="article-row-thumb" style="background: var(--gray-600);">
           <span style="font-family:var(--font-serif); font-size:0.9rem; color:rgba(255,255,255,0.9); letter-spacing:0.1em;">ツール</span>
@@ -404,11 +301,6 @@
         </div>
       </article>
 
-      <!-- ===== M&Aニュース（JS自動挿入エリア） ===== -->
-      <div id="news-inject-area">
-        <div class="news-loading" id="news-loading">M&Aニュースを読み込み中...</div>
-      </div>
-
     </div>
   </main>
 
@@ -418,6 +310,7 @@
       <p class="sidebar-tool-cta-desc">登録不要。売上・利益を入力するだけで本格的な算定結果を即時表示。</p>
       <a href="/ma-tool.html" class="btn btn-primary" style="width:100%; text-align:center; display:block;">ツールを使う →</a>
     </div>
+
     <div class="sidebar-widget">
       <div class="sidebar-widget-title">カテゴリ</div>
       <div class="sidebar-widget-body">
@@ -426,10 +319,10 @@
           <li><a href="/blog/?cat=ma">M&A基礎知識 →</a></li>
           <li><a href="/blog/?cat=career">転職ガイド →</a></li>
           <li><a href="/blog/?cat=tool">ツール解説 →</a></li>
-          <li><a href="/news/">M&Aニュース →</a></li>
         </ul>
       </div>
     </div>
+
     <div class="sidebar-widget">
       <div class="sidebar-widget-title">人気記事</div>
       <div class="sidebar-widget-body">
@@ -441,13 +334,6 @@
         </ul>
       </div>
     </div>
-    <div class="sidebar-widget">
-      <div class="sidebar-widget-title">M&Aニュース</div>
-      <div class="sidebar-widget-body">
-        <p style="font-size:0.8rem;color:var(--gray-600);margin-bottom:12px;line-height:1.7;">東証TDnet適時開示をもとにした自動更新ニュース。毎日配信。</p>
-        <a href="/news/" class="btn btn-outline" style="display:block;text-align:center;padding:9px;font-size:0.82rem;">ニュース一覧を見る →</a>
-      </div>
-    </div>
   </aside>
 </div>
 
@@ -457,109 +343,24 @@
     <div class="footer-tagline">M&A・事業承継の実務情報メディア</div>
     <div class="footer-bottom" style="margin-top:32px;">
       <span>© 2026 JP NEXT. All rights reserved.</span>
+      <a href="mailto:info@jpnext.co" style="color:var(--gray-600);">info@jpnext.co</a>
       <a href="/" style="color: var(--gray-600);">トップへ戻る</a>
     </div>
   </div>
 </footer>
 
 <script>
-  /* ─── フィルター ─── */
-  function filterArticles(cat, btn) {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('.article-row').forEach(article => {
-      const show = cat === 'all' || article.dataset.cat === cat;
-      article.style.display = show ? 'grid' : 'none';
-    });
-  }
-
-  /* ─── URLパラメータでフィルター初期化 ─── */
-  (function() {
-    const params = new URLSearchParams(location.search);
-    const cat = params.get('cat');
-    if (cat) {
-      const btn = document.querySelector(`.filter-btn[onclick*="'${cat}'"]`);
-      if (btn) filterArticles(cat, btn);
+function filterArticles(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.article-row').forEach(article => {
+    if (cat === 'all' || article.dataset.cat === cat) {
+      article.style.display = 'grid';
+    } else {
+      article.style.display = 'none';
     }
-  })();
-
-  /* ─── M&Aニュース自動読み込み ─── */
-  (async function loadNews() {
-    const injectArea = document.getElementById('news-inject-area');
-    const loading = document.getElementById('news-loading');
-
-    try {
-      // news/index.html を fetch してニュース記事リストを取得
-      const res = await fetch('/news/index.html');
-      if (!res.ok) throw new Error('fetch failed');
-      const html = await res.text();
-
-      // DOMParserで解析
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-      const newsRows = doc.querySelectorAll('.news-row');
-
-      if (newsRows.length === 0) {
-        loading.textContent = '';
-        return;
-      }
-
-      // ニュース記事をblog記事カード形式に変換して挿入
-      const fragment = document.createDocumentFragment();
-
-      newsRows.forEach(row => {
-        // news/index.html のニュース行からデータを抽出
-        const titleEl = row.querySelector('.news-title a');
-        const excerptEl = row.querySelector('.news-excerpt');
-        const monthEl = row.querySelector('.news-date-month');
-        const dayEl = row.querySelector('.news-date-day');
-        const metaCountEl = row.querySelector('.news-meta span:last-child');
-
-        if (!titleEl) return;
-
-        const title = titleEl.textContent.trim();
-        const href = titleEl.getAttribute('href');
-        const excerpt = excerptEl ? excerptEl.textContent.trim() : '';
-        const month = monthEl ? monthEl.textContent.trim() : '';
-        const day = dayEl ? dayEl.textContent.trim() : '';
-        const dateStr = month && day ? `2026.${month.replace('月','').padStart(2,'0')}.${day.padStart(2,'0')}` : '';
-        const count = metaCountEl ? metaCountEl.textContent.trim() : '';
-
-        // article-row として組み立て
-        const article = document.createElement('article');
-        article.className = 'article-row news-row-item';
-        article.dataset.cat = 'news';
-        article.innerHTML = `
-          <div class="article-row-thumb" style="background:var(--black);flex-direction:column;gap:4px;">
-            <span style="font-family:var(--font-serif);font-size:0.65rem;color:var(--accent-mid);letter-spacing:0.12em;text-transform:uppercase;">M&A News</span>
-            ${day ? `<span style="font-family:var(--font-serif);font-size:2rem;color:var(--white);line-height:1;">${day}</span>` : ''}
-            ${month ? `<span style="font-size:0.65rem;color:var(--gray-600);">${month}</span>` : ''}
-          </div>
-          <div class="article-row-body">
-            <div class="article-row-meta">
-              <span class="tag tag-news">M&Aニュース</span>
-              ${dateStr ? `<span>${dateStr}</span>` : ''}
-              ${count ? `<span>${count}</span>` : ''}
-              <span class="news-auto-badge">自動更新</span>
-            </div>
-            <h2 class="article-row-title">
-              <a href="${href}">${title}</a>
-            </h2>
-            ${excerpt ? `<p class="article-row-excerpt">${excerpt.substring(0, 90)}…</p>` : ''}
-          </div>
-        `;
-        fragment.appendChild(article);
-      });
-
-      // ローディング表示を消してニュース挿入
-      loading.remove();
-      injectArea.appendChild(fragment);
-
-    } catch(e) {
-      // エラー時はニュースエリアを非表示にするだけ（記事一覧は残る）
-      loading.remove();
-    }
-  })();
+  });
+}
 </script>
 </body>
 </html>
