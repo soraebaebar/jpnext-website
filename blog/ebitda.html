@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EBITDAとは？M&Aでの計算例・役員報酬調整・EV/EBITDA倍率をわかりやすく解説 | JP NEXT</title>
+  <meta name="description" content="EBITDAの意味・計算式・M&Aでの使い方を解説。中小企業ならではの役員報酬調整・EV/EBITDA倍率の業種別目安・実際の計算例まで実務経験者がわかりやすく説明。">
+  <meta property="og:title" content="EBITDAとは？M&Aでの計算例・役員報酬調整・EV/EBITDA倍率をわかりやすく解説">
+  <meta property="og:description" content="EBITDAの意味・計算式・中小企業での役員報酬調整・EV/EBITDA倍率の使い方を実例で解説。">
+  <meta property="og:url" content="https://www.jpnext.co/blog/ebitda.html">
+  <meta property="og:image" content="https://www.jpnext.co/ogp.png">
+  <meta property="og:type" content="article">
+  <link rel="canonical" href="https://www.jpnext.co/blog/ebitda.html">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P8KB1E1GRV"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P8KB1E1GRV');</script>
+  <style>
+    .article-wrap{max-width:780px;margin:0 auto;padding:48px 24px 100px}
+    .article-h1{font-family:var(--font-serif);font-size:clamp(1.5rem,4vw,2.1rem);line-height:1.45;margin-bottom:20px}
+    .article-meta-bar{display:flex;align-items:center;gap:12px;font-size:.82rem;color:var(--gray-400);flex-wrap:wrap;padding-bottom:24px;border-bottom:1px solid var(--gray-200)}
+    .author-box{display:flex;align-items:flex-start;gap:14px;padding:20px;background:var(--gray-100);border-radius:var(--radius);margin-bottom:36px}
+    .author-avatar{width:48px;height:48px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-size:1rem;color:var(--white);flex-shrink:0}
+    .author-name{font-weight:700;font-size:.9rem;margin-bottom:4px}
+    .author-desc{font-size:.8rem;color:var(--gray-400);line-height:1.6}
+    .summary-box{border:2px solid var(--accent);border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:36px;background:#f0fdf4}
+    .summary-box-title{font-weight:700;font-size:.88rem;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+    .summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .summary-item{display:flex;align-items:flex-start;gap:8px;font-size:.88rem;color:#166534;line-height:1.5}
+    .summary-item::before{content:'✓';font-weight:700;flex-shrink:0;color:var(--accent)}
+    .toc{background:var(--gray-100);border-radius:var(--radius-lg);padding:24px 28px;margin-bottom:48px;border-left:4px solid var(--accent)}
+    .toc-title{font-weight:700;font-size:.9rem;margin-bottom:14px}
+    .toc ol{list-style:decimal;padding-left:20px;display:flex;flex-direction:column;gap:8px}
+    .toc li{font-size:.88rem}
+    .toc a{color:var(--accent);text-decoration:none}
+    .article-body h2{font-family:var(--font-serif);font-size:1.35rem;margin:56px 0 18px;padding:16px 20px 16px 26px;background:var(--black);color:var(--white);border-radius:var(--radius);line-height:1.4;position:relative}
+    .article-body h2::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--accent);border-radius:var(--radius) 0 0 var(--radius)}
+    .article-body h3{font-family:var(--font-serif);font-size:1.1rem;margin:32px 0 12px;padding-left:14px;border-left:3px solid var(--accent);color:var(--black)}
+    .article-body p{font-size:.95rem;line-height:2.0;color:#2d2d2d;margin-bottom:18px}
+    .article-body ul{padding-left:22px;margin-bottom:20px;display:flex;flex-direction:column;gap:8px}
+    .article-body li{font-size:.93rem;line-height:1.85;color:#2d2d2d}
+    .callout{border-radius:var(--radius);padding:20px 24px;margin:28px 0;font-size:.9rem;line-height:1.85}
+    .callout-green{background:#f0fdf4;border-left:4px solid var(--accent);color:#166534}
+    .callout-gold{background:#fffbeb;border-left:4px solid var(--gold);color:#92400e}
+    .callout-red{background:#fef2f2;border-left:4px solid #dc2626;color:#991b1b}
+    .callout-gray{background:var(--gray-100);border-left:4px solid var(--gray-400);color:#374151}
+    .callout-title{font-weight:700;margin-bottom:8px;font-size:.88rem;letter-spacing:.04em}
+    .formula-box{background:var(--black);border-radius:var(--radius-lg);padding:24px 28px;margin:24px 0}
+    .formula-label{font-size:.72rem;letter-spacing:.12em;color:var(--accent-mid);text-transform:uppercase;margin-bottom:10px}
+    .formula-text{font-family:var(--font-serif);font-size:1.1rem;color:var(--white);line-height:1.8}
+    .formula-note{font-size:.8rem;color:var(--gray-600);margin-top:8px;line-height:1.6}
+    .calc-box{background:var(--black);border-radius:var(--radius-lg);padding:28px;margin:28px 0;color:var(--white)}
+    .calc-title{font-size:.78rem;letter-spacing:.12em;color:var(--accent-mid);text-transform:uppercase;margin-bottom:16px}
+    .calc-step{border-left:2px solid #374151;padding-left:16px;margin-bottom:12px;font-size:.88rem;color:var(--gray-400);line-height:1.9}
+    .calc-step strong{color:var(--white)}
+    .calc-result{margin-top:16px;padding:14px 18px;background:rgba(29,158,117,.15);border-radius:var(--radius);border-left:3px solid var(--accent-mid)}
+    .calc-result-label{font-size:.75rem;color:var(--accent-mid);margin-bottom:4px}
+    .calc-result-value{font-family:var(--font-serif);font-size:1.5rem;color:var(--accent-mid);font-weight:700}
+    .compare-table{width:100%;border-collapse:collapse;margin:24px 0;font-size:.88rem;border-radius:var(--radius);overflow:hidden}
+    .compare-table th{background:var(--black);color:var(--white);padding:13px 16px;text-align:left;font-weight:600}
+    .compare-table td{padding:12px 16px;border-bottom:1px solid var(--gray-200);vertical-align:top;line-height:1.75}
+    .compare-table tr:nth-child(even) td{background:#f9fafb}
+    .compare-table tr:last-child td{border-bottom:none}
+    .cta-banner{background:var(--black);border-radius:var(--radius-lg);padding:36px;text-align:center;margin:56px 0}
+    .cta-banner-label{font-size:.72rem;font-weight:700;letter-spacing:.14em;color:var(--accent-mid);text-transform:uppercase;margin-bottom:12px}
+    .cta-banner-title{font-family:var(--font-serif);font-size:1.4rem;color:var(--white);margin-bottom:10px;line-height:1.4}
+    .cta-banner-desc{font-size:.88rem;color:var(--gray-400);margin-bottom:24px;line-height:1.8}
+    .related-articles{margin-top:56px;padding-top:40px;border-top:1px solid var(--gray-200)}
+    .related-title{font-family:var(--font-serif);font-size:1.1rem;margin-bottom:20px}
+    .related-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .related-card{border:1px solid var(--gray-200);border-radius:var(--radius);padding:18px;text-decoration:none;transition:all .2s;display:block}
+    .related-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 16px rgba(26,92,58,.08)}
+    .related-card-tag{font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.08em;margin-bottom:8px}
+    .related-card-title{font-size:.88rem;font-weight:600;color:var(--black);line-height:1.5}
+    @media(max-width:640px){
+      .article-wrap{padding:28px 16px 80px}
+      .summary-grid{grid-template-columns:1fr}
+      .related-grid{grid-template-columns:1fr}
+      .article-body h2{font-size:1.15rem;padding:14px 16px 14px 22px}
+    }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">JP <span>NEXT</span></a>
+    <ul class="nav-links">
+      <li><a href="/blog/">コラム</a></li>
+      <li><a href="/news/">M&Aニュース</a></li>
+      <li><a href="/blog/?cat=jigyo">事業承継</a></li>
+      <li><a href="/blog/?cat=career">転職ガイド</a></li>
+      <li><a href="/ma-tool.html">無料ツール</a></li>
+      <li><a href="/contact.html" class="nav-cta">相談・依頼</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="article-wrap">
+  <header style="margin-bottom:36px;">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+      <span class="tag" style="background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0;">事業承継</span>
+      <span class="tag" style="background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe;">M&A基礎</span>
+    </div>
+    <h1 class="article-h1">EBITDAとは？M&Aでの<span style="color:var(--accent)">計算例・役員報酬調整・EV/EBITDA倍率</span>をわかりやすく解説</h1>
+    <div class="article-meta-bar">
+      <span>📅 2026年3月26日</span>
+      <span>·</span>
+      <span>⏱ 約7分で読めます</span>
+      <span>·</span>
+      <span>✍️ JP NEXT 編集部</span>
+    </div>
+  </header>
+
+  <div class="author-box">
+    <div class="author-avatar">J</div>
+    <div>
+      <div class="author-name">JP NEXT 編集部</div>
+      <div class="author-desc">不動産仕入営業出身 / M&Aアドバイザー実務経験者。不動産会社にて仕入営業3年半を経てM&A業界に転職。10社以上の選考経験と実務をもとに情報発信。</div>
+    </div>
+  </div>
+
+  <div class="summary-box">
+    <div class="summary-box-title">📌 この記事でわかること</div>
+    <div class="summary-grid">
+      <div class="summary-item">EBITDAの意味と計算式</div>
+      <div class="summary-item">営業利益との違い</div>
+      <div class="summary-item">中小企業特有の「役員報酬調整」とは</div>
+      <div class="summary-item">EV/EBITDA倍率の意味と使い方</div>
+      <div class="summary-item">実際の計算例（中小企業ケース）</div>
+      <div class="summary-item">業種別のEV/EBITDA倍率の目安</div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">📋 目次</div>
+    <ol>
+      <li><a href="#what">EBITDAとは？</a></li>
+      <li><a href="#calc">EBITDAの計算式と計算例</a></li>
+      <li><a href="#yakuin">中小企業特有：役員報酬調整とは</a></li>
+      <li><a href="#ev">EV/EBITDA倍率の意味と使い方</a></li>
+      <li><a href="#example">実際の計算例（中小企業の売却価格の目安）</a></li>
+      <li><a href="#limits">EBITDAの限界と注意点</a></li>
+      <li><a href="#summary">まとめ</a></li>
+    </ol>
+  </div>
+
+  <div class="article-body">
+
+    <p>M&Aの資料を見ていると「EBITDA（イービットダー）」という言葉がよく出てきます。企業価値評価や売却価格の目安として広く使われる指標ですが、「そもそもEBITDAって何？」という方に向けてわかりやすく解説します。</p>
+
+    <p>👉 企業価値算定の他の手法（DCF法・年買法）については<a href="/blog/kigyokachi-santei.html" style="color:var(--accent);font-weight:600;">企業価値算定3手法解説</a>もご覧ください。</p>
+
+    <h2 id="what">① EBITDAとは？</h2>
+
+    <p>EBITDA（Earnings Before Interest, Taxes, Depreciation and Amortization）とは、<strong>利払前・税引前・減価償却前の利益</strong>を意味します。「イービットダー」または「イービットディーエー」と読みます。</p>
+    <p>簡単に言えば、「税金・借入金の利息・設備の減価償却費などの影響を除いた、本業の実質的な稼ぐ力」を示す指標です。国や会計方針が異なっても比較しやすいため、M&Aの現場で企業価値を評価する際に広く使われています。</p>
+
+    <h2 id="calc">② EBITDAの計算式と計算例</h2>
+
+    <div class="formula-box">
+      <div class="formula-label">基本計算式（実務上最もよく使われる）</div>
+      <div class="formula-text">EBITDA ＝ 営業利益 ＋ 減価償却費</div>
+      <div class="formula-note">※より厳密には：EBITDA = 税引前利益 + 支払利息 + 減価償却費 としても計算可能</div>
+    </div>
+
+    <p>なぜ減価償却費を足し戻すのかというと、減価償却費は実際に現金が出ていくわけではない「帳簿上の費用」だからです。EBITDAは「実際のキャッシュの稼ぐ力」に近い数字として使われます。</p>
+
+    <div class="calc-box">
+      <div class="calc-title">計算例｜A社（製造業）</div>
+      <div class="calc-step">
+        <strong>売上高：</strong>5億円<br>
+        <strong>営業利益：</strong>3,000万円<br>
+        <strong>減価償却費：</strong>1,000万円
+      </div>
+      <div class="calc-result">
+        <div class="calc-result-label">EBITDA</div>
+        <div class="calc-result-value">3,000万円 ＋ 1,000万円 ＝ 4,000万円</div>
+      </div>
+    </div>
+
+    <h2 id="yakuin">③ 中小企業特有：役員報酬調整とは</h2>
+
+    <p>中小企業のM&Aでは、EBITDAを計算する際に<strong>「役員報酬の調整」</strong>を行うことがあります。これは中小企業特有のポイントで、非常に重要です。</p>
+
+    <div class="callout callout-gold">
+      <div class="callout-title">💡 役員報酬調整が必要な理由</div>
+      中小企業のオーナー経営者は、節税のために役員報酬を高く設定しているケースがあります。例えば役員報酬が3,000万円の会社と1,000万円の会社では、同じ売上でも利益が全く異なります。しかし実際には「社長交代後は適切な水準の役員報酬になる」ため、調整前のEBITDAで企業価値を計算すると実態より低く評価されてしまいます。
+    </div>
+
+    <div class="calc-box">
+      <div class="calc-title">役員報酬調整ありの計算例｜B社（サービス業）</div>
+      <div class="calc-step">
+        <strong>営業利益：</strong>▲500万円（赤字）<br>
+        <strong>減価償却費：</strong>500万円<br>
+        <strong>現社長の役員報酬：</strong>3,000万円<br>
+        <strong>市場水準の後任報酬：</strong>700万円
+      </div>
+      <div class="calc-step">
+        <strong>調整額（役員報酬の差）：</strong>3,000万円 − 700万円 ＝ 2,300万円<br>
+        <strong>調整後EBITDA：</strong>▲500万円 ＋ 500万円 ＋ 2,300万円
+      </div>
+      <div class="calc-result">
+        <div class="calc-result-label">調整後EBITDA</div>
+        <div class="calc-result-value">2,300万円</div>
+      </div>
+    </div>
+
+    <p>「帳簿上は赤字」でも役員報酬を調整すると実質的には黒字企業になることがあります。これが<a href="/blog/akaji-ma.html" style="color:var(--accent);font-weight:600;">赤字会社でもM&Aできる？</a>で解説した「正規化利益」の考え方です。</p>
+
+    <h2 id="ev">④ EV/EBITDA倍率の意味と使い方</h2>
+
+    <div class="formula-box">
+      <div class="formula-label">EV/EBITDA倍率</div>
+      <div class="formula-text">EV/EBITDA倍率 ＝ EV（企業価値） ÷ EBITDA</div>
+      <div class="formula-note">EV（Enterprise Value）= 株式価値 + 有利子負債 − 現預金</div>
+    </div>
+
+    <p>EV/EBITDA倍率は「EBITDAの何年分で買収コストを回収できるか」を示す指標です。倍率が低いほど投資効率が良い（割安）と判断されます。</p>
+
+    <h3>業種別の目安（参考）</h3>
+
+    <table class="compare-table">
+      <thead><tr><th>業種</th><th>EV/EBITDA倍率の目安（中小企業）</th><th>特徴</th></tr></thead>
+      <tbody>
+        <tr><td><strong>IT・ソフトウェア</strong></td><td>5〜10倍</td><td>成長性・ストック型ビジネスが評価される</td></tr>
+        <tr><td><strong>製造業</strong></td><td>4〜7倍</td><td>技術力・設備・人材の希少性で変動</td></tr>
+        <tr><td><strong>医療・介護</strong></td><td>5〜8倍</td><td>許認可・安定収益性が評価される</td></tr>
+        <tr><td><strong>建設・工事</strong></td><td>3〜6倍</td><td>受注の安定性・資格保有者数に依存</td></tr>
+        <tr><td><strong>飲食・小売</strong></td><td>3〜5倍</td><td>立地・ブランド・収益安定性で変動</td></tr>
+        <tr><td><strong>運送・物流</strong></td><td>4〜6倍</td><td>車両・許可・ドライバー確保の希少性</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-red">
+      <div class="callout-title">⚠️ 倍率はあくまで「目安」</div>
+      EV/EBITDA倍率は参考指標に過ぎず、実際の売却価格は買い手の戦略的価値（シナジー）・交渉力・市況によって大きく変わります。同業種でも2〜3倍の幅が出ることは珍しくありません。「この倍率だから自社はいくら」という単純な計算は危険です。
+    </div>
+
+    <h2 id="example">⑤ 実際の計算例（中小企業の売却価格の目安）</h2>
+
+    <div class="calc-box">
+      <div class="calc-title">売却価格の目安計算｜C社（IT企業）</div>
+      <div class="calc-step">
+        <strong>調整後EBITDA：</strong>5,000万円<br>
+        <strong>業種のEV/EBITDA倍率：</strong>6倍（IT企業として想定）<br>
+        <strong>有利子負債：</strong>5,000万円<br>
+        <strong>現預金：</strong>2,000万円
+      </div>
+      <div class="calc-step">
+        <strong>EV（企業価値）：</strong>5,000万円 × 6倍 ＝ 3億円<br>
+        <strong>株式価値：</strong>3億円 − 5,000万円（借入）＋ 2,000万円（現預金） ＝ 2億7,000万円
+      </div>
+      <div class="calc-result">
+        <div class="calc-result-label">売却価格の概算目安</div>
+        <div class="calc-result-value">約2億7,000万円</div>
+      </div>
+    </div>
+
+    <p>👉 無料で企業価値を算定したい方は<a href="/ma-tool.html" style="color:var(--accent);font-weight:600;">企業価値算定ツール（登録不要）</a>をご活用ください。</p>
+
+    <h2 id="limits">⑥ EBITDAの限界と注意点</h2>
+
+    <ul>
+      <li><strong>設備投資の多い業種には不向き</strong>：EBITDAは減価償却費を足し戻すため、設備投資が大きい製造業などでは実態より良く見える場合がある</li>
+      <li><strong>運転資金の増減を反映しない</strong>：売上が急成長していると、利益はあっても現金が不足するケースがあるが、EBITDAでは見えにくい</li>
+      <li><strong>中小企業は非流動性ディスカウントがある</strong>：上場企業と違い、中小企業の株式はすぐに現金化できないため、10〜30%程度ディスカウントされることがある</li>
+    </ul>
+
+    <div class="cta-banner">
+      <div class="cta-banner-label">Free Consultation</div>
+      <div class="cta-banner-title">「自社のEBITDAと売却価格の目安を知りたい」<br>実務経験者に相談できます</div>
+      <div class="cta-banner-desc">決算書をお持ちいただければ、EBITDAの計算と売却価格の概算をお伝えします。<br>無料・秘密厳守です。</div>
+      <a href="/contact.html" class="btn btn-white" style="display:inline-block;">無料相談はこちら →</a>
+    </div>
+
+    <h2 id="summary">⑦ まとめ</h2>
+
+    <div class="callout callout-gray">
+      <div class="callout-title">📌 まとめ</div>
+      <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:8px;">
+        <li>EBITDA ＝ 営業利益 ＋ 減価償却費。「本業の実質的な稼ぐ力」を示す指標</li>
+        <li>中小企業では「役員報酬調整」が重要。帳簿上の赤字でも調整後は黒字になるケースがある</li>
+        <li>EV/EBITDA倍率 ＝ EV ÷ EBITDA。「何年でコストを回収できるか」を示す。中小企業の目安は3〜10倍</li>
+        <li>業種・シナジー・交渉力によって倍率は大きく変わる。単純計算で売却価格を決めるのは危険</li>
+        <li>EBITDAには限界がある（設備投資・運転資金を反映しない）。他の手法と組み合わせて使う</li>
+      </ul>
+    </div>
+
+    <div class="related-articles">
+      <div class="related-title">関連記事</div>
+      <div class="related-grid">
+        <a href="/blog/kigyokachi-santei.html" class="related-card">
+          <div class="related-card-tag">M&A基礎</div>
+          <div class="related-card-title">企業価値算定3手法解説｜DCF・類似会社・純資産の違い</div>
+        </a>
+        <a href="/blog/baikyaku-soba.html" class="related-card">
+          <div class="related-card-tag">事業承継</div>
+          <div class="related-card-title">会社売却の相場はいくら？業種別の目安・計算方法・手取り額</div>
+        </a>
+        <a href="/blog/akaji-ma.html" class="related-card">
+          <div class="related-card-tag">事業承継</div>
+          <div class="related-card-title">赤字会社でもM&Aできる？買い手がつく5つの条件を解説</div>
+        </a>
+        <a href="/ma-tool.html" class="related-card">
+          <div class="related-card-tag">無料ツール</div>
+          <div class="related-card-title">企業価値を今すぐ無料で算定する｜登録不要・3手法対応</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">JP <span>NEXT</span></div>
+    <div class="footer-tagline">M&A・事業承継の実務情報メディア</div>
+    <div class="footer-grid">
+      <div><div class="footer-col-title">JP NEXTについて</div><p style="font-size:.85rem;color:var(--gray-600);line-height:1.8;max-width:320px;">不動産・M&Aの実務経験者が運営するメディアです。</p></div>
+      <div><div class="footer-col-title">コンテンツ</div><ul class="footer-links"><li><a href="/blog/">最新記事</a></li><li><a href="/blog/?cat=jigyo">事業承継コラム</a></li><li><a href="/ma-tool.html">企業価値算定ツール</a></li></ul></div>
+      <div><div class="footer-col-title">サイト情報</div><ul class="footer-links"><li><a href="/about.html">運営者情報</a></li><li><a href="/privacy.html">プライバシーポリシー</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 JP NEXT. All rights reserved.</span><a href="mailto:info@jpnext.co" style="color:var(--gray-600);">info@jpnext.co</a></div>
+  </div>
+</footer>
+</body>
+</html>
