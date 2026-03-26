@@ -5,177 +5,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>コラム一覧 | JP NEXT — M&A・事業承継メディア</title>
   <meta name="description" content="M&A・事業承継・転職に関する実務情報コラム。企業価値算定・仲介会社比較・転職ガイドなど実務経験者が執筆。">
-  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/style.css">
-
-  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-P8KB1E1GRV"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-P8KB1E1GRV');
-  </script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P8KB1E1GRV');</script>
   <style>
-    .blog-hero {
-      background: var(--black);
-      padding: 64px 24px 56px;
-      border-bottom: 1px solid #222;
-    }
-    .blog-hero-inner { max-width: var(--max-w); margin: 0 auto; }
-    .blog-hero-label {
-      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em;
-      color: var(--accent-mid); text-transform: uppercase; margin-bottom: 16px;
-    }
-    .blog-hero-title {
-      font-family: var(--font-serif);
-      font-size: clamp(2rem, 4vw, 3rem);
-      color: var(--white);
-      margin-bottom: 12px;
-    }
-    .blog-hero-desc { font-size: 0.9rem; color: var(--gray-600); }
-
-    /* フィルター */
-    .filter-bar {
-      background: var(--white);
-      border-bottom: 1px solid var(--gray-200);
-      padding: 0 24px;
-      position: sticky;
-      top: 64px;
-      z-index: 90;
-    }
-    .filter-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      display: flex;
-      gap: 0;
-      overflow-x: auto;
-    }
-    .filter-btn {
-      padding: 16px 24px;
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--gray-600);
-      border-bottom: 2px solid transparent;
-      cursor: pointer;
-      white-space: nowrap;
-      background: none;
-      border-top: none;
-      border-left: none;
-      border-right: none;
-      font-family: var(--font-sans);
-      transition: all var(--transition);
-    }
-    .filter-btn:hover { color: var(--accent); }
-    .filter-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 700; }
-
-    /* メインレイアウト */
-    .blog-layout {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 48px 24px;
-      display: grid;
-      grid-template-columns: 1fr 300px;
-      gap: 48px;
-      align-items: start;
-    }
-
-    /* 記事リスト */
-    .articles-list { display: flex; flex-direction: column; gap: 24px; }
-    .article-row {
-      display: grid;
-      grid-template-columns: 160px 1fr;
-      gap: 24px;
-      background: var(--white);
-      border: 1px solid var(--gray-200);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      transition: all var(--transition);
-    }
-    .article-row:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(26,92,58,0.08);
-    }
-    .article-row-thumb {
-      background: var(--gray-100);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 140px;
-    }
-    .article-row-body {
-      padding: 24px 24px 24px 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .article-row-meta {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-      font-size: 0.75rem;
-      color: var(--gray-400);
-    }
-    .article-row-title {
-      font-family: var(--font-serif);
-      font-size: 1.05rem;
-      line-height: 1.5;
-      margin-bottom: 10px;
-    }
-    .article-row-title a:hover { color: var(--accent); }
-    .article-row-excerpt { font-size: 0.82rem; color: var(--gray-600); line-height: 1.7; }
-
+    .blog-hero{background:var(--black);padding:64px 24px 56px;border-bottom:1px solid #222}
+    .blog-hero-inner{max-width:var(--max-w);margin:0 auto}
+    .blog-hero-label{font-size:.72rem;font-weight:700;letter-spacing:.16em;color:var(--accent-mid);text-transform:uppercase;margin-bottom:16px}
+    .blog-hero-title{font-family:var(--font-serif);font-size:clamp(2rem,4vw,3rem);color:var(--white);margin-bottom:12px}
+    .blog-hero-desc{font-size:.9rem;color:var(--gray-600)}
+    .filter-bar{background:var(--white);border-bottom:1px solid var(--gray-200);padding:0 24px;position:sticky;top:64px;z-index:90}
+    .filter-inner{max-width:var(--max-w);margin:0 auto;display:flex;gap:0;overflow-x:auto}
+    .filter-btn{padding:16px 24px;font-size:.82rem;font-weight:500;color:var(--gray-600);border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;background:none;border-top:none;border-left:none;border-right:none;font-family:var(--font-sans);transition:all var(--transition)}
+    .filter-btn:hover{color:var(--accent)}
+    .filter-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:700}
+    .blog-layout{max-width:var(--max-w);margin:0 auto;padding:48px 24px;display:grid;grid-template-columns:1fr 300px;gap:48px;align-items:start}
+    .articles-list{display:flex;flex-direction:column;gap:24px}
+    .article-row{display:grid;grid-template-columns:160px 1fr;gap:24px;background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);overflow:hidden;transition:all var(--transition);text-decoration:none;color:inherit}
+    .article-row:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 32px rgba(26,92,58,.08)}
+    .article-row-thumb{display:flex;align-items:center;justify-content:center;min-height:140px}
+    .article-thumb-label{font-family:var(--font-serif);font-size:.9rem;color:rgba(255,255,255,.9);letter-spacing:.1em}
+    .article-row-body{padding:24px 24px 24px 0;display:flex;flex-direction:column;justify-content:center}
+    .article-row-meta{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:.75rem;color:var(--gray-400);flex-wrap:wrap}
+    .article-row-title{font-family:var(--font-serif);font-size:1.05rem;line-height:1.5;margin-bottom:10px;color:var(--black)}
+    .article-row-excerpt{font-size:.82rem;color:var(--gray-600);line-height:1.7}
+    /* 記事なし表示 */
+    .no-articles{text-align:center;padding:60px 24px;color:var(--gray-400);font-size:.9rem}
+    /* ローディング */
+    .loading{text-align:center;padding:60px 24px;color:var(--gray-400);font-size:.9rem}
+    /* タグ */
+    .tag-career{background:#fef3c7;color:#92400e;border:1px solid #fde68a;padding:3px 8px;border-radius:4px;font-size:.72rem;font-weight:700}
+    .tag-jigyo{background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0;padding:3px 8px;border-radius:4px;font-size:.72rem;font-weight:700}
+    .tag-ma{background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe;padding:3px 8px;border-radius:4px;font-size:.72rem;font-weight:700}
+    .tag-tool{background:var(--gray-100);color:var(--gray-600);border:1px solid var(--gray-200);padding:3px 8px;border-radius:4px;font-size:.72rem;font-weight:700}
     /* サイドバー */
-    .sidebar { display: flex; flex-direction: column; gap: 32px; }
-    .sidebar-widget {
-      background: var(--white);
-      border: 1px solid var(--gray-200);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-    }
-    .sidebar-widget-title {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--white);
-      background: var(--accent);
-      padding: 12px 20px;
-    }
-    .sidebar-widget-body { padding: 20px; }
-    .sidebar-tool-cta {
-      background: var(--black);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      text-align: center;
-    }
-    .sidebar-tool-cta-title {
-      font-family: var(--font-serif);
-      font-size: 1.1rem;
-      color: var(--white);
-      margin-bottom: 10px;
-    }
-    .sidebar-tool-cta-desc { font-size: 0.8rem; color: var(--gray-600); margin-bottom: 20px; line-height: 1.7; }
-    .sidebar-links { list-style: none; display: flex; flex-direction: column; gap: 0; }
-    .sidebar-links li { border-bottom: 1px solid var(--gray-100); }
-    .sidebar-links li:last-child { border-bottom: none; }
-    .sidebar-links a {
-      display: block;
-      padding: 12px 0;
-      font-size: 0.85rem;
-      color: var(--gray-600);
-      transition: color var(--transition);
-    }
-    .sidebar-links a:hover { color: var(--accent); }
-
-    @media (max-width: 900px) {
-      .blog-layout { grid-template-columns: 1fr; }
-      .sidebar { display: none; }
-      .article-row { grid-template-columns: 1fr; }
-      .article-row-thumb { min-height: 120px; }
-      .article-row-body { padding: 20px; }
+    .sidebar{display:flex;flex-direction:column;gap:32px}
+    .sidebar-widget{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);overflow:hidden}
+    .sidebar-widget-title{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--white);background:var(--accent);padding:12px 20px}
+    .sidebar-widget-body{padding:20px}
+    .sidebar-tool-cta{background:var(--black);border-radius:var(--radius-lg);padding:24px;text-align:center}
+    .sidebar-tool-cta-title{font-family:var(--font-serif);font-size:1.1rem;color:var(--white);margin-bottom:10px}
+    .sidebar-tool-cta-desc{font-size:.8rem;color:var(--gray-600);margin-bottom:20px;line-height:1.7}
+    .sidebar-links{list-style:none;display:flex;flex-direction:column;gap:0}
+    .sidebar-links li{border-bottom:1px solid var(--gray-100)}
+    .sidebar-links li:last-child{border-bottom:none}
+    .sidebar-links a{display:block;padding:12px 0;font-size:.85rem;color:var(--gray-600);transition:color var(--transition)}
+    .sidebar-links a:hover{color:var(--accent)}
+    /* 記事数バッジ */
+    .article-count{font-size:.8rem;color:var(--gray-400);margin-bottom:16px}
+    .article-count span{font-weight:700;color:var(--accent)}
+    @media(max-width:900px){
+      .blog-layout{grid-template-columns:1fr}
+      .sidebar{display:none}
+      .article-row{grid-template-columns:1fr}
+      .article-row-thumb{min-height:80px}
+      .article-row-body{padding:20px}
     }
   </style>
 </head>
@@ -186,6 +71,7 @@
     <a href="/" class="nav-logo">JP <span>NEXT</span></a>
     <ul class="nav-links">
       <li><a href="/blog/">コラム</a></li>
+      <li><a href="/news/">M&Aニュース</a></li>
       <li><a href="/blog/?cat=jigyo">事業承継</a></li>
       <li><a href="/blog/?cat=career">転職ガイド</a></li>
       <li><a href="/ma-tool.html">無料ツール</a></li>
@@ -204,103 +90,19 @@
 
 <div class="filter-bar">
   <div class="filter-inner">
-    <button class="filter-btn active" onclick="filterArticles('all', this)">すべて</button>
-    <button class="filter-btn" onclick="filterArticles('jigyo', this)">事業承継</button>
-    <button class="filter-btn" onclick="filterArticles('ma', this)">M&A基礎</button>
-    <button class="filter-btn" onclick="filterArticles('career', this)">転職ガイド</button>
-    <button class="filter-btn" onclick="filterArticles('tool', this)">ツール解説</button>
+    <button class="filter-btn active" data-cat="all" onclick="filterArticles('all', this)">すべて</button>
+    <button class="filter-btn" data-cat="jigyo" onclick="filterArticles('jigyo', this)">事業承継</button>
+    <button class="filter-btn" data-cat="ma" onclick="filterArticles('ma', this)">M&A基礎</button>
+    <button class="filter-btn" data-cat="career" onclick="filterArticles('career', this)">転職ガイド</button>
+    <button class="filter-btn" data-cat="tool" onclick="filterArticles('tool', this)">ツール解説</button>
   </div>
 </div>
 
 <div class="blog-layout">
   <main>
+    <p class="article-count" id="articleCount"></p>
     <div class="articles-list" id="articleList">
-
-      <article class="article-row" data-cat="jigyo">
-        <div class="article-row-thumb" style="background: var(--accent);">
-          <span style="font-family:var(--font-serif); font-size:0.9rem; color:rgba(255,255,255,0.9); letter-spacing:0.1em;">事業承継</span>
-        </div>
-        <div class="article-row-body">
-          <div class="article-row-meta">
-            <span class="tag tag-ma">事業承継</span>
-            <span>2026.03.23</span>
-            <span>読了 18分</span>
-          </div>
-          <h2 class="article-row-title">
-            <a href="/blog/jigyo-shokei.html">事業承継とは？流れ・期間・費用をM&Aアドバイザーが全解説</a>
-          </h2>
-          <p class="article-row-excerpt">相談から成約まで平均8ヶ月。手数料・仲介会社の選び方・失敗パターン・弁護士の必要性まで現役アドバイザーが包み隠さず解説。</p>
-        </div>
-      </article>
-
-      <article class="article-row" data-cat="career">
-        <div class="article-row-thumb" style="background: var(--gold);">
-          <span style="font-family:var(--font-serif); font-size:0.9rem; color:rgba(255,255,255,0.9); letter-spacing:0.1em;">転職</span>
-        </div>
-        <div class="article-row-body">
-          <div class="article-row-meta">
-            <span class="tag tag-transfer">転職ガイド</span>
-            <span>2026.03.23</span>
-            <span>読了 15分</span>
-          </div>
-          <h2 class="article-row-title">
-            <a href="/blog/ma-company-hikaku.html">M&A仲介会社の転職難易度比較｜日本M&Aセンター・ストライク・M&A総研・キャピタルを現役アドバイザーが徹底解説</a>
-          </h2>
-          <p class="article-row-excerpt">各社の面接の特徴・難易度・得意案件・社風を実際の選考経験をもとに比較。会食面接・一問一答・エージェント活用まで包み隠さず解説。</p>
-        </div>
-      </article>
-
-      <article class="article-row" data-cat="career">
-        <div class="article-row-thumb" style="background: var(--gold);">
-          <span style="font-family:var(--font-serif); font-size:0.9rem; color:rgba(255,255,255,0.9); letter-spacing:0.1em;">転職</span>
-        </div>
-        <div class="article-row-body">
-          <div class="article-row-meta">
-            <span class="tag tag-transfer">転職ガイド</span>
-            <span>2026.03.22</span>
-            <span>読了 15分</span>
-          </div>
-          <h2 class="article-row-title">
-            <a href="/blog/ma-career.html">M&Aアドバイザーの年収は？固定給・インセンティブ・インクルード・クレジットの実態を公開</a>
-          </h2>
-          <p class="article-row-excerpt">固定給360〜420万円・インセンティブ400万〜1億円の実数値を公開。インクルード・クレジット・上司との分配など転職前に知るべき報酬の仕組みも解説。</p>
-        </div>
-      </article>
-
-      <article class="article-row" data-cat="ma">
-        <div class="article-row-thumb" style="background: var(--black);">
-          <span style="font-family:var(--font-serif); font-size:0.9rem; color:rgba(255,255,255,0.9); letter-spacing:0.1em;">M&A基礎</span>
-        </div>
-        <div class="article-row-body">
-          <div class="article-row-meta">
-            <span class="tag tag-ma">M&A基礎</span>
-            <span>2026.03.23</span>
-            <span>読了 12分</span>
-          </div>
-          <h2 class="article-row-title">
-            <a href="/blog/kigyokachi-santei.html">中小企業の企業価値算定｜M&Aアドバイザーが実務で使う3つの手法を解説</a>
-          </h2>
-          <p class="article-row-excerpt">EV/EBITDA倍率、DCF法、純資産のれん法の3手法を計算例付きで解説。業界別倍率の目安も公開。</p>
-        </div>
-      </article>
-
-      <article class="article-row" data-cat="tool">
-        <div class="article-row-thumb" style="background: var(--gray-600);">
-          <span style="font-family:var(--font-serif); font-size:0.9rem; color:rgba(255,255,255,0.9); letter-spacing:0.1em;">ツール</span>
-        </div>
-        <div class="article-row-body">
-          <div class="article-row-meta">
-            <span class="tag tag-news">ツール解説</span>
-            <span>2026.03.23</span>
-            <span>読了 5分</span>
-          </div>
-          <h2 class="article-row-title">
-            <a href="/blog/kigyokachi-tool.html">企業価値算定ツールの使い方｜EV/EBITDA・DCF・純資産のれん法の3手法で即時算定</a>
-          </h2>
-          <p class="article-row-excerpt">登録不要・完全無料。売上・利益を入力するだけで3手法の概算が即時表示。M&A検討の第一歩に。</p>
-        </div>
-      </article>
-
+      <div class="loading">読み込み中...</div>
     </div>
   </main>
 
@@ -308,9 +110,8 @@
     <div class="sidebar-tool-cta">
       <div class="sidebar-tool-cta-title">無料で企業価値を算定</div>
       <p class="sidebar-tool-cta-desc">登録不要。売上・利益を入力するだけで本格的な算定結果を即時表示。</p>
-      <a href="/ma-tool.html" class="btn btn-primary" style="width:100%; text-align:center; display:block;">ツールを使う →</a>
+      <a href="/ma-tool.html" class="btn btn-primary" style="width:100%;text-align:center;display:block;">ツールを使う →</a>
     </div>
-
     <div class="sidebar-widget">
       <div class="sidebar-widget-title">カテゴリ</div>
       <div class="sidebar-widget-body">
@@ -322,15 +123,11 @@
         </ul>
       </div>
     </div>
-
     <div class="sidebar-widget">
       <div class="sidebar-widget-title">人気記事</div>
       <div class="sidebar-widget-body">
-        <ul class="sidebar-links">
-          <li><a href="/blog/kigyokachi-santei.html">企業価値算定の3手法</a></li>
-          <li><a href="/blog/ma-company-hikaku.html">M&A仲介会社比較</a></li>
-          <li><a href="/blog/ma-career.html">M&A転職の年収実態</a></li>
-          <li><a href="/blog/jigyo-shokei.html">事業承継のプロセス</a></li>
+        <ul class="sidebar-links" id="popularLinks">
+          <!-- articles.jsonから自動生成 -->
         </ul>
       </div>
     </div>
@@ -344,23 +141,119 @@
     <div class="footer-bottom" style="margin-top:32px;">
       <span>© 2026 JP NEXT. All rights reserved.</span>
       <a href="mailto:info@jpnext.co" style="color:var(--gray-600);">info@jpnext.co</a>
-      <a href="/" style="color: var(--gray-600);">トップへ戻る</a>
+      <a href="/" style="color:var(--gray-600);">トップへ戻る</a>
     </div>
   </div>
 </footer>
 
 <script>
-function filterArticles(cat, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.article-row').forEach(article => {
-    if (cat === 'all' || article.dataset.cat === cat) {
-      article.style.display = 'grid';
-    } else {
-      article.style.display = 'none';
+  // ==============================
+  // 記事データの読み込みと描画
+  // ==============================
+  let allArticles = [];
+  let currentCat = 'all';
+
+  // URLパラメータからカテゴリ取得
+  const urlParams = new URLSearchParams(window.location.search);
+  const catParam = urlParams.get('cat');
+  if (catParam) {
+    currentCat = catParam;
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.dataset.cat === catParam) btn.classList.add('active');
+    });
+  }
+
+  // タグのクラス名マッピング
+  const tagClass = {
+    career: 'tag-career',
+    jigyo: 'tag-jigyo',
+    ma: 'tag-ma',
+    tool: 'tag-tool'
+  };
+
+  // 記事カードHTMLを生成
+  function renderArticle(article) {
+    return `
+      <a class="article-row" href="${article.url}" data-cat="${article.cat}">
+        <div class="article-row-thumb" style="background:${article.catColor};">
+          <span class="article-thumb-label">${article.catLabel}</span>
+        </div>
+        <div class="article-row-body">
+          <div class="article-row-meta">
+            <span class="${tagClass[article.cat] || 'tag-ma'}">${article.catLabel}</span>
+            <span>${article.date}</span>
+            <span>読了 ${article.readTime}</span>
+          </div>
+          <div class="article-row-title">${article.title}</div>
+          <p class="article-row-excerpt">${article.excerpt}</p>
+        </div>
+      </a>
+    `;
+  }
+
+  // 一覧の描画・フィルタリング
+  function renderArticles(cat) {
+    const list = document.getElementById('articleList');
+    const countEl = document.getElementById('articleCount');
+    const filtered = cat === 'all' ? allArticles : allArticles.filter(a => a.cat === cat);
+
+    if (filtered.length === 0) {
+      list.innerHTML = '<div class="no-articles">この カテゴリの記事はまだありません。</div>';
+      countEl.innerHTML = '';
+      return;
     }
+
+    list.innerHTML = filtered.map(renderArticle).join('');
+    countEl.innerHTML = `<span>${filtered.length}</span> 件の記事`;
+  }
+
+  // フィルターボタン押下
+  function filterArticles(cat, btn) {
+    currentCat = cat;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderArticles(cat);
+    // URLを更新（ブラウザバック対応）
+    const newUrl = cat === 'all' ? '/blog/' : `/blog/?cat=${cat}`;
+    history.pushState({cat}, '', newUrl);
+  }
+
+  // 人気記事サイドバーを生成（最初の5件）
+  function renderPopularLinks(articles) {
+    const el = document.getElementById('popularLinks');
+    el.innerHTML = articles.slice(0, 5).map(a =>
+      `<li><a href="${a.url}">${a.title.length > 28 ? a.title.slice(0, 28) + '…' : a.title}</a></li>`
+    ).join('');
+  }
+
+  // articles.json を読み込む
+  fetch('/blog/articles.json')
+    .then(res => {
+      if (!res.ok) throw new Error('articles.json が見つかりません');
+      return res.json();
+    })
+    .then(data => {
+      allArticles = data;
+      renderArticles(currentCat);
+      renderPopularLinks(data);
+    })
+    .catch(err => {
+      console.error(err);
+      document.getElementById('articleList').innerHTML =
+        '<div class="no-articles">記事の読み込みに失敗しました。</div>';
+    });
+
+  // ブラウザバック対応
+  window.addEventListener('popstate', (e) => {
+    const cat = e.state?.cat || 'all';
+    currentCat = cat;
+    document.querySelectorAll('.filter-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.cat === cat);
+    });
+    renderArticles(cat);
   });
-}
 </script>
+
 </body>
 </html>
