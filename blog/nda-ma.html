@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NDA（秘密保持契約）とは？M&Aで締結するタイミングと注意点を解説 | JP NEXT</title>
+  <meta name="description" content="M&AにおけるNDA（秘密保持契約）の意味・締結タイミング・記載すべき主要条項・情報が漏れた場合のリスクを実務経験者が解説。売り手が知っておくべき注意点まで網羅。">
+  <meta property="og:title" content="NDA（秘密保持契約）とは？M&Aで締結するタイミングと注意点を解説">
+  <meta property="og:description" content="M&AのNDA（秘密保持契約）の意味・タイミング・主要条項・情報漏洩リスクを実務視点で解説。">
+  <meta property="og:url" content="https://www.jpnext.co/blog/nda-ma.html">
+  <meta property="og:image" content="https://www.jpnext.co/ogp.png">
+  <meta property="og:type" content="article">
+  <link rel="canonical" href="https://www.jpnext.co/blog/nda-ma.html">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P8KB1E1GRV"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P8KB1E1GRV');</script>
+  <style>
+    .article-wrap{max-width:780px;margin:0 auto;padding:48px 24px 100px}
+    .article-h1{font-family:var(--font-serif);font-size:clamp(1.5rem,4vw,2.1rem);line-height:1.45;margin-bottom:20px}
+    .article-meta-bar{display:flex;align-items:center;gap:12px;font-size:.82rem;color:var(--gray-400);flex-wrap:wrap;padding-bottom:24px;border-bottom:1px solid var(--gray-200)}
+    .author-box{display:flex;align-items:flex-start;gap:14px;padding:20px;background:var(--gray-100);border-radius:var(--radius);margin-bottom:36px}
+    .author-avatar{width:48px;height:48px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-size:1rem;color:var(--white);flex-shrink:0}
+    .author-name{font-weight:700;font-size:.9rem;margin-bottom:4px}
+    .author-desc{font-size:.8rem;color:var(--gray-400);line-height:1.6}
+    .summary-box{border:2px solid var(--accent);border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:36px;background:#f0fdf4}
+    .summary-box-title{font-weight:700;font-size:.88rem;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+    .summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .summary-item{display:flex;align-items:flex-start;gap:8px;font-size:.88rem;color:#166534;line-height:1.5}
+    .summary-item::before{content:'✓';font-weight:700;flex-shrink:0;color:var(--accent)}
+    .toc{background:var(--gray-100);border-radius:var(--radius-lg);padding:24px 28px;margin-bottom:48px;border-left:4px solid var(--accent)}
+    .toc-title{font-weight:700;font-size:.9rem;margin-bottom:14px}
+    .toc ol{list-style:decimal;padding-left:20px;display:flex;flex-direction:column;gap:8px}
+    .toc li{font-size:.88rem}
+    .toc a{color:var(--accent);text-decoration:none}
+    .article-body h2{font-family:var(--font-serif);font-size:1.35rem;margin:56px 0 18px;padding:16px 20px 16px 26px;background:var(--black);color:var(--white);border-radius:var(--radius);line-height:1.4;position:relative}
+    .article-body h2::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--accent);border-radius:var(--radius) 0 0 var(--radius)}
+    .article-body h3{font-family:var(--font-serif);font-size:1.1rem;margin:32px 0 12px;padding-left:14px;border-left:3px solid var(--accent);color:var(--black)}
+    .article-body p{font-size:.95rem;line-height:2.0;color:#2d2d2d;margin-bottom:18px}
+    .article-body ul{padding-left:22px;margin-bottom:20px;display:flex;flex-direction:column;gap:8px}
+    .article-body li{font-size:.93rem;line-height:1.85;color:#2d2d2d}
+    .callout{border-radius:var(--radius);padding:20px 24px;margin:28px 0;font-size:.9rem;line-height:1.85}
+    .callout-green{background:#f0fdf4;border-left:4px solid var(--accent);color:#166534}
+    .callout-gold{background:#fffbeb;border-left:4px solid var(--gold);color:#92400e}
+    .callout-red{background:#fef2f2;border-left:4px solid #dc2626;color:#991b1b}
+    .callout-gray{background:var(--gray-100);border-left:4px solid var(--gray-400);color:#374151}
+    .callout-title{font-weight:700;margin-bottom:8px;font-size:.88rem;letter-spacing:.04em}
+    .flow-bar{display:flex;align-items:center;gap:4px;margin:24px 0;flex-wrap:wrap}
+    .flow-step{background:var(--black);color:var(--white);padding:8px 14px;border-radius:var(--radius);font-size:.8rem;font-weight:600;white-space:nowrap}
+    .flow-step-active{background:var(--accent)}
+    .flow-arrow{color:var(--gray-400);font-size:.9rem;flex-shrink:0}
+    .clause-list{display:flex;flex-direction:column;gap:12px;margin:20px 0}
+    .clause-item{padding:16px 20px;background:var(--gray-100);border-radius:var(--radius);border-left:3px solid var(--gray-400)}
+    .clause-item-key{border-left-color:var(--accent);background:#f0fdf4}
+    .clause-item-warn{border-left-color:#dc2626;background:#fef2f2}
+    .clause-title{font-weight:700;font-size:.9rem;margin-bottom:6px}
+    .clause-desc{font-size:.84rem;color:#374151;line-height:1.8}
+    .compare-table{width:100%;border-collapse:collapse;margin:24px 0;font-size:.88rem;border-radius:var(--radius);overflow:hidden}
+    .compare-table th{background:var(--black);color:var(--white);padding:13px 16px;text-align:left;font-weight:600}
+    .compare-table td{padding:12px 16px;border-bottom:1px solid var(--gray-200);vertical-align:top;line-height:1.75}
+    .compare-table tr:nth-child(even) td{background:#f9fafb}
+    .compare-table tr:last-child td{border-bottom:none}
+    .cta-banner{background:var(--black);border-radius:var(--radius-lg);padding:36px;text-align:center;margin:56px 0}
+    .cta-banner-label{font-size:.72rem;font-weight:700;letter-spacing:.14em;color:var(--accent-mid);text-transform:uppercase;margin-bottom:12px}
+    .cta-banner-title{font-family:var(--font-serif);font-size:1.4rem;color:var(--white);margin-bottom:10px;line-height:1.4}
+    .cta-banner-desc{font-size:.88rem;color:var(--gray-400);margin-bottom:24px;line-height:1.8}
+    .related-articles{margin-top:56px;padding-top:40px;border-top:1px solid var(--gray-200)}
+    .related-title{font-family:var(--font-serif);font-size:1.1rem;margin-bottom:20px}
+    .related-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .related-card{border:1px solid var(--gray-200);border-radius:var(--radius);padding:18px;text-decoration:none;transition:all .2s;display:block}
+    .related-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 16px rgba(26,92,58,.08)}
+    .related-card-tag{font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.08em;margin-bottom:8px}
+    .related-card-title{font-size:.88rem;font-weight:600;color:var(--black);line-height:1.5}
+    @media(max-width:640px){
+      .article-wrap{padding:28px 16px 80px}
+      .summary-grid{grid-template-columns:1fr}
+      .related-grid{grid-template-columns:1fr}
+      .article-body h2{font-size:1.15rem;padding:14px 16px 14px 22px}
+    }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">JP <span>NEXT</span></a>
+    <ul class="nav-links">
+      <li><a href="/blog/">コラム</a></li>
+      <li><a href="/news/">M&Aニュース</a></li>
+      <li><a href="/blog/?cat=jigyo">事業承継</a></li>
+      <li><a href="/blog/?cat=career">転職ガイド</a></li>
+      <li><a href="/ma-tool.html">無料ツール</a></li>
+      <li><a href="/contact.html" class="nav-cta">相談・依頼</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="article-wrap">
+  <header style="margin-bottom:36px;">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+      <span class="tag" style="background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0;">事業承継</span>
+      <span class="tag" style="background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe;">M&A基礎</span>
+    </div>
+    <h1 class="article-h1">NDA（秘密保持契約）とは？M&Aで締結するタイミングと<span style="color:var(--accent)">注意点</span>を解説</h1>
+    <div class="article-meta-bar">
+      <span>📅 2026年3月26日</span>
+      <span>·</span>
+      <span>⏱ 約6分で読めます</span>
+      <span>·</span>
+      <span>✍️ JP NEXT 編集部</span>
+    </div>
+  </header>
+
+  <div class="author-box">
+    <div class="author-avatar">J</div>
+    <div>
+      <div class="author-name">JP NEXT 編集部</div>
+      <div class="author-desc">不動産仕入営業出身 / M&Aアドバイザー実務経験者。不動産会社にて仕入営業3年半を経てM&A業界に転職。10社以上の選考経験と実務をもとに情報発信。</div>
+    </div>
+  </div>
+
+  <div class="summary-box">
+    <div class="summary-box-title">📌 この記事でわかること</div>
+    <div class="summary-grid">
+      <div class="summary-item">NDAとは何か（意味と目的）</div>
+      <div class="summary-item">M&Aで締結するタイミング</div>
+      <div class="summary-item">NDAに盛り込むべき主要条項</div>
+      <div class="summary-item">情報が漏れたらどうなるか</div>
+      <div class="summary-item">売り手が注意すべき条項のチェックポイント</div>
+      <div class="summary-item">M&Aが失敗に終わった後の情報管理</div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">📋 目次</div>
+    <ol>
+      <li><a href="#what">NDAとは何か</a></li>
+      <li><a href="#why">M&AでNDAが必要な理由</a></li>
+      <li><a href="#timing">締結するタイミング</a></li>
+      <li><a href="#contents">主要な条項と内容</a></li>
+      <li><a href="#risk">情報が漏れたらどうなるか</a></li>
+      <li><a href="#checklist">売り手が確認すべきチェックポイント</a></li>
+      <li><a href="#summary">まとめ</a></li>
+    </ol>
+  </div>
+
+  <div class="article-body">
+
+    <p>M&Aを進める上で、最初に締結する重要な書面がNDA（Non-Disclosure Agreement：秘密保持契約）です。「M&Aは秘密保持に始まり秘密保持に終わる」とも言われるほど、情報管理はM&Aの成否を左右します。この記事では、NDAの基本から実務的な注意点まで解説します。</p>
+
+    <h2 id="what">① NDAとは何か</h2>
+
+    <p>NDA（Non-Disclosure Agreement）とは、取引の過程で開示される秘密情報を第三者に漏らさないことを約束する契約です。日本語では「秘密保持契約」または「機密保持契約」と呼ばれ、「CA（Confidentiality Agreement）」と表記されることもあります。</p>
+    <p>M&Aでは、売り手企業の財務情報・顧客リスト・取引先・事業計画などの極めて機密性の高い情報を買い手候補に開示する必要があります。この情報を保護するためにNDAを締結します。</p>
+
+    <h2 id="why">② M&AでNDAが必要な理由</h2>
+
+    <p>M&Aの交渉では、通常であれば社外秘となる情報を大量に開示します。これがNDA締結前に漏洩すると、以下のような深刻な問題が起きます。</p>
+
+    <div class="callout callout-red">
+      <div class="callout-title">⚠️ 情報が漏洩した場合に起きること</div>
+      <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:8px;">
+        <li><strong>従業員の動揺・離職</strong>：「うちの会社が売りに出ている」という噂が広まると、優秀な社員から離職するリスクがある</li>
+        <li><strong>取引先の不安・離反</strong>：主要取引先が「取引を続けて大丈夫か」と不安になり、受注が減る可能性がある</li>
+        <li><strong>競合他社への情報流出</strong>：財務情報・顧客情報が競合に渡ると経営に深刻なダメージ</li>
+        <li><strong>M&A自体の失敗</strong>：情報漏洩で会社の価値が毀損され、買い手が撤退したり価格を大幅に下げてくる可能性がある</li>
+      </ul>
+    </div>
+
+    <p>特に注意すべきは、<strong>「M&Aを検討しているという事実そのもの」が秘密情報に含まれる</strong>点です。一般的なNDAとは異なり、交渉の存在自体を秘密とすることがM&AのNDAの大きな特徴です。</p>
+
+    <h2 id="timing">③ 締結するタイミング</h2>
+
+    <div class="flow-bar">
+      <div class="flow-step flow-step-active">仲介会社との契約時</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step flow-step-active">IM（詳細情報）開示前</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">トップ面談</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">LOI</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">MOU</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">DD</div>
+    </div>
+
+    <p>M&AにおけるNDA締結は2段階で行われることが多いです。</p>
+
+    <table class="compare-table">
+      <thead><tr><th>タイミング</th><th>相手</th><th>内容</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>第1段階</strong><br>依頼開始時</td>
+          <td>M&A仲介会社</td>
+          <td>仲介会社との間でNDAを締結。財務情報などの開示前に必須。</td>
+        </tr>
+        <tr>
+          <td><strong>第2段階</strong><br>IM開示前</td>
+          <td>買い手候補企業</td>
+          <td>ノンネームシート→NDA→IM開示という流れ。この段階で買い手の社名が初めて開示される。</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-gold">
+      <div class="callout-title">💡 NDA締結前にどの程度の情報を開示していいか</div>
+      NDA締結前は「ノンネームシート（社名を伏せた匿名の概要情報）」のみを開示します。業種・売上規模・地域などから会社が特定されてしまう可能性があるため、ノンネームシートの内容も慎重に決める必要があります。社名・具体的な財務数値・顧客名などはNDA締結後に限定します。
+    </div>
+
+    <h2 id="contents">④ 主要な条項と内容</h2>
+
+    <div class="clause-list">
+      <div class="clause-item clause-item-key">
+        <div class="clause-title">秘密情報の定義</div>
+        <div class="clause-desc">何が秘密情報に当たるかを定める。「開示された一切の情報」と広く定義するのが売り手にとって有利。買い手は「秘密と表示したもののみ」に限定しようとすることがある。</div>
+      </div>
+      <div class="clause-item clause-item-key">
+        <div class="clause-title">M&A交渉の事実の秘密保持</div>
+        <div class="clause-desc">「M&Aを検討していること自体」を秘密情報に含めることがM&AのNDAの特徴。これを明記しておかないと、交渉の事実が外部に漏れても責任追及が難しくなる。</div>
+      </div>
+      <div class="clause-item">
+        <div class="clause-title">目的外使用の禁止</div>
+        <div class="clause-desc">開示された情報はM&Aの検討・実行の目的のみに使用することを定める。競合他社への転職・自社の事業への流用などを禁止。</div>
+      </div>
+      <div class="clause-item clause-item-key">
+        <div class="clause-title">開示範囲（第三者への開示）</div>
+        <div class="clause-desc">弁護士・公認会計士・税理士などの専門家に開示する場合は、その旨を盛り込んでおく。ただし開示先にも同等の秘密保持義務を課すことを条件にする。</div>
+      </div>
+      <div class="clause-item">
+        <div class="clause-title">有効期間</div>
+        <div class="clause-desc">一般的にはNDA締結日から1〜3年間。M&Aが不成立に終わっても、この期間中は秘密保持義務が継続する。「交渉終了後も守秘義務は続く」ことに注意。</div>
+      </div>
+      <div class="clause-item">
+        <div class="clause-title">資料の返還・破棄義務</div>
+        <div class="clause-desc">交渉が不成立に終わった場合、開示した資料（コピー含む）を返還または破棄することを求める条項。</div>
+      </div>
+      <div class="clause-item clause-item-warn">
+        <div class="clause-title">⚠️ 損害賠償・差止請求</div>
+        <div class="clause-desc">NDA違反時の損害賠償請求権・差止請求権を定める。ただし「漏洩した情報によって生じた損害額の立証」は実務上難しいことが多い。違約金条項の設定も検討に値する。</div>
+      </div>
+    </div>
+
+    <h2 id="risk">⑤ 情報が漏れたらどうなるか</h2>
+
+    <p>NDAに違反して情報が漏洩した場合、契約不履行に基づく損害賠償請求が可能です。ただし実務上、「漏洩した情報によって具体的にいくらの損害が生じたか」を立証することは困難です。</p>
+    <p>そのためNDAは「違反した場合の抑止力」として機能することが最大の役割です。M&Aの現場では「NDAを締結しているから安心」というよりも、「NDAを締結した相手なら信頼できる」という信頼関係の形成として機能しています。</p>
+
+    <h2 id="checklist">⑥ 売り手が確認すべきチェックポイント</h2>
+
+    <div class="callout callout-green">
+      <div class="callout-title">✅ NDA締結前の確認チェックリスト</div>
+      <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:8px;">
+        <li>秘密情報の定義は「開示した一切の情報」と広く設定されているか</li>
+        <li>「M&A交渉の事実そのもの」が秘密情報に含まれているか</li>
+        <li>第三者（弁護士・会計士など）への開示条件が明記されているか</li>
+        <li>有効期間はいつからいつまでか（交渉終了後も継続するか）</li>
+        <li>不成立時の資料返還・破棄義務が明記されているか</li>
+        <li>相手方の担当者だけでなく会社として義務を負う形になっているか</li>
+        <li>一方的に不利な条件になっていないか（弁護士に確認を）</li>
+      </ul>
+    </div>
+
+    <div class="cta-banner">
+      <div class="cta-banner-label">Free Consultation</div>
+      <div class="cta-banner-title">「NDAを締結する前に相談したい」<br>実務経験者に確認できます</div>
+      <div class="cta-banner-desc">NDAの内容確認・M&Aプロセスの流れについてご相談を承ります。<br>無料・秘密厳守です。</div>
+      <a href="/contact.html" class="btn btn-white" style="display:inline-block;">無料相談はこちら →</a>
+    </div>
+
+    <h2 id="summary">⑦ まとめ</h2>
+
+    <div class="callout callout-gray">
+      <div class="callout-title">📌 まとめ</div>
+      <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:8px;">
+        <li>NDAとは秘密保持契約。M&Aでは財務・顧客・事業計画などの機密情報を大量に開示するため必須</li>
+        <li>M&A特有の注意点：「交渉の事実そのもの」を秘密情報に含める必要がある</li>
+        <li>締結タイミング：仲介会社との契約時（第1段階）とIM開示前・買い手候補との間（第2段階）</li>
+        <li>主要条項：秘密情報の定義・目的外使用禁止・第三者開示条件・有効期間・返還義務・損害賠償</li>
+        <li>NDAは「抑止力」として機能する。違反時の損害立証は実務上難しいため、信頼できる相手選びが最重要</li>
+      </ul>
+    </div>
+
+    <div class="related-articles">
+      <div class="related-title">関連記事</div>
+      <div class="related-grid">
+        <a href="/blog/loi.html" class="related-card">
+          <div class="related-card-tag">M&A基礎</div>
+          <div class="related-card-title">LOI（意向表明書）とは？M&Aで受け取ったときの読み方・比較ポイント</div>
+        </a>
+        <a href="/blog/uriru-flow.html" class="related-card">
+          <div class="related-card-tag">事業承継</div>
+          <div class="related-card-title">会社を売るための手順・流れ8ステップ｜準備から成約まで</div>
+        </a>
+        <a href="/blog/ma-dd-junbi.html" class="related-card">
+          <div class="related-card-tag">事業承継</div>
+          <div class="related-card-title">M&AのDDチェックリスト｜売り手が事前に準備すべき書類と指摘されやすいポイント</div>
+        </a>
+        <a href="/blog/baikyaku-soba.html" class="related-card">
+          <div class="related-card-tag">事業承継</div>
+          <div class="related-card-title">会社売却の相場はいくら？業種別の目安・計算方法・手取り額</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">JP <span>NEXT</span></div>
+    <div class="footer-tagline">M&A・事業承継の実務情報メディア</div>
+    <div class="footer-grid">
+      <div><div class="footer-col-title">JP NEXTについて</div><p style="font-size:.85rem;color:var(--gray-600);line-height:1.8;max-width:320px;">不動産・M&Aの実務経験者が運営するメディアです。</p></div>
+      <div><div class="footer-col-title">コンテンツ</div><ul class="footer-links"><li><a href="/blog/">最新記事</a></li><li><a href="/blog/?cat=jigyo">事業承継コラム</a></li><li><a href="/ma-tool.html">企業価値算定ツール</a></li></ul></div>
+      <div><div class="footer-col-title">サイト情報</div><ul class="footer-links"><li><a href="/about.html">運営者情報</a></li><li><a href="/privacy.html">プライバシーポリシー</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 JP NEXT. All rights reserved.</span><a href="mailto:info@jpnext.co" style="color:var(--gray-600);">info@jpnext.co</a></div>
+  </div>
+</footer>
+</body>
+</html>
