@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M&Aの手数料はいくら？レーマン方式の計算例・種類・注意点を実例で解説 | JP NEXT</title>
+  <meta name="description" content="M&A仲介会社の手数料（レーマン方式）の仕組みを実例で解説。株価基準・企業価値基準・移動総資産基準で手数料がどう変わるかの比較計算・最低報酬額の注意点まで網羅。">
+  <meta property="og:title" content="M&Aの手数料はいくら？レーマン方式の計算例・種類・注意点を実例で解説">
+  <meta property="og:description" content="レーマン方式の仕組みと計算例を実例で解説。基準額の違いで手数料がいくら変わるかの比較計算も公開。">
+  <meta property="og:url" content="https://www.jpnext.co/blog/lehman-fee.html">
+  <meta property="og:image" content="https://www.jpnext.co/ogp.png">
+  <meta property="og:type" content="article">
+  <link rel="canonical" href="https://www.jpnext.co/blog/lehman-fee.html">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P8KB1E1GRV"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P8KB1E1GRV');</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"M&Aの手数料はいくら？レーマン方式の計算例・種類・注意点を実例で解説","author":{"@type":"Person","name":"JP NEXT 編集部"},"publisher":{"@type":"Organization","name":"JP NEXT"},"datePublished":"2026-03-26","url":"https://www.jpnext.co/blog/lehman-fee.html"}</script>
+  <style>
+    .article-wrap{max-width:780px;margin:0 auto;padding:48px 24px 100px}
+    .article-eyebrow{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+    .article-h1{font-family:var(--font-serif);font-size:clamp(1.5rem,4vw,2.1rem);line-height:1.45;margin-bottom:20px;letter-spacing:-.01em}
+    .article-meta-bar{display:flex;align-items:center;gap:12px;font-size:.82rem;color:var(--gray-400);flex-wrap:wrap;padding-bottom:24px;border-bottom:1px solid var(--gray-200)}
+    .author-box{display:flex;align-items:flex-start;gap:14px;padding:20px;background:var(--gray-100);border-radius:var(--radius);margin-bottom:36px}
+    .author-avatar{width:48px;height:48px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-size:1rem;color:var(--white);flex-shrink:0}
+    .author-name{font-weight:700;font-size:.9rem;margin-bottom:4px}
+    .author-desc{font-size:.8rem;color:var(--gray-400);line-height:1.6}
+    .summary-box{border:2px solid var(--accent);border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:36px;background:#f0fdf4}
+    .summary-box-title{font-weight:700;font-size:.88rem;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+    .summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .summary-item{display:flex;align-items:flex-start;gap:8px;font-size:.88rem;color:#166534;line-height:1.5}
+    .summary-item::before{content:'✓';font-weight:700;flex-shrink:0;color:var(--accent)}
+    .toc{background:var(--gray-100);border-radius:var(--radius-lg);padding:24px 28px;margin-bottom:48px;border-left:4px solid var(--accent)}
+    .toc-title{font-weight:700;font-size:.9rem;margin-bottom:14px}
+    .toc ol{list-style:decimal;padding-left:20px;display:flex;flex-direction:column;gap:8px}
+    .toc li{font-size:.88rem}
+    .toc a{color:var(--accent);text-decoration:none}
+    .article-body h2{font-family:var(--font-serif);font-size:1.35rem;margin:56px 0 18px;padding:16px 20px 16px 26px;background:var(--black);color:var(--white);border-radius:var(--radius);line-height:1.4;position:relative}
+    .article-body h2::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--accent);border-radius:var(--radius) 0 0 var(--radius)}
+    .article-body h3{font-family:var(--font-serif);font-size:1.1rem;margin:32px 0 12px;padding-left:14px;border-left:3px solid var(--accent);color:var(--black)}
+    .article-body p{font-size:.95rem;line-height:2.0;color:#2d2d2d;margin-bottom:18px}
+    .article-body ul{padding-left:22px;margin-bottom:20px;display:flex;flex-direction:column;gap:8px}
+    .article-body li{font-size:.93rem;line-height:1.85;color:#2d2d2d}
+    .callout{border-radius:var(--radius);padding:20px 24px;margin:28px 0;font-size:.9rem;line-height:1.85}
+    .callout-green{background:#f0fdf4;border-left:4px solid var(--accent);color:#166534}
+    .callout-gold{background:#fffbeb;border-left:4px solid var(--gold);color:#92400e}
+    .callout-red{background:#fef2f2;border-left:4px solid #dc2626;color:#991b1b}
+    .callout-gray{background:var(--gray-100);border-left:4px solid var(--gray-400);color:#374151}
+    .callout-title{font-weight:700;margin-bottom:8px;font-size:.88rem;letter-spacing:.04em}
+    /* レーマンテーブル */
+    .lehman-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:.9rem;border-radius:var(--radius);overflow:hidden}
+    .lehman-table th{background:var(--black);color:var(--white);padding:12px 16px;text-align:left;font-weight:600}
+    .lehman-table td{padding:11px 16px;border-bottom:1px solid var(--gray-200);vertical-align:middle}
+    .lehman-table tr:nth-child(even) td{background:#f9fafb}
+    .lehman-table tr:last-child td{border-bottom:none}
+    .rate-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-weight:700;font-size:.82rem}
+    /* 計算ボックス */
+    .calc-box{background:var(--black);border-radius:var(--radius-lg);padding:28px;margin:28px 0;color:var(--white)}
+    .calc-title{font-size:.78rem;letter-spacing:.12em;color:var(--accent-mid);text-transform:uppercase;margin-bottom:16px}
+    .calc-step{border-left:2px solid #374151;padding-left:16px;margin-bottom:14px;font-size:.88rem;color:var(--gray-400);line-height:1.9}
+    .calc-step strong{color:var(--white)}
+    .calc-result{margin-top:16px;padding:14px 18px;background:rgba(29,158,117,.15);border-radius:var(--radius);border-left:3px solid var(--accent-mid)}
+    .calc-result-label{font-size:.75rem;color:var(--accent-mid);margin-bottom:4px}
+    .calc-result-value{font-family:var(--font-serif);font-size:1.6rem;color:var(--accent-mid);font-weight:700}
+    /* 比較テーブル */
+    .compare-table{width:100%;border-collapse:collapse;margin:24px 0;font-size:.88rem;border-radius:var(--radius);overflow:hidden}
+    .compare-table th{background:var(--black);color:var(--white);padding:13px 16px;text-align:left;font-weight:600}
+    .compare-table td{padding:12px 16px;border-bottom:1px solid var(--gray-200);vertical-align:top;line-height:1.75}
+    .compare-table tr:nth-child(even) td{background:#f9fafb}
+    .compare-table tr:last-child td{border-bottom:none}
+    .cta-banner{background:var(--black);border-radius:var(--radius-lg);padding:36px;text-align:center;margin:56px 0}
+    .cta-banner-label{font-size:.72rem;font-weight:700;letter-spacing:.14em;color:var(--accent-mid);text-transform:uppercase;margin-bottom:12px}
+    .cta-banner-title{font-family:var(--font-serif);font-size:1.4rem;color:var(--white);margin-bottom:10px;line-height:1.4}
+    .cta-banner-desc{font-size:.88rem;color:var(--gray-400);margin-bottom:24px;line-height:1.8}
+    .related-articles{margin-top:56px;padding-top:40px;border-top:1px solid var(--gray-200)}
+    .related-title{font-family:var(--font-serif);font-size:1.1rem;margin-bottom:20px}
+    .related-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .related-card{border:1px solid var(--gray-200);border-radius:var(--radius);padding:18px;text-decoration:none;transition:all .2s;display:block}
+    .related-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 16px rgba(26,92,58,.08)}
+    .related-card-tag{font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.08em;margin-bottom:8px}
+    .related-card-title{font-size:.88rem;font-weight:600;color:var(--black);line-height:1.5}
+    @media(max-width:640px){
+      .article-wrap{padding:28px 16px 80px}
+      .summary-grid{grid-template-columns:1fr}
+      .related-grid{grid-template-columns:1fr}
+      .article-body h2{font-size:1.15rem;padding:14px 16px 14px 22px}
+      .lehman-table{font-size:.8rem}
+      .lehman-table th,.lehman-table td{padding:9px 12px}
+    }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">JP <span>NEXT</span></a>
+    <ul class="nav-links">
+      <li><a href="/blog/">コラム</a></li>
+      <li><a href="/news/">M&Aニュース</a></li>
+      <li><a href="/blog/?cat=jigyo">事業承継</a></li>
+      <li><a href="/blog/?cat=career">転職ガイド</a></li>
+      <li><a href="/ma-tool.html">無料ツール</a></li>
+      <li><a href="/contact.html" class="nav-cta">相談・依頼</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="article-wrap">
+  <header style="margin-bottom:36px;">
+    <div class="article-eyebrow">
+      <span class="tag" style="background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0;">事業承継</span>
+      <span class="tag" style="background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe;">M&A基礎</span>
+    </div>
+    <h1 class="article-h1">M&Aの手数料はいくら？<span style="color:var(--accent)">レーマン方式の計算例・種類・注意点</span>を実例で解説</h1>
+    <div class="article-meta-bar">
+      <span>📅 2026年3月26日</span>
+      <span>·</span>
+      <span>⏱ 約7分で読めます</span>
+      <span>·</span>
+      <span>✍️ JP NEXT 編集部</span>
+    </div>
+  </header>
+
+  <div class="author-box">
+    <div class="author-avatar">J</div>
+    <div>
+      <div class="author-name">JP NEXT 編集部</div>
+      <div class="author-desc">不動産仕入営業出身 / M&Aアドバイザー実務経験者。不動産会社にて仕入営業3年半を経てM&A業界に転職。10社以上の選考経験と実務をもとに情報発信。</div>
+    </div>
+  </div>
+
+  <div class="summary-box">
+    <div class="summary-box-title">📌 この記事でわかること</div>
+    <div class="summary-grid">
+      <div class="summary-item">レーマン方式の仕組みと計算方法</div>
+      <div class="summary-item">株価・企業価値・移動総資産の3種類の違い</div>
+      <div class="summary-item">同じ案件でも基準で手数料がいくら変わるか</div>
+      <div class="summary-item">最低報酬額の注意点</div>
+      <div class="summary-item">着手金・中間報酬の仕組み</div>
+      <div class="summary-item">手数料を確認する際のチェックポイント</div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">📋 目次</div>
+    <ol>
+      <li><a href="#what">レーマン方式とは？</a></li>
+      <li><a href="#table">レーマンテーブル（料率表）</a></li>
+      <li><a href="#calc">計算例：売却価格3億円の場合</a></li>
+      <li><a href="#types">基準額の種類と手数料への影響</a></li>
+      <li><a href="#minimum">最低報酬額の注意点</a></li>
+      <li><a href="#other">着手金・中間報酬の仕組み</a></li>
+      <li><a href="#check">仲介会社を選ぶときの確認ポイント</a></li>
+      <li><a href="#summary">まとめ</a></li>
+    </ol>
+  </div>
+
+  <div class="article-body">
+
+    <p>M&Aを進めると決めたとき、多くの経営者が気になるのが「仲介会社の手数料はいくらかかるのか」という問いです。この手数料の計算に使われるのが<strong>「レーマン方式」</strong>です。</p>
+    <p>ただし、同じ「レーマン方式」でも、<strong>基準額の設定が会社によって異なるため、同じ案件でも手数料が大きく変わります。</strong>「レーマン方式だから安心」と思っていると、契約後に想定外の金額を請求される場合があります。この記事では、仕組みから計算例、基準額の違いによる影響まで解説します。</p>
+
+    <p>👉 売却価格の相場については<a href="/blog/baikyaku-soba.html" style="color:var(--accent);font-weight:600;">会社売却の相場はいくら？業種別の目安・計算方法</a>も合わせてご覧ください。</p>
+
+    <h2 id="what">① レーマン方式とは？</h2>
+
+    <p>レーマン方式（Lehman Formula）とは、M&Aの仲介会社や専門家への成功報酬を計算する方法で、<strong>取引金額が大きくなるほど料率（手数料率）が下がる「段階的累進方式」</strong>です。</p>
+    <p>一律の料率（例：取引額の5%）で計算すると、大型案件では手数料が膨大になりすぎます。レーマン方式は金額帯ごとに料率を下げることで、売り手・買い手双方にとってバランスの取れた手数料設計を実現しています。</p>
+
+    <h2 id="table">② レーマンテーブル（料率表）</h2>
+
+    <p>一般的なレーマンテーブルは以下の通りです。各社で多少の違いはありますが、この構造が業界標準として広く使われています。</p>
+
+    <table class="lehman-table">
+      <thead><tr><th>基準額の金額帯</th><th>手数料率</th></tr></thead>
+      <tbody>
+        <tr><td>5億円以下の部分</td><td><span class="rate-badge" style="background:#fef2f2;color:#dc2626;">5%</span></td></tr>
+        <tr><td>5億円超〜10億円以下の部分</td><td><span class="rate-badge" style="background:#fffbeb;color:#92400e;">4%</span></td></tr>
+        <tr><td>10億円超〜50億円以下の部分</td><td><span class="rate-badge" style="background:#ecfdf5;color:#065f46;">3%</span></td></tr>
+        <tr><td>50億円超〜100億円以下の部分</td><td><span class="rate-badge" style="background:#eff6ff;color:#1e40af;">2%</span></td></tr>
+        <tr><td>100億円超の部分</td><td><span class="rate-badge" style="background:var(--gray-100);color:var(--gray-600);">1%</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-gold">
+      <div class="callout-title">⚠️ 重要：この料率を「基準額全体」にかけるわけではない</div>
+      よくある誤解として「売却価格3億円なら3億円×5%＝1,500万円」と計算する人がいますが、これは間違いです。レーマン方式では<strong>金額帯ごとに分けて計算し、合算する</strong>のが正しい方法です。次のセクションで具体的に計算します。
+    </div>
+
+    <h2 id="calc">③ 計算例：売却価格3億円の場合</h2>
+
+    <div class="calc-box">
+      <div class="calc-title">計算例｜株価（売却価格）3億円</div>
+      <div class="calc-step">
+        <strong>3億円は「5億円以下の部分」に全額収まる</strong><br>
+        ↓<br>
+        3億円 × 5% ＝ <strong>1,500万円</strong>
+      </div>
+      <div class="calc-result">
+        <div class="calc-result-label">成功報酬（税抜）</div>
+        <div class="calc-result-value">1,500万円</div>
+      </div>
+    </div>
+
+    <div class="calc-box">
+      <div class="calc-title">計算例｜売却価格8億円</div>
+      <div class="calc-step">
+        <strong>5億円以下の部分：</strong>5億円 × 5% ＝ 2,500万円<br>
+        <strong>5億円超〜8億円の部分：</strong>3億円 × 4% ＝ 1,200万円
+      </div>
+      <div class="calc-result">
+        <div class="calc-result-label">成功報酬（税抜）</div>
+        <div class="calc-result-value">3,700万円</div>
+      </div>
+    </div>
+
+    <div class="calc-box">
+      <div class="calc-title">計算例｜売却価格15億円</div>
+      <div class="calc-step">
+        <strong>5億円以下の部分：</strong>5億円 × 5% ＝ 2,500万円<br>
+        <strong>5億円超〜10億円の部分：</strong>5億円 × 4% ＝ 2,000万円<br>
+        <strong>10億円超〜15億円の部分：</strong>5億円 × 3% ＝ 1,500万円
+      </div>
+      <div class="calc-result">
+        <div class="calc-result-label">成功報酬（税抜）</div>
+        <div class="calc-result-value">6,000万円</div>
+      </div>
+    </div>
+
+    <div class="callout callout-gray">
+      <div class="callout-title">💡 消費税を忘れずに</div>
+      上記はすべて税抜金額です。消費税10%が加算されます。成功報酬6,000万円であれば、実際の支払いは6,600万円になります。
+    </div>
+
+    <h2 id="types">④ 基準額の種類と手数料への影響</h2>
+
+    <p>レーマン方式の「料率」は各社でほぼ同じですが、<strong>何を「基準額」にするかで手数料が大きく変わります。</strong>これが最も重要な注意点です。</p>
+
+    <table class="compare-table">
+      <thead><tr><th>方式</th><th>基準額の定義</th><th>特徴</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>株価方式</strong></td>
+          <td>株式の譲渡対価のみ</td>
+          <td>4つの中で最も手数料が低くなる。売り手に最もシンプルで有利</td>
+        </tr>
+        <tr>
+          <td><strong>企業価値方式</strong></td>
+          <td>株価＋有利子負債</td>
+          <td>借入金が多い会社は手数料が大きく増える</td>
+        </tr>
+        <tr>
+          <td><strong>移動総資産方式</strong></td>
+          <td>株価＋負債総額（有利子負債以外も含む）</td>
+          <td>4つの中で最も手数料が高くなりやすい</td>
+        </tr>
+        <tr>
+          <td><strong>オーナー受取額方式</strong></td>
+          <td>株価＋役員借入金</td>
+          <td>役員借入金がある場合に手数料が増える</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>同じ案件で基準額が変わるとどうなるか（実例）</h3>
+
+    <div class="callout callout-green">
+      <div class="callout-title">💡 前提条件（A社）</div>
+      株式売却価格：3億円　／　有利子負債：1億円　／　役員借入金：3,000万円　／　買掛金等：5,000万円
+    </div>
+
+    <table class="compare-table">
+      <thead><tr><th>方式</th><th>基準額</th><th>成功報酬（税抜）</th></tr></thead>
+      <tbody>
+        <tr><td><strong>株価方式</strong></td><td>3億円</td><td>1,500万円</td></tr>
+        <tr><td><strong>企業価値方式</strong></td><td>4億円（3億＋1億）</td><td>1,900万円（5億以下部分×5%）</td></tr>
+        <tr><td><strong>オーナー受取額方式</strong></td><td>3億3,000万円（3億＋3,000万）</td><td>1,650万円</td></tr>
+        <tr><td><strong>移動総資産方式</strong></td><td>4億8,000万円（3億＋1億5,000万）</td><td>2,400万円</td></tr>
+      </tbody>
+    </table>
+
+    <p>同じ3億円の案件でも、方式によって<strong>1,500万円〜2,400万円と900万円もの差</strong>が生じます。契約前に必ず確認してください。</p>
+
+    <h2 id="minimum">⑤ 最低報酬額の注意点</h2>
+
+    <p>多くの仲介会社では<strong>最低報酬額（最低成功報酬）</strong>が設定されています。レーマン方式で計算した結果がこの最低額を下回った場合、最低報酬額が適用されます。</p>
+
+    <div class="callout callout-red">
+      <div class="callout-title">⚠️ 小規模M&Aでは実質的な手数料率が高くなる</div>
+      例えば最低報酬額1,000万円の会社に5,000万円の案件を依頼した場合：<br>
+      レーマン計算：5,000万円 × 5% ＝ 250万円<br>
+      しかし最低報酬額が1,000万円なので → <strong>1,000万円（実質20%！）</strong><br>
+      小規模案件では「最低報酬額がいくらか」を必ず事前確認してください。
+    </div>
+
+    <h2 id="other">⑥ 着手金・中間報酬の仕組み</h2>
+
+    <p>成功報酬以外にも費用が発生する場合があります。</p>
+
+    <table class="compare-table">
+      <thead><tr><th>費用の種類</th><th>内容</th><th>目安</th></tr></thead>
+      <tbody>
+        <tr><td><strong>着手金</strong></td><td>依頼時に支払う固定費。成約しなくても返金されないことが多い</td><td>0〜300万円（会社による）</td></tr>
+        <tr><td><strong>中間報酬</strong></td><td>基本合意締結時などに発生する報酬</td><td>成功報酬の10〜20%程度</td></tr>
+        <tr><td><strong>成功報酬</strong></td><td>クロージング時に支払う。レーマン方式で計算</td><td>前述の通り</td></tr>
+        <tr><td><strong>月額報酬</strong></td><td>一部の会社で月額の顧問料が発生するケース</td><td>10〜30万円/月（会社による）</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-green">
+      <div class="callout-title">💡 着手金0円・完全成功報酬の会社も増えている</div>
+      近年は「着手金0円・成功報酬のみ」という完全成功報酬制を採用するM&A仲介会社が増えています。成約しない限り費用がかからないため、売り手にとってリスクが低いです。ただし手数料率や最低報酬額は会社によって異なるため、必ずトータルの費用を比較することが重要です。
+    </div>
+
+    <h2 id="check">⑦ 仲介会社を選ぶときの確認ポイント</h2>
+
+    <div class="callout callout-gray">
+      <div class="callout-title">📋 契約前に必ず確認するチェックリスト</div>
+      <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:8px;">
+        <li><strong>レーマン方式の基準額は何か</strong>（株価・企業価値・移動総資産・オーナー受取額）</li>
+        <li><strong>最低報酬額はいくらか</strong>（小規模案件は特に重要）</li>
+        <li><strong>着手金・月額報酬が発生するか</strong></li>
+        <li><strong>売り手・買い手双方から手数料を取るか</strong>（両手仲介の場合、利益相反に注意）</li>
+        <li><strong>消費税込みの金額を見積もりで確認する</strong></li>
+        <li><strong>見積書を書面で出してもらう</strong></li>
+      </ul>
+    </div>
+
+    <div class="cta-banner">
+      <div class="cta-banner-label">Free Consultation</div>
+      <div class="cta-banner-title">手数料の見積もりを比較したい方へ</div>
+      <div class="cta-banner-desc">仲介会社の手数料体系の違いや、自社案件の概算費用について<br>無料でご相談いただけます。秘密厳守です。</div>
+      <a href="/contact.html" class="btn btn-white" style="display:inline-block;">無料相談はこちら →</a>
+    </div>
+
+    <h2 id="summary">⑧ まとめ</h2>
+
+    <div class="callout callout-gray">
+      <div class="callout-title">📌 まとめ</div>
+      <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:8px;">
+        <li>レーマン方式は「金額帯ごとに料率を下げる段階的累進方式」。全体にかけるのではない</li>
+        <li>同じレーマン方式でも<strong>基準額の定義（株価・企業価値・移動総資産）で手数料が大きく変わる</strong></li>
+        <li>3億円の案件でも方式によって1,500万〜2,400万円の差が出る</li>
+        <li>小規模M&Aでは最低報酬額が適用され、実質手数料率が高くなりやすい</li>
+        <li>着手金・中間報酬・消費税を含めたトータルの費用を事前に書面で確認する</li>
+      </ul>
+    </div>
+
+    <div class="related-articles">
+      <div class="related-title">関連記事</div>
+      <div class="related-grid">
+        <a href="/blog/baikyaku-soba.html" class="related-card">
+          <div class="related-card-tag">事業承継</div>
+          <div class="related-card-title">会社売却の相場はいくら？業種別の目安・計算方法・手取り額を解説</div>
+        </a>
+        <a href="/blog/jigyo-shokei.html" class="related-card">
+          <div class="related-card-tag">事業承継</div>
+          <div class="related-card-title">事業承継とは？流れ・期間・費用をわかりやすく解説</div>
+        </a>
+        <a href="/blog/kigyokachi-santei.html" class="related-card">
+          <div class="related-card-tag">M&A基礎</div>
+          <div class="related-card-title">企業価値算定3手法解説｜DCF・類似会社・純資産の違い</div>
+        </a>
+        <a href="/ma-tool.html" class="related-card">
+          <div class="related-card-tag">無料ツール</div>
+          <div class="related-card-title">企業価値を今すぐ無料で算定する｜登録不要・3手法対応</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">JP <span>NEXT</span></div>
+    <div class="footer-tagline">M&A・事業承継の実務情報メディア</div>
+    <div class="footer-grid">
+      <div><div class="footer-col-title">JP NEXTについて</div><p style="font-size:.85rem;color:var(--gray-600);line-height:1.8;max-width:320px;">不動産・M&Aの実務経験者が運営するメディアです。</p></div>
+      <div><div class="footer-col-title">コンテンツ</div><ul class="footer-links"><li><a href="/blog/">最新記事</a></li><li><a href="/blog/?cat=jigyo">事業承継コラム</a></li><li><a href="/ma-tool.html">企業価値算定ツール</a></li></ul></div>
+      <div><div class="footer-col-title">サイト情報</div><ul class="footer-links"><li><a href="/about.html">運営者情報</a></li><li><a href="/privacy.html">プライバシーポリシー</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 JP NEXT. All rights reserved.</span><a href="mailto:info@jpnext.co" style="color:var(--gray-600);">info@jpnext.co</a></div>
+  </div>
+</footer>
+</body>
+</html>
