@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M&AのDDチェックリスト｜売り手が事前に準備すべき書類と「指摘されやすいポイント」を解説 | JP NEXT</title>
+  <meta name="description" content="M&AのDD（デューデリジェンス）で売り手が事前に準備すべき書類・指摘されやすい問題点・事前に直しておくべきことを実務経験者が解説。財務DD・法務DD・労務DDのチェックリスト付き。">
+  <meta property="og:title" content="M&AのDDチェックリスト｜売り手が事前に準備すべき書類と「指摘されやすいポイント」を解説">
+  <meta property="og:description" content="M&Aのデューデリジェンスで売り手が準備すべき書類と指摘されやすい問題点を実務視点で解説。">
+  <meta property="og:url" content="https://www.jpnext.co/blog/ma-dd-junbi.html">
+  <meta property="og:image" content="https://www.jpnext.co/ogp.png">
+  <meta property="og:type" content="article">
+  <link rel="canonical" href="https://www.jpnext.co/blog/ma-dd-junbi.html">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P8KB1E1GRV"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P8KB1E1GRV');</script>
+  <style>
+    .article-wrap{max-width:780px;margin:0 auto;padding:48px 24px 100px}
+    .article-eyebrow{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+    .article-h1{font-family:var(--font-serif);font-size:clamp(1.5rem,4vw,2.1rem);line-height:1.45;margin-bottom:20px}
+    .article-meta-bar{display:flex;align-items:center;gap:12px;font-size:.82rem;color:var(--gray-400);flex-wrap:wrap;padding-bottom:24px;border-bottom:1px solid var(--gray-200)}
+    .author-box{display:flex;align-items:flex-start;gap:14px;padding:20px;background:var(--gray-100);border-radius:var(--radius);margin-bottom:36px}
+    .author-avatar{width:48px;height:48px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-size:1rem;color:var(--white);flex-shrink:0}
+    .author-name{font-weight:700;font-size:.9rem;margin-bottom:4px}
+    .author-desc{font-size:.8rem;color:var(--gray-400);line-height:1.6}
+    .summary-box{border:2px solid var(--accent);border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:36px;background:#f0fdf4}
+    .summary-box-title{font-weight:700;font-size:.88rem;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+    .summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .summary-item{display:flex;align-items:flex-start;gap:8px;font-size:.88rem;color:#166534;line-height:1.5}
+    .summary-item::before{content:'✓';font-weight:700;flex-shrink:0;color:var(--accent)}
+    .toc{background:var(--gray-100);border-radius:var(--radius-lg);padding:24px 28px;margin-bottom:48px;border-left:4px solid var(--accent)}
+    .toc-title{font-weight:700;font-size:.9rem;margin-bottom:14px}
+    .toc ol{list-style:decimal;padding-left:20px;display:flex;flex-direction:column;gap:8px}
+    .toc li{font-size:.88rem}
+    .toc a{color:var(--accent);text-decoration:none}
+    .article-body h2{font-family:var(--font-serif);font-size:1.35rem;margin:56px 0 18px;padding:16px 20px 16px 26px;background:var(--black);color:var(--white);border-radius:var(--radius);line-height:1.4;position:relative}
+    .article-body h2::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--accent);border-radius:var(--radius) 0 0 var(--radius)}
+    .article-body h3{font-family:var(--font-serif);font-size:1.1rem;margin:32px 0 12px;padding-left:14px;border-left:3px solid var(--accent);color:var(--black)}
+    .article-body p{font-size:.95rem;line-height:2.0;color:#2d2d2d;margin-bottom:18px}
+    .callout{border-radius:var(--radius);padding:20px 24px;margin:28px 0;font-size:.9rem;line-height:1.85}
+    .callout-green{background:#f0fdf4;border-left:4px solid var(--accent);color:#166534}
+    .callout-gold{background:#fffbeb;border-left:4px solid var(--gold);color:#92400e}
+    .callout-red{background:#fef2f2;border-left:4px solid #dc2626;color:#991b1b}
+    .callout-gray{background:var(--gray-100);border-left:4px solid var(--gray-400);color:#374151}
+    .callout-title{font-weight:700;margin-bottom:8px;font-size:.88rem;letter-spacing:.04em}
+    .dd-section{border-radius:var(--radius-lg);overflow:hidden;margin:28px 0;border:1px solid var(--gray-200)}
+    .dd-header{padding:14px 20px;display:flex;align-items:center;gap:12px}
+    .dd-header-financial{background:#1e3a5f}
+    .dd-header-legal{background:#1a3a2a}
+    .dd-header-labor{background:#3b1f00}
+    .dd-header-tax{background:#2d1a4a}
+    .dd-header-title{font-weight:700;font-size:.95rem;color:var(--white)}
+    .dd-header-desc{font-size:.78rem;color:rgba(255,255,255,.6);margin-left:auto}
+    .dd-body{padding:18px 20px;background:var(--white)}
+    .dd-checklist{display:flex;flex-direction:column;gap:10px}
+    .dd-item{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:var(--radius);background:var(--gray-100)}
+    .dd-item-check{width:18px;height:18px;border-radius:4px;border:2px solid var(--gray-400);flex-shrink:0;margin-top:2px}
+    .dd-item-content{flex:1}
+    .dd-item-title{font-size:.88rem;font-weight:600;color:var(--black);margin-bottom:3px}
+    .dd-item-note{font-size:.78rem;color:var(--gray-600);line-height:1.6}
+    .dd-item-warn{background:#fef2f2}
+    .dd-item-warn .dd-item-title{color:#991b1b}
+    .dd-item-warn .dd-item-check{border-color:#dc2626}
+    .risk-table{width:100%;border-collapse:collapse;margin:24px 0;font-size:.88rem;border-radius:var(--radius);overflow:hidden}
+    .risk-table th{background:var(--black);color:var(--white);padding:12px 16px;text-align:left;font-weight:600}
+    .risk-table td{padding:11px 16px;border-bottom:1px solid var(--gray-200);vertical-align:top;line-height:1.75}
+    .risk-table tr:nth-child(even) td{background:#f9fafb}
+    .risk-table tr:last-child td{border-bottom:none}
+    .risk-badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:.72rem;font-weight:700}
+    .risk-high{background:#fef2f2;color:#dc2626}
+    .risk-mid{background:#fffbeb;color:#92400e}
+    .risk-low{background:#f0fdf4;color:#166534}
+    .cta-banner{background:var(--black);border-radius:var(--radius-lg);padding:36px;text-align:center;margin:56px 0}
+    .cta-banner-label{font-size:.72rem;font-weight:700;letter-spacing:.14em;color:var(--accent-mid);text-transform:uppercase;margin-bottom:12px}
+    .cta-banner-title{font-family:var(--font-serif);font-size:1.4rem;color:var(--white);margin-bottom:10px;line-height:1.4}
+    .cta-banner-desc{font-size:.88rem;color:var(--gray-400);margin-bottom:24px;line-height:1.8}
+    .related-articles{margin-top:56px;padding-top:40px;border-top:1px solid var(--gray-200)}
+    .related-title{font-family:var(--font-serif);font-size:1.1rem;margin-bottom:20px}
+    .related-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .related-card{border:1px solid var(--gray-200);border-radius:var(--radius);padding:18px;text-decoration:none;transition:all .2s;display:block}
+    .related-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 16px rgba(26,92,58,.08)}
+    .related-card-tag{font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.08em;margin-bottom:8px}
+    .related-card-title{font-size:.88rem;font-weight:600;color:var(--black);line-height:1.5}
+    @media(max-width:640px){
+      .article-wrap{padding:28px 16px 80px}
+      .summary-grid{grid-template-columns:1fr}
+      .related-grid{grid-template-columns:1fr}
+      .article-body h2{font-size:1.15rem;padding:14px 16px 14px 22px}
+    }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">JP <span>NEXT</span></a>
+    <ul class="nav-links">
+      <li><a href="/blog/">コラム</a></li>
+      <li><a href="/news/">M&Aニュース</a></li>
+      <li><a href="/blog/?cat=jigyo">事業承継</a></li>
+      <li><a href="/blog/?cat=career">転職ガイド</a></li>
+      <li><a href="/ma-tool.html">無料ツール</a></li>
+      <li><a href="/contact.html" class="nav-cta">相談・依頼</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="article-wrap">
+  <header style="margin-bottom:36px;">
+    <div class="article-eyebrow">
+      <span class="tag" style="background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0;">事業承継</span>
+      <span class="tag" style="background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe;">M&A基礎</span>
+    </div>
+    <h1 class="article-h1">M&AのDDチェックリスト｜売り手が事前に準備すべき書類と<span style="color:var(--accent)">「指摘されやすいポイント」</span>を解説</h1>
+    <div class="article-meta-bar">
+      <span>📅 2026年3月26日</span>
+      <span>·</span>
+      <span>⏱ 約8分で読めます</span>
+      <span>·</span>
+      <span>✍️ JP NEXT 編集部</span>
+    </div>
+  </header>
+
+  <div class="author-box">
+    <div class="author-avatar">J</div>
+    <div>
+      <div class="author-name">JP NEXT 編集部</div>
+      <div class="author-desc">不動産仕入営業出身 / M&Aアドバイザー実務経験者。不動産会社にて仕入営業3年半を経てM&A業界に転職。DDフェーズでの破談事例も実務で経験。</div>
+    </div>
+  </div>
+
+  <div class="summary-box">
+    <div class="summary-box-title">📌 この記事でわかること</div>
+    <div class="summary-grid">
+      <div class="summary-item">DDとは何か・売り手に何が求められるか</div>
+      <div class="summary-item">財務DD・法務DD・労務DDの準備書類リスト</div>
+      <div class="summary-item">DDで破談・価格減額につながる指摘事項</div>
+      <div class="summary-item">事前に直しておくべき問題の優先順位</div>
+      <div class="summary-item">DDを乗り越えるための心構え</div>
+      <div class="summary-item">売り手が相談すべき専門家</div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">📋 目次</div>
+    <ol>
+      <li><a href="#what">DDとは？売り手に何が求められるか</a></li>
+      <li><a href="#financial">財務DDの準備書類と指摘されやすい点</a></li>
+      <li><a href="#legal">法務DDの準備書類と指摘されやすい点</a></li>
+      <li><a href="#labor">労務DDの準備書類と指摘されやすい点</a></li>
+      <li><a href="#risks">DD破談・価格減額につながる問題の一覧</a></li>
+      <li><a href="#prep">事前準備のすすめ方</a></li>
+      <li><a href="#summary">まとめ</a></li>
+    </ol>
+  </div>
+
+  <div class="article-body">
+
+    <p>M&Aのプロセスの中で、売り手経営者が最も「身構える」フェーズがDD（デューデリジェンス：買収監査）です。基本合意後に買い手側の弁護士・公認会計士・税理士が入り、自社の財務・法務・労務・税務を詳細調査します。</p>
+    <p>DDで問題が発覚すると価格が下がるか、最悪の場合は破談になります。この記事では、売り手が事前に知っておくべき準備書類と「指摘されやすいポイント」を解説します。</p>
+
+    <div class="callout callout-red">
+      <div class="callout-title">⚠️ DDで破談するケースは珍しくない</div>
+      DDを経験したアドバイザーによれば「DDで問題が発覚して交渉が複雑化するケースは全体の3〜4割」と言われます。事前に自社の問題を把握し、できる範囲で整理しておくことが価格維持と破談防止の最善策です。
+    </div>
+
+    <h2 id="what">① DDとは？売り手に何が求められるか</h2>
+
+    <p>DDとは、買い手が「この会社を買っても大丈夫か」を確認するための詳細調査です。中小企業のM&Aでは主に以下の3種類が行われます。</p>
+
+    <ul>
+      <li><strong>財務DD</strong>：決算書の正確性・簿外債務・収益の実態確認</li>
+      <li><strong>法務DD</strong>：契約書・許認可・訴訟リスクの確認</li>
+      <li><strong>労務DD</strong>：未払残業・就業規則・雇用契約の確認</li>
+    </ul>
+
+    <p>売り手に求められるのは主に「資料の提出」です。買い手側の専門家（弁護士・会計士）が資料室（データルーム）にアクセスして調査します。提出を拒んだり資料が不足したりすると、「何か隠している」と受け取られて破談リスクが高まります。</p>
+
+    <h2 id="financial">② 財務DDの準備書類と指摘されやすい点</h2>
+
+    <div class="dd-section">
+      <div class="dd-header dd-header-financial">
+        <div class="dd-header-title">📊 財務DD チェックリスト</div>
+        <div class="dd-header-desc">公認会計士・税理士が調査</div>
+      </div>
+      <div class="dd-body">
+        <div class="dd-checklist">
+          <div class="dd-item">
+            <div class="dd-item-check"></div>
+            <div class="dd-item-content">
+              <div class="dd-item-title">直近3〜5期分の決算書（PL・BS・CF）</div>
+              <div class="dd-item-note">税務申告書・勘定科目内訳書も含めて用意する</div>
+            </div>
+          </div>
+          <div class="dd-item">
+            <div class="dd-item-check"></div>
+            <div class="dd-item-content">
+              <div class="dd-item-title">直近12〜24ヶ月の月次試算表</div>
+              <div class="dd-item-note">売上の季節変動・特異な費用の変動を説明できるようにしておく</div>
+            </div>
+          </div>
+          <div class="dd-item dd-item-warn">
+            <div class="dd-item-check"></div>
+            <div class="dd-item-content">
+              <div class="dd-item-title">⚠️ 役員報酬・役員借入金の内訳</div>
+              <div class="dd-item-note">役員報酬が高すぎる場合・役員からの多額の借入がある場合は説明を準備する</div>
+            </div>
+          </div>
+          <div class="dd-item dd-item-warn">
+            <div class="dd-item-check"></div>
+            <div class="dd-item-content">
+              <div class="dd-item-title">⚠️ 棚卸資産の実態（過大計上になっていないか）</div>
+              <div class="dd-item-note">在庫の評価が実態と乖離していると大きな問題になる</div>
+            </div>
+          </div>
+          <div class="dd-item">
+            <div class="dd-item-check"></div>
+            <div class="dd-item-content">
+              <div class="dd-item-title">借入金・リース債務の一覧</div>
+              <div class="dd-item-note">返済スケジュール・金融機関名・残高を一覧化しておく</div>
+            </div>
+          </div>
+          <div class="dd-item">
+            <div class="dd-item-check"></div>
+            <div class="dd-item-content">
+              <div class="dd-item-title">売掛金・買掛金の年齢表</div>
+              <div class="dd-item-note">長期未回収の売掛金がある場合は理由と回収見通しを準備</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3>財務DDで最も指摘されやすいポイント</h3>
+    <ul>
+      <li>「簿外債務」：帳簿に載っていない保証債務・未払退職金・損害賠償リスク</li>
+      <li>「売上の水増し」：前倒し計上・架空売上（発覚した場合は即破談）</li>
+      <li>「私的費用の経費計上」：役員個人の費用を会社経費に計上しているケース</li>
+      <li>「主要顧客への依存度が高い」：売上の50%以上が1社という場合はリスクとして指摘される</li>
+    </ul>
+
+    <h2 id="legal">③ 法務DDの準備書類と指摘されやすい点</h2>
+
+    <div class="dd-section">
+      <div class="dd-header dd-header-legal">
+        <div class="dd-header-title">⚖️ 法務DD チェックリスト</div>
+        <div class="dd-header-desc">弁護士が調査</div>
+      </div>
+      <div class="dd-body">
+        <div class="dd-checklist">
+          <div class="dd-item">
+            <div class="dd-item-check"></div>
+            <div class="dd-item-content">
+              <div class="dd-item-title">定款・登記簿謄本</div>
+              <div class="dd-item-note">最新の内容になっているか確認。住所変更・役員変更が未登記のケースがある</div>
+            </div>
+          </div>
+          <div class="dd-item">
+            <div class="dd-item-check"></div>
+            <div class="dd-item-content">
+              <div class="dd-item-title">株主名簿・株式に関する書類</div>
+              <div class="dd-item-note">株主が分散していないか・名義株がないかを確認</div>
+            </div>
+          </div>
+          <div class="dd-item dd-item-warn">
+            <div class="dd-item-check"></div>
+            <div class="dd-item-content">
+              <div class="dd-item-title">⚠️ 主要取引先との契約書（チェンジオブコントロール条項）</div>
+              <div class="dd-item-note">M&Aによって自動解約される条項がある契約書は大問題。事前確認必須。</div>
+            </div>
+          </div>
+          <div class="dd-item">
+            <div class="dd-item-check"></div>
+            <div class="dd-item-content">
+              <div class="dd-item-title">許認可・ライセンスの一覧</div>
+              <div class="dd-item-note">建設業許可・宅建業免許・食品衛生許可など。承継できるか確認が必要</div>
+            </div>
+          </div>
+          <div class="dd-item dd-item-warn">
+            <div class="dd-item-check"></div>
+            <div class="dd-item-content">
+              <div class="dd-item-title">⚠️ 現在・過去の訴訟・紛争・クレームの記録</div>
+              <div class="dd-item-note">隠すのは厳禁。表明保証違反として後から問題になる</div>
+            </div>
+          </div>
+          <div class="dd-item">
+            <div class="dd-item-check"></div>
+            <div class="dd-item-content">
+              <div class="dd-item-title">不動産・設備の賃貸借契約書</div>
+              <div class="dd-item-note">賃貸契約の名義変更・承継が可能か事前に確認</div>
+            </div>
+          </div>
+          <div class="dd-item">
+            <div class="dd-item-check"></div>
+            <div class="dd-item-content">
+              <div class="dd-item-title">知的財産権（特許・商標・著作権）の一覧</div>
+              <div class="dd-item-note">会社名義になっているか確認。社長個人名義の特許は承継できない</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 id="labor">④ 労務DDの準備書類と指摘されやすい点</h2>
+
+    <div class="dd-section">
+      <div class="dd-header dd-header-labor">
+        <div class="dd-header-title">👥 労務DD チェックリスト</div>
+        <div class="dd-header-desc">社会保険労務士・弁護士が調査</div>
+      </div>
+      <div class="dd-body">
+        <div class="dd-checklist">
+          <div class="dd-item">
+            <div class="dd-item-check"></div>
+            <div class="dd-item-content">
+              <div class="dd-item-title">就業規則・賃金規程</div>
+              <div class="dd-item-note">労基署への届け出状況を確認。10人以上の企業は届出義務あり</div>
+            </div>
+          </div>
+          <div class="dd-item dd-item-warn">
+            <div class="dd-item-check"></div>
+            <div class="dd-item-content">
+              <div class="dd-item-title">⚠️ 残業代・未払残業の確認</div>
+              <div class="dd-item-note">中小企業で最も多い指摘事項。タイムカード・勤怠記録と実際の支払いを照合される</div>
+            </div>
+          </div>
+          <div class="dd-item">
+            <div class="dd-item-check"></div>
+            <div class="dd-item-content">
+              <div class="dd-item-title">全従業員の雇用契約書</div>
+              <div class="dd-item-note">書面化されていない口頭契約・雇用条件の相違がないか確認</div>
+            </div>
+          </div>
+          <div class="dd-item dd-item-warn">
+            <div class="dd-item-check"></div>
+            <div class="dd-item-content">
+              <div class="dd-item-title">⚠️ 社会保険・雇用保険の加入状況</div>
+              <div class="dd-item-note">未加入・加入漏れがある場合は遡及加入で多額の費用が発生するため大きなリスクとして指摘される</div>
+            </div>
+          </div>
+          <div class="dd-item">
+            <div class="dd-item-check"></div>
+            <div class="dd-item-content">
+              <div class="dd-item-title">退職金規程・退職金の積立状況</div>
+              <div class="dd-item-note">中退共・保険での積立があれば内容を整理しておく</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 id="risks">⑤ DD破談・価格減額につながる問題の一覧</h2>
+
+    <table class="risk-table">
+      <thead><tr><th>問題の種類</th><th>影響度</th><th>対処法</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>多額の未払残業代</strong></td>
+          <td><span class="risk-badge risk-high">高</span></td>
+          <td>DDの前に社労士に診断してもらい、遡及額を試算。買い手との価格交渉で調整するか事前解決する</td>
+        </tr>
+        <tr>
+          <td><strong>チェンジオブコントロール条項のある主要契約</strong></td>
+          <td><span class="risk-badge risk-high">高</span></td>
+          <td>取引先との契約書を事前に弁護士に確認してもらう。条項がある場合は取引先との事前交渉が必要</td>
+        </tr>
+        <tr>
+          <td><strong>税務調査リスク・申告漏れ</strong></td>
+          <td><span class="risk-badge risk-high">高</span></td>
+          <td>顧問税理士と直近3期の申告内容を再確認。問題があれば修正申告を検討する</td>
+        </tr>
+        <tr>
+          <td><strong>売上の特定顧客への依存（50%超）</strong></td>
+          <td><span class="risk-badge risk-mid">中</span></td>
+          <td>完全解消は難しいが、取引先との長期契約書・関係の安定性を示す資料を用意する</td>
+        </tr>
+        <tr>
+          <td><strong>社会保険未加入・加入漏れ</strong></td>
+          <td><span class="risk-badge risk-mid">中</span></td>
+          <td>事前に社労士に確認して加入整備する。遡及加入の費用は売却価格から控除される可能性あり</td>
+        </tr>
+        <tr>
+          <td><strong>名義株・株主の分散</strong></td>
+          <td><span class="risk-badge risk-mid">中</span></td>
+          <td>事前に弁護士・司法書士に相談して株主整理を行う</td>
+        </tr>
+        <tr>
+          <td><strong>許認可の承継不可</strong></td>
+          <td><span class="risk-badge risk-mid">中</span></td>
+          <td>主要な許認可が株式譲渡で承継されるか、新規取得が必要かを事前確認する</td>
+        </tr>
+        <tr>
+          <td><strong>環境汚染・廃棄物処理の問題</strong></td>
+          <td><span class="risk-badge risk-low">低〜高</span></td>
+          <td>製造業・土地保有企業は特に注意。問題がある場合は事前に環境調査が必要</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="prep">⑥ 事前準備のすすめ方</h2>
+
+    <div class="callout callout-green">
+      <div class="callout-title">✅ DDの前に相談すべき専門家と順番</div>
+      <ol style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:10px;">
+        <li><strong>顧問税理士</strong>：財務・税務の問題点を事前に洗い出す。申告内容の再確認。</li>
+        <li><strong>社会保険労務士</strong>：未払残業・社会保険加入状況の診断。就業規則の整備。</li>
+        <li><strong>弁護士</strong>：主要契約書のチェンジオブコントロール条項の確認・株主整理。</li>
+      </ol>
+    </div>
+
+    <p>これらの専門家費用は数十万円かかることもありますが、DDで価格が下がるリスクと比べれば安い投資です。M&A仲介会社に相談する際に「事前DDの準備を手伝ってほしい」と伝えると、専門家の紹介をしてくれる場合もあります。</p>
+
+    <div class="callout callout-gold">
+      <div class="callout-title">⚠️ 隠してもバレます。正直に開示する方が得です</div>
+      DDで問題が発覚した場合、「知らなかった」では済みません。最終契約後に発覚した場合は「表明保証違反」として損害賠償請求される可能性があります。DDの段階で正直に開示し、価格で調整する方が長期的には双方にとって良い結果になります。
+    </div>
+
+    <div class="cta-banner">
+      <div class="cta-banner-label">Free Consultation</div>
+      <div class="cta-banner-title">「DDで何が問題になりそうか」<br>事前チェックのご相談を承ります</div>
+      <div class="cta-banner-desc">現在の財務・法務・労務の状況をお聞きし、問題になりそうな点を整理します。<br>無料・秘密厳守です。</div>
+      <a href="/contact.html" class="btn btn-white" style="display:inline-block;">無料相談はこちら →</a>
+    </div>
+
+    <h2 id="summary">⑦ まとめ</h2>
+
+    <div class="callout callout-gray">
+      <div class="callout-title">📌 まとめ</div>
+      <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:8px;">
+        <li>DDとは買い手が行う詳細調査。財務・法務・労務の3種類が中小企業では主流</li>
+        <li>最も指摘されやすいのは「未払残業」「チェンジオブコントロール条項」「税務リスク」</li>
+        <li>問題を隠すのは厳禁。表明保証違反として後から請求される可能性がある</li>
+        <li>事前準備：税理士→社労士→弁護士の順に相談して問題を洗い出す</li>
+        <li>DDの準備はM&Aの相談開始と同時に始めるのが理想。時間的余裕を持つことが重要</li>
+      </ul>
+    </div>
+
+    <div class="related-articles">
+      <div class="related-title">関連記事</div>
+      <div class="related-grid">
+        <a href="/blog/uriru-flow.html" class="related-card">
+          <div class="related-card-tag">事業承継</div>
+          <div class="related-card-title">会社を売るための手順・流れ8ステップ｜準備から成約まで</div>
+        </a>
+        <a href="/blog/baikyaku-soba.html" class="related-card">
+          <div class="related-card-tag">事業承ligere</div>
+          <div class="related-card-title">会社売却の相場はいくら？業種別の目安・計算方法・手取り額</div>
+        </a>
+        <a href="/blog/koyo-mamoru.html" class="related-card">
+          <div class="related-card-tag">事業承継</div>
+          <div class="related-card-title">M&Aで従業員はどうなる？雇用を守るために売り手が交渉すべきこと</div>
+        </a>
+        <a href="/blog/lehman-fee.html" class="related-card">
+          <div class="related-card-tag">M&A基礎</div>
+          <div class="related-card-title">M&Aの手数料はいくら？レーマン方式の計算例・種類・注意点</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">JP <span>NEXT</span></div>
+    <div class="footer-tagline">M&A・事業承継の実務情報メディア</div>
+    <div class="footer-grid">
+      <div><div class="footer-col-title">JP NEXTについて</div><p style="font-size:.85rem;color:var(--gray-600);line-height:1.8;max-width:320px;">不動産・M&Aの実務経験者が運営するメディアです。</p></div>
+      <div><div class="footer-col-title">コンテンツ</div><ul class="footer-links"><li><a href="/blog/">最新記事</a></li><li><a href="/blog/?cat=jigyo">事業承継コラム</a></li><li><a href="/ma-tool.html">企業価値算定ツール</a></li></ul></div>
+      <div><div class="footer-col-title">サイト情報</div><ul class="footer-links"><li><a href="/about.html">運営者情報</a></li><li><a href="/privacy.html">プライバシーポリシー</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 JP NEXT. All rights reserved.</span><a href="/cdn-cgi/l/email-protection#c1a8afa7ae81abb1afa4b9b5efa2ae" style="color:var(--gray-600);"><span class="__cf_email
