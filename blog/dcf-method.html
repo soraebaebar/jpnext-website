@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DCF法とは？M&Aでの計算式・割引率・実例・メリット・デメリットをわかりやすく解説 | JP NEXT</title>
+  <meta name="description" content="DCF法（割引キャッシュフロー法）の意味・計算式・割引率の決め方・実際の計算例・年買法・EBITDA法との違いをM&A実務経験者がわかりやすく解説。中小企業のM&Aでの使われ方も紹介。">
+  <meta property="og:title" content="DCF法とは？M&Aでの計算式・割引率・実例・メリット・デメリットをわかりやすく解説">
+  <meta property="og:image" content="https://www.jpnext.co/ogp.png">
+  <meta property="og:type" content="article">
+  <link rel="canonical" href="https://www.jpnext.co/blog/dcf-method.html">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P8KB1E1GRV"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P8KB1E1GRV');</script>
+  <script src="//statics.a8.net/a8link/a8linkmgr.js"></script>
+  <script>a8linkmgr({"config_id":"1bzGVFod4YzRI5x4EqA4"});</script>
+  <style>
+    .aw{max-width:780px;margin:0 auto;padding:48px 24px 100px}
+    .ah1{font-family:var(--font-serif);font-size:clamp(1.5rem,4vw,2.1rem);line-height:1.45;margin-bottom:20px}
+    .ameta{display:flex;align-items:center;gap:12px;font-size:.82rem;color:var(--gray-400);flex-wrap:wrap;padding-bottom:24px;border-bottom:1px solid var(--gray-200);margin-bottom:28px}
+    .abox{display:flex;align-items:flex-start;gap:14px;padding:20px;background:var(--gray-100);border-radius:var(--radius);margin-bottom:36px}
+    .aavatar{width:48px;height:48px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-size:1rem;color:var(--white);flex-shrink:0}
+    .sbox{border:2px solid var(--accent);border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:36px;background:#f0fdf4}
+    .sbox-t{font-weight:700;font-size:.88rem;color:var(--accent);letter-spacing:.08em;margin-bottom:16px}
+    .sgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .si{display:flex;align-items:flex-start;gap:8px;font-size:.88rem;color:#166534;line-height:1.5}
+    .si::before{content:'✓';font-weight:700;flex-shrink:0;color:var(--accent)}
+    .toc{background:var(--gray-100);border-radius:var(--radius-lg);padding:24px 28px;margin-bottom:48px;border-left:4px solid var(--accent)}
+    .toc-t{font-weight:700;font-size:.9rem;margin-bottom:14px}
+    .toc ol{list-style:decimal;padding-left:20px;display:flex;flex-direction:column;gap:8px}
+    .toc li{font-size:.88rem}
+    .toc a{color:var(--accent);text-decoration:none}
+    .ab h2{font-family:var(--font-serif);font-size:1.35rem;margin:52px 0 16px;padding:14px 20px 14px 24px;background:var(--black);color:var(--white);border-radius:var(--radius);line-height:1.4;position:relative}
+    .ab h2::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--accent);border-radius:var(--radius) 0 0 var(--radius)}
+    .ab h3{font-family:var(--font-serif);font-size:1.1rem;margin:28px 0 10px;padding-left:14px;border-left:3px solid var(--accent);color:var(--black)}
+    .ab p{font-size:.95rem;line-height:2.0;color:#2d2d2d;margin-bottom:16px}
+    .ab ul,.ab ol{padding-left:22px;margin-bottom:18px;display:flex;flex-direction:column;gap:7px}
+    .ab li{font-size:.93rem;line-height:1.85;color:#2d2d2d}
+    .cg{border-radius:var(--radius);padding:18px 22px;margin:24px 0;font-size:.9rem;line-height:1.85}
+    .cg-g{background:#f0fdf4;border-left:4px solid var(--accent);color:#166534}
+    .cg-y{background:#fffbeb;border-left:4px solid var(--gold);color:#92400e}
+    .cg-r{background:#fef2f2;border-left:4px solid #dc2626;color:#991b1b}
+    .cg-gr{background:var(--gray-100);border-left:4px solid var(--gray-400);color:#374151}
+    .cg-t{font-weight:700;margin-bottom:7px;font-size:.88rem}
+    .tbl{width:100%;border-collapse:collapse;margin:20px 0;font-size:.88rem;border-radius:var(--radius);overflow:hidden}
+    .tbl th{background:var(--black);color:var(--white);padding:11px 14px;text-align:left;font-weight:600}
+    .tbl td{padding:10px 14px;border-bottom:1px solid var(--gray-200);vertical-align:top;line-height:1.7}
+    .tbl tr:nth-child(even) td{background:#f9fafb}
+    .tbl tr:last-child td{border-bottom:none}
+    .formula{background:var(--black);border-radius:var(--radius-lg);padding:24px 28px;margin:24px 0}
+    .formula-l{font-size:.72rem;letter-spacing:.12em;color:var(--accent-mid);text-transform:uppercase;margin-bottom:10px}
+    .formula-t{font-family:var(--font-serif);font-size:1.1rem;color:var(--white);line-height:1.8}
+    .formula-n{font-size:.8rem;color:var(--gray-600);margin-top:8px;line-height:1.6}
+    .calc-box{background:var(--black);border-radius:var(--radius-lg);padding:28px;margin:24px 0;color:var(--white)}
+    .calc-t{font-size:.78rem;letter-spacing:.12em;color:var(--accent-mid);text-transform:uppercase;margin-bottom:16px}
+    .calc-s{border-left:2px solid #374151;padding-left:16px;margin-bottom:12px;font-size:.88rem;color:var(--gray-400);line-height:1.9}
+    .calc-s strong{color:var(--white)}
+    .calc-r{margin-top:16px;padding:14px 18px;background:rgba(29,158,117,.15);border-radius:var(--radius);border-left:3px solid var(--accent-mid)}
+    .calc-r-l{font-size:.75rem;color:var(--accent-mid);margin-bottom:4px}
+    .calc-r-v{font-family:var(--font-serif);font-size:1.4rem;color:var(--accent-mid);font-weight:700}
+    .cta{background:var(--black);border-radius:var(--radius-lg);padding:34px;text-align:center;margin:52px 0}
+    .cta-l{font-size:.72rem;font-weight:700;letter-spacing:.14em;color:var(--accent-mid);text-transform:uppercase;margin-bottom:10px}
+    .cta-h{font-family:var(--font-serif);font-size:1.35rem;color:var(--white);margin-bottom:10px;line-height:1.4}
+    .cta-d{font-size:.88rem;color:var(--gray-400);margin-bottom:22px;line-height:1.75}
+    .rel{margin-top:52px;padding-top:36px;border-top:1px solid var(--gray-200)}
+    .rel-t{font-family:var(--font-serif);font-size:1.1rem;margin-bottom:18px}
+    .rgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .rcard{border:1px solid var(--gray-200);border-radius:var(--radius);padding:16px;text-decoration:none;transition:all .2s;display:block}
+    .rcard:hover{border-color:var(--accent);transform:translateY(-2px)}
+    .rcard-tag{font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.08em;margin-bottom:6px}
+    .rcard-title{font-size:.88rem;font-weight:600;color:var(--black);line-height:1.5}
+    @media(max-width:640px){.aw{padding:28px 16px 80px}.sgrid{grid-template-columns:1fr}.rgrid{grid-template-columns:1fr}.ab h2{font-size:1.1rem}}
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">JP <span>NEXT</span></a>
+    <ul class="nav-links">
+      <li><a href="/blog/">コラム</a></li>
+      <li><a href="/news/">M&Aニュース</a></li>
+      <li><a href="/blog/?cat=jigyo">事業承継</a></li>
+      <li><a href="/blog/?cat=career">転職ガイド</a></li>
+      <li><a href="/ma-tool.html">無料ツール</a></li>
+      <li><a href="/contact.html" class="nav-cta">相談・依頼</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="aw">
+  <header style="margin-bottom:32px">
+    <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+      <span class="tag" style="background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0;">事業承継</span>
+      <span class="tag" style="background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe;">M&A基礎</span>
+    </div>
+    <h1 class="ah1">DCF法とは？M&Aでの<span style="color:var(--accent)">計算式・割引率・実例・メリット・デメリット</span>をわかりやすく解説</h1>
+    <div class="ameta">
+      <span>📅 2026年3月27日</span><span>·</span>
+      <span>⏱ 約7分</span><span>·</span>
+      <span>✍️ JP NEXT 編集部</span>
+    </div>
+  </header>
+
+  <div class="abox">
+    <div class="aavatar">J</div>
+    <div>
+      <div style="font-weight:700;font-size:.9rem;margin-bottom:4px">JP NEXT 編集部</div>
+      <div style="font-size:.8rem;color:var(--gray-400);line-height:1.6">不動産仕入営業出身 / M&Aアドバイザー実務経験者。企業価値算定の実務経験をもとに情報発信。</div>
+    </div>
+  </div>
+
+  <div class="sbox">
+    <div class="sbox-t">📌 この記事でわかること</div>
+    <div class="sgrid">
+      <div class="si">DCF法の意味と基本的な考え方</div>
+      <div class="si">計算式と割引率（WACC）の決め方</div>
+      <div class="si">実際の計算例（中小企業ケース）</div>
+      <div class="si">年買法・EBITDA法との違い</div>
+      <div class="si">中小企業M&AでのDCF法の使われ方</div>
+      <div class="si">DCF法のメリット・デメリット</div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-t">📋 目次</div>
+    <ol>
+      <li><a href="#what">DCF法とは何か</a></li>
+      <li><a href="#formula">計算式と手順</a></li>
+      <li><a href="#wacc">割引率（WACC）の決め方</a></li>
+      <li><a href="#example">実際の計算例</a></li>
+      <li><a href="#compare">年買法・EBITDA法との違い</a></li>
+      <li><a href="#pros">メリット・デメリット</a></li>
+      <li><a href="#summary">まとめ</a></li>
+    </ol>
+  </div>
+
+  <div class="ab">
+
+    <p>DCF法（ディーシーエフほう）は企業価値算定の代表的な手法の一つです。M&Aの実務では必ず登場しますが、「計算が難しそう」と敬遠されることも多い。この記事では計算の仕組みを実例付きでわかりやすく解説します。</p>
+
+    <p>👉 EBITDAを使った算定方法は<a href="/blog/ebitda.html" style="color:var(--accent);font-weight:600">EBITDAとは？M&Aでの計算例</a>、年買法については<a href="/blog/kigyokachi-santei.html" style="color:var(--accent);font-weight:600">企業価値算定3手法解説</a>もご覧ください。</p>
+
+    <h2 id="what">① DCF法とは何か</h2>
+
+    <p>DCF法（Discounted Cash Flow Method：割引キャッシュフロー法）とは、企業が将来生み出すフリーキャッシュフロー（FCF）を予測し、それを現在価値に割り引いて企業価値を算出する手法です。</p>
+
+    <div class="cg cg-g">
+      <div class="cg-t">💡 DCF法の基本的な考え方</div>
+      「今もらえる100万円」と「5年後にもらえる100万円」は同じ価値ではない。5年後の100万円は現在の貨幣価値に換算すると目減りする（インフレ・リスク）。DCF法はこの「お金の時間的価値」を考慮して、将来の利益を現在価値に換算することで企業の価値を算出する。
+    </div>
+
+    <h2 id="formula">② 計算式と手順</h2>
+
+    <div class="formula">
+      <div class="formula-l">DCF法の基本式</div>
+      <div class="formula-t">企業価値（EV）＝ Σ FCFt / (1＋r)^t ＋ 残存価値 / (1＋r)^n</div>
+      <div class="formula-n">FCFt：t年目のフリーキャッシュフロー　r：割引率（WACC）　n：予測期間</div>
+    </div>
+
+    <h3>計算の3ステップ</h3>
+    <ol>
+      <li><strong>将来のFCFを予測する</strong>（通常3〜5年分）<br>FCF = EBIT × (1－税率) ＋ 減価償却費 － 設備投資 ± 運転資本増減</li>
+      <li><strong>割引率（WACC）を設定する</strong><br>リスクを考慮した資本コスト。中小企業では10〜20%が多い</li>
+      <li><strong>残存価値（ターミナルバリュー）を計算する</strong><br>予測期間以降も続く収益を一括評価する</li>
+    </ol>
+
+    <h2 id="wacc">③ 割引率（WACC）の決め方</h2>
+
+    <p>WACCとは「加重平均資本コスト（Weighted Average Cost of Capital）」のことです。簡単に言うと「この会社にお金を投じる際に最低限必要なリターン率」です。</p>
+
+    <table class="tbl">
+      <thead><tr><th>企業タイプ</th><th>目安の割引率</th><th>理由</th></tr></thead>
+      <tbody>
+        <tr><td>大企業・上場企業</td><td>5〜8%</td><td>リスクが低く、資本調達コストが低い</td></tr>
+        <tr><td>中堅企業（非上場）</td><td>8〜12%</td><td>流動性が低く、情報の非対称性がある</td></tr>
+        <tr><td>中小企業（オーナー経営）</td><td>12〜20%</td><td>キーパーソンリスク・業績変動が大きい</td></tr>
+        <tr><td>スタートアップ</td><td>20〜40%以上</td><td>事業継続リスクが非常に高い</td></tr>
+      </tbody>
+    </table>
+
+    <div class="cg cg-y">
+      <div class="cg-t">💡 中小企業のDCF法で特に重要なポイント</div>
+      中小企業ではオーナー（社長）個人への依存が高く、社長交代後に売上が落ちるリスク（キーパーソンリスク）が大きい。そのため大企業より高い割引率（10〜20%）が設定されることが多い。割引率が高いほど将来キャッシュフローの現在価値が低くなるため、企業価値は下がる。
+    </div>
+
+    <h2 id="example">④ 実際の計算例</h2>
+
+    <div class="calc-box">
+      <div class="calc-t">DCF法 計算例｜製造業D社</div>
+      <div class="calc-s">
+        <strong>前提条件：</strong><br>
+        割引率（WACC）：12%<br>
+        予測期間：5年<br>
+        5年後の残存価値（ターミナルバリュー）：FCF5年目 × 8倍
+      </div>
+      <div class="calc-s">
+        <strong>予測FCF：</strong><br>
+        1年目：3,000万円　2年目：3,200万円　3年目：3,500万円<br>
+        4年目：3,700万円　5年目：4,000万円
+      </div>
+      <div class="calc-s">
+        <strong>各年の現在価値（÷(1.12)^t）：</strong><br>
+        1年目：3,000÷1.12 ≒ 2,679万円<br>
+        2年目：3,200÷1.25 ≒ 2,560万円<br>
+        3年目：3,500÷1.40 ≒ 2,500万円<br>
+        4年目：3,700÷1.57 ≒ 2,357万円<br>
+        5年目：4,000÷1.76 ≒ 2,273万円<br>
+        <strong>5年分合計：約1億2,369万円</strong>
+      </div>
+      <div class="calc-s">
+        <strong>残存価値：</strong>4,000万円 × 8倍 ÷ 1.76 ≒ 1億8,182万円
+      </div>
+      <div class="calc-r">
+        <div class="calc-r-l">企業価値（EV）の概算</div>
+        <div class="calc-r-v">約1億2,369万円 + 約1億8,182万円 ≒ 約3億円</div>
+      </div>
+    </div>
+
+    <h2 id="compare">⑤ 年買法・EBITDA法との違い</h2>
+
+    <table class="tbl">
+      <thead><tr><th></th><th>DCF法</th><th>EBITDA倍率法</th><th>年買法</th></tr></thead>
+      <tbody>
+        <tr><td><strong>考え方</strong></td><td>将来CF → 現在価値</td><td>EBITDAの倍数</td><td>純資産＋営業利益×年数</td></tr>
+        <tr><td><strong>難易度</strong></td><td>高い（予測・計算複雑）</td><td>中程度</td><td>低い（シンプル）</td></tr>
+        <tr><td><strong>精度</strong></td><td>理論的に最も高い</td><td>市場実勢を反映しやすい</td><td>粗い目安</td></tr>
+        <tr><td><strong>中小企業での使用頻度</strong></td><td>少ない（参考値）</td><td>多い（主流）</td><td>多い（簡易計算）</td></tr>
+        <tr><td><strong>向いている場面</strong></td><td>FAS・投資銀行・大型案件</td><td>M&A仲介・中堅案件</td><td>初期の大まかな把握</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="pros">⑥ メリット・デメリット</h2>
+
+    <div class="cg cg-g">
+      <div class="cg-t">✅ DCF法のメリット</div>
+      <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px">
+        <li>理論的に最も精緻な企業価値算定手法</li>
+        <li>将来の成長性・収益力を価値に反映できる</li>
+        <li>割引率を変えることでシナリオ分析が可能（感応度分析）</li>
+        <li>買収後の事業計画との整合性を確認できる</li>
+      </ul>
+    </div>
+
+    <div class="cg cg-r">
+      <div class="cg-t">⚠️ DCF法のデメリット</div>
+      <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px">
+        <li>将来のFCF予測が難しく、前提次第で結果が大きく変わる</li>
+        <li>割引率（WACC）の設定が恣意的になりやすい</li>
+        <li>計算が複雑で中小企業のM&A実務では使いにくい</li>
+        <li>残存価値が全体の価値の大部分を占めてしまうことがある</li>
+      </ul>
+    </div>
+
+    <p>中小企業のM&Aでは、DCF法は参考値として使うケースが多く、主にEBITDA倍率法や年買法が実務で使われます。ただし、ITスタートアップや将来の成長期待が高い企業の場合はDCF法が重視されることがあります。</p>
+
+    <div class="cg cg-y">
+      <div class="cg-t">💡 実務での使われ方</div>
+      M&A仲介会社では最初に「年買法→EBITDA法」で大まかな価格帯を示し、FAS（財務アドバイザリー）や投資銀行では「DCF法」を用いて精緻な企業価値算定を行うというケースが多い。
+    </div>
+
+    <div class="cta">
+      <div class="cta-l">Free Tool</div>
+      <div class="cta-h">自社の企業価値を今すぐ無料で算定する</div>
+      <div class="cta-d">DCF法を含む3手法で企業価値を算定できる無料ツールを提供しています。<br>登録不要・すぐに使えます。</div>
+      <a href="/ma-tool.html" class="btn btn-white" style="display:inline-block">無料で算定する →</a>
+    </div>
+
+    <h2 id="summary">⑦ まとめ</h2>
+
+    <div class="cg cg-gr">
+      <div class="cg-t">📌 まとめ</div>
+      <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px">
+        <li>DCF法 = 将来のFCFを割引率で現在価値に換算して企業価値を算出する手法</li>
+        <li>計算式：EV = Σ FCFt/(1+r)^t + 残存価値/(1+r)^n</li>
+        <li>割引率（WACC）：大企業5〜8%・中堅8〜12%・中小企業12〜20%が目安</li>
+        <li>中小企業では「キーパーソンリスク」で割引率が高めに設定されがち</li>
+        <li>実務：中小M&AではEBITDA法・年買法が主流。DCF法は参考値や大型案件向け</li>
+        <li>メリット：理論的精度が高く将来成長性を反映できる</li>
+        <li>デメリット：予測の不確実性・割引率の恣意性・計算の複雑さ</li>
+      </ul>
+    </div>
+
+    <div class="rel">
+      <div class="rel-t">関連記事</div>
+      <div class="rgrid">
+        <a href="/blog/ebitda.html" class="rcard">
+          <div class="rcard-tag">M&A基礎</div>
+          <div class="rcard-title">EBITDAとは？M&Aでの計算例・役員報酬調整・EV/EBITDA倍率をわかりやすく解説</div>
+        </a>
+        <a href="/blog/kigyokachi-santei.html" class="rcard">
+          <div class="rcard-tag">M&A基礎</div>
+          <div class="rcard-title">企業価値算定3手法解説｜DCF・類似会社比較・純資産の違い</div>
+        </a>
+        <a href="/blog/baikyaku-soba.html" class="rcard">
+          <div class="rcard-tag">事業承継</div>
+          <div class="rcard-title">会社売却の相場はいくら？業種別の目安・計算方法・手取り額</div>
+        </a>
+        <a href="/ma-tool.html" class="rcard">
+          <div class="rcard-tag">無料ツール</div>
+          <div class="rcard-title">企業価値を今すぐ無料で算定する｜3手法対応・登録不要</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">JP <span>NEXT</span></div>
+    <div class="footer-tagline">M&A・事業承継の実務情報メディア</div>
+    <div class="footer-grid">
+      <div><div class="footer-col-title">JP NEXTについて</div><p style="font-size:.85rem;color:var(--gray-600);line-height:1.8;max-width:320px;">不動産・M&Aの実務経験者が運営するメディアです。</p></div>
+      <div><div class="footer-col-title">コンテンツ</div><ul class="footer-links"><li><a href="/blog/">最新記事</a></li><li><a href="/blog/?cat=jigyo">事業承継コラム</a></li><li><a href="/ma-tool.html">企業価値算定ツール</a></li></ul></div>
+      <div><div class="footer-col-title">サイト情報</div><ul class="footer-links"><li><a href="/about.html">運営者情報</a></li><li><a href="/privacy.html">プライバシーポリシー</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 JP NEXT. All rights reserved.</span><a href="mailto:info@jpnext.co" style="color:var(--gray-600)">info@jpnext.co</a></div>
+  </div>
+</footer>
+</body>
+</html>
