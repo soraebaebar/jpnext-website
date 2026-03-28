@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M&Aロングリスト作成ツール｜JP NEXT</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap');
+  :root{--bg:#f5f4f0;--surface:#fff;--s2:#f0ede8;--border:#e2ddd6;--text:#1a1916;--t2:#6b6860;--accent:#1A5C3A;--al:#f0fdf4;--a2:#1D9E75;--gold:#B8962E;--gl:#fffbeb;--red:#dc2626;--rl:#fef2f2;--r:10px;--sh:0 1px 3px rgba(0,0,0,.08)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  .protected{-webkit-user-select:none;-moz-user-select:none;user-select:none}
+
+  header{background:var(--text);color:#fff;padding:14px 32px;display:flex;align-items:center;gap:14px}
+  .logo{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700}
+  .badge{font-size:11px;background:var(--accent);color:#fff;border-radius:4px;padding:2px 8px;font-weight:500}
+  .hsub{font-size:12px;color:#888;margin-left:4px}
+
+  /* 残り回数・クレジットバー */
+  .topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px;flex-wrap:wrap}
+  .udots{display:flex;gap:6px}
+  .udot{width:14px;height:14px;border-radius:50%;border:2px solid var(--accent);transition:background .3s}
+  .udot.used{background:var(--accent)}.udot.empty{background:transparent}
+  .credit-badge{display:flex;align-items:center;gap:8px;padding:6px 14px;background:var(--gl);border:1.5px solid var(--gold);border-radius:20px;font-size:13px;font-weight:600;color:var(--gold);cursor:pointer;transition:all .2s}
+  .credit-badge:hover{background:#fef3c7}
+  .credit-count{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700}
+
+  .container{max-width:1100px;margin:0 auto;padding:28px 24px}
+
+  .steps{display:flex;gap:4px;margin-bottom:24px;background:var(--s2);border-radius:12px;padding:6px;border:1px solid var(--border)}
+  .sb{flex:1;padding:10px 8px;border:none;border-radius:8px;font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:500;cursor:pointer;background:transparent;color:var(--t2);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px}
+  .sb.active{background:var(--surface);color:var(--text);box-shadow:var(--sh)}
+  .sb .num{width:20px;height:20px;border-radius:50%;background:var(--border);font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .sb.active .num{background:var(--accent);color:#fff}.sb.done .num{background:var(--a2);color:#fff}
+
+  .panel{display:none}.panel.active{display:block}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:16px;box-shadow:var(--sh)}
+  .ct{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+  .ct .icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;background:var(--al);color:var(--accent)}
+
+  input[type="text"],textarea,select{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:'Noto Sans JP',sans-serif;font-size:14px;color:var(--text);background:var(--surface);outline:none;transition:border-color .2s}
+  input[type="text"]:focus,textarea:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(26,92,58,.1)}
+  textarea{resize:vertical;min-height:80px;line-height:1.6}
+  label{display:block;font-size:13px;font-weight:500;color:var(--t2);margin-bottom:6px}
+  .fg{margin-bottom:16px}
+  .tc{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .thr{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+
+  .btn{padding:10px 20px;border:none;border-radius:8px;font-family:'Noto Sans JP',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+  .bp{background:var(--accent);color:#fff}.bp:hover{background:#14472d}.bp:disabled{background:var(--t2);cursor:not-allowed;opacity:.6}
+  .bs{background:var(--surface);color:var(--text);border:1px solid var(--border)}.bs:hover{background:var(--s2)}
+  .bg{background:var(--gold);color:#fff}.bg:hover{background:#9a7d24}
+  .bsm{padding:6px 12px;font-size:12px}
+  .bpay{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-size:15px;padding:14px 24px;border-radius:10px}
+  .bpay:hover{background:linear-gradient(135deg,#4f46e5,#7c3aed);transform:translateY(-1px)}
+
+  .tag{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:500}
+  .tg{background:var(--al);color:var(--accent);border:1px solid #a7f3d0}
+  .ty{background:var(--gl);color:var(--gold);border:1px solid #fde68a}
+  .tgr{background:var(--s2);color:var(--t2);border:1px solid var(--border)}
+
+  .cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}
+  .cc{border:1.5px solid var(--border);border-radius:8px;padding:12px 14px;cursor:pointer;transition:all .2s;display:flex;align-items:flex-start;gap:10px}
+  .cc:hover,.cc.sel{border-color:var(--accent);background:var(--al)}
+  .cc input[type="checkbox"]{margin-top:2px;accent-color:var(--accent);flex-shrink:0;width:15px;height:15px;cursor:pointer}
+  .ccl{font-size:13px;font-weight:500;line-height:1.4}.ccs{font-size:11px;color:var(--t2);margin-top:2px}
+
+  .rrow{display:flex;align-items:center;gap:12px}
+  input[type="range"]{flex:1;accent-color:var(--accent);height:4px}
+  .rval{font-size:13px;font-weight:700;color:var(--accent);white-space:nowrap;min-width:80px;text-align:right}
+
+  .loading{display:flex;align-items:center;gap:10px;color:var(--t2);font-size:13px;padding:12px 0}
+  .spinner{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  .clist{display:flex;flex-direction:column;gap:12px}
+  .ccard{border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;background:var(--surface);transition:all .2s}
+  .ccard:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(26,92,58,.08)}
+  .ccard.sel{border-color:var(--accent);background:var(--al)}
+  .cn{font-size:15px;font-weight:700}
+  .cm{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 8px}
+  .cr{font-size:13px;color:var(--t2);line-height:1.7;padding:10px 14px;background:var(--s2);border-radius:6px;border-left:3px solid var(--accent)}
+  .cscore{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700}
+  .sbw{background:var(--s2);border-radius:100px;height:6px;overflow:hidden;width:80px}
+  .sbb{height:100%;border-radius:100px;background:var(--accent);transition:width .5s}
+  .cchk{width:20px;height:20px;accent-color:var(--accent);cursor:pointer;flex-shrink:0;margin-top:2px}
+
+  .fbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+  .fb{padding:6px 14px;border:1px solid var(--border);border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;background:var(--surface);color:var(--t2);transition:all .15s}
+  .fb.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+  .sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+  .sbox{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;text-align:center}
+  .snum{font-family:'Space Grotesk',sans-serif;font-size:1.8rem;font-weight:700;color:var(--accent);line-height:1}
+  .slabel{font-size:11px;color:var(--t2);margin-top:4px}
+
+  .pwrap{background:var(--s2);border-radius:100px;height:6px;margin-bottom:6px;overflow:hidden}
+  .pbar{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--accent),var(--a2));transition:width .8s ease}
+
+  .nav{display:flex;justify-content:space-between;align-items:center;margin-top:20px}
+  .smsg{padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:12px}
+  .si{background:var(--al);color:var(--accent);border:1px solid #a7f3d0}
+  .sw{background:var(--gl);color:var(--gold);border:1px solid #fde68a}
+
+  /* モーダル共通 */
+  .modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center}
+  .modal-ov.show{display:flex}
+  .modal{background:var(--surface);border-radius:16px;padding:40px 36px;max-width:480px;width:90%;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.25);animation:popIn .3s cubic-bezier(.34,1.56,.64,1)}
+  @keyframes popIn{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+  .m-icon{font-size:48px;margin-bottom:16px}
+  .m-title{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:700;margin-bottom:10px}
+  .m-desc{font-size:14px;color:var(--t2);line-height:1.8;margin-bottom:24px}
+  .m-btns{display:flex;flex-direction:column;gap:10px}
+
+  /* 課金モーダル */
+  .pay-modal{background:var(--surface);border-radius:16px;padding:0;max-width:520px;width:90%;box-shadow:0 24px 80px rgba(0,0,0,.3);overflow:hidden;animation:popIn .3s cubic-bezier(.34,1.56,.64,1)}
+  .pay-header{background:var(--text);padding:28px;text-align:center}
+  .pay-header-icon{font-size:40px;margin-bottom:8px}
+  .pay-header-title{font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:4px}
+  .pay-header-sub{font-size:12px;color:#888}
+  .pay-body{padding:28px}
+  .plan-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px}
+  .plan-card{border:2px solid var(--border);border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:all .2s;position:relative}
+  .plan-card:hover{border-color:var(--accent)}
+  .plan-card.selected{border-color:var(--accent);background:var(--al)}
+  .plan-card.popular::before{content:'人気';position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-size:10px;font-weight:700;padding:2px 10px;border-radius:10px}
+  .plan-num{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:700;color:var(--accent)}
+  .plan-unit{font-size:11px;color:var(--t2)}
+  .plan-price{font-size:13px;font-weight:600;color:var(--text);margin-top:4px}
+  .plan-per{font-size:11px;color:var(--t2)}
+  .pay-divider{text-align:center;font-size:12px;color:var(--t2);margin:16px 0;position:relative}
+  .pay-divider::before,.pay-divider::after{content:'';position:absolute;top:50%;width:40%;height:1px;background:var(--border)}
+  .pay-divider::before{left:0}.pay-divider::after{right:0}
+  .stripe-info{background:var(--s2);border-radius:8px;padding:12px 16px;font-size:12px;color:var(--t2);display:flex;align-items:center;gap:8px;margin-bottom:20px}
+
+  /* エクスポートゲート */
+  .egate{background:var(--text);border-radius:var(--r);padding:36px;text-align:center;margin-bottom:16px;position:relative;overflow:hidden}
+  .egate::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,92,58,.3),transparent);pointer-events:none}
+  .eg-icon{font-size:40px;margin-bottom:12px}
+  .eg-title{font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:8px}
+  .eg-desc{font-size:13px;color:#aaa;margin-bottom:20px;line-height:1.8}
+  .eg-feats{display:flex;flex-direction:column;gap:8px;margin-bottom:24px;text-align:left}
+  .eg-feat{font-size:13px;color:#ccc;display:flex;align-items:center;gap:8px}
+  .eg-feat::before{content:'✓';color:var(--a2);font-weight:700;flex-shrink:0}
+  .eg-price{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:#fff;margin-bottom:4px;position:relative;z-index:1}
+  .eg-price-sub{font-size:12px;color:#888;margin-bottom:20px;position:relative;z-index:1}
+
+  /* ブラープレビュー */
+  .bprev{position:relative;border-radius:var(--r);overflow:hidden;margin-bottom:16px}
+  .btbl{width:100%;border-collapse:collapse;font-size:13px;filter:blur(5px);user-select:none;pointer-events:none}
+  .btbl th{background:var(--text);color:#fff;padding:10px 14px;text-align:left}
+  .btbl td{padding:10px 14px;border-bottom:1px solid var(--border)}
+  .btbl tr:nth-child(even) td{background:#f9fafb}
+  .bov{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.65)}
+  .bovt{background:var(--text);color:#fff;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+
+  .slhdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .slcnt{font-size:13px;font-weight:600;color:var(--accent);background:var(--al);padding:4px 12px;border-radius:20px}
+
+  /* クレジット残高が0でエクスポートしようとした時 */
+  .export-unlock{background:linear-gradient(135deg,#1a1916,#2d2d2d);border-radius:var(--r);padding:28px;display:flex;align-items:center;gap:20px;margin-bottom:16px;cursor:pointer;transition:all .2s}
+  .export-unlock:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.2)}
+  .eu-icon{font-size:36px;flex-shrink:0}
+  .eu-text{flex:1}
+  .eu-title{font-weight:700;font-size:15px;color:#fff;margin-bottom:4px}
+  .eu-desc{font-size:12px;color:#888;line-height:1.6}
+  .eu-price{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:700;color:var(--gold);flex-shrink:0}
+
+  @media(max-width:640px){
+    .tc,.thr,.cgrid,.sgrid,.plan-grid{grid-template-columns:1fr}
+    .sgrid{grid-template-columns:1fr 1fr}
+    .topbar{flex-direction:column;align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+
+<!-- 使用上限モーダル -->
+<div class="modal-ov" id="lim-modal">
+  <div class="modal">
+    <div class="m-icon">🔒</div>
+    <div class="m-title">無料枠を使い切りました</div>
+    <div class="m-desc">無料で3回ご利用いただきました。<br>続けるにはクレジットを購入してください。<br><span style="font-size:12px;color:var(--t2)">1クレジット = ロングリスト生成1回 or エクスポート1回</span></div>
+    <div class="m-btns">
+      <button class="btn bpay" onclick="closeModal('lim-modal');openPayModal('gen')" style="justify-content:center">💳 生成クレジットを購入（100円〜）</button>
+      <button class="btn bs" onclick="closeModal('lim-modal')" style="justify-content:center">閉じる</button>
+    </div>
+  </div>
+</div>
+
+<!-- 課金モーダル -->
+<div class="modal-ov" id="pay-modal">
+  <div class="pay-modal">
+    <div class="pay-header">
+      <div class="pay-header-icon">💳</div>
+      <div class="pay-header-title" id="pay-modal-title">クレジットを購入</div>
+      <div class="pay-header-sub">生成：100円/枚（月3回無料）｜エクスポート：1,000円/枚</div>
+    </div>
+    <div class="pay-body">
+      <div class="plan-grid" id="plan-grid"></div>
+
+      <div class="stripe-info">
+        🔒 決済はStripe（国際基準SSL）で安全に処理されます。カード情報はJP NEXTには渡りません。
+      </div>
+
+      <!-- Stripe Checkout ボタン（本番実装時にStripeのプリシントIDを設定） -->
+      <button class="btn bpay" id="stripe-btn" onclick="handleStripeCheckout()" style="width:100%;justify-content:center;margin-bottom:12px">
+        💳 Stripeで支払う（<span id="pay-amount">¥4,500</span>）
+      </button>
+
+      <div class="pay-divider">または</div>
+
+      <div style="margin-top:12px;text-align:center">
+        <button class="btn bs" onclick="handleManualPurchase()" style="width:100%;justify-content:center;font-size:13px">
+          📧 請求書払いで申し込む（法人向け）
+        </button>
+      </div>
+
+      <div style="text-align:center;margin-top:16px">
+        <button onclick="closeModal('pay-modal')" style="background:none;border:none;color:var(--t2);font-size:13px;cursor:pointer">キャンセル</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 購入完了モーダル（デモ用） -->
+<div class="modal-ov" id="success-modal">
+  <div class="modal">
+    <div class="m-icon">🎉</div>
+    <div class="m-title">クレジット追加完了！</div>
+    <div class="m-desc" id="success-desc"></div>
+    <div class="m-btns">
+      <button class="btn bp" onclick="closeModal('success-modal')" style="justify-content:center">ありがとうございます！</button>
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="logo">JP NEXT</div>
+  <div class="badge">AI搭載</div>
+  <span class="hsub">M&A ロングリスト作成ツール</span>
+</header>
+
+<!-- 残り回数・クレジットバー -->
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:16px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="font-weight:600;font-size:13px">無料残り</span>
+      <div class="udots" id="udots"></div>
+    </div>
+    <div id="utext" style="font-size:13px;color:var(--t2)"></div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px">
+    <div class="credit-badge" onclick="openPayModal()" title="クレジットを購入">
+      <span>💳 クレジット残高</span>
+      <span class="credit-count" id="credit-count" style="color:var(--gold)">0</span>
+      <span style="font-size:11px;color:var(--t2)">枚</span>
+      <span style="font-size:11px;color:var(--gold);margin-left:4px">+ 購入</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="steps">
+    <button class="sb active" id="tab1" onclick="goStep(1)"><span class="num">1</span>売り手情報</button>
+    <button class="sb" id="tab2" onclick="goStep(2)"><span class="num">2</span>買い手条件</button>
+    <button class="sb" id="tab3" onclick="goStep(3)"><span class="num">3</span>リスト生成</button>
+    <button class="sb" id="tab4" onclick="goStep(4)"><span class="num">4</span>絞り込み</button>
+    <button class="sb" id="tab5" onclick="goStep(5)"><span class="num">5</span>エクスポート</button>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="panel active" id="panel1">
+    <div class="card">
+      <div class="ct"><div class="icon">🏢</div>売り手企業の基本情報</div>
+      <div class="tc">
+        <div class="fg"><label>業種・業界</label>
+          <select id="s-ind">
+            <option value="">選択してください</option>
+            <option value="製造業（機械・金属）">製造業（機械・金属）</option>
+            <option value="製造業（食品・飲料）">製造業（食品・飲料）</option>
+            <option value="製造業（化学・素材）">製造業（化学・素材）</option>
+            <option value="製造業（その他）">製造業（その他）</option>
+            <option value="建設業">建設業</option>
+            <option value="土木・設備工事">土木・設備工事</option>
+            <option value="IT・ソフトウェア開発">IT・ソフトウェア開発</option>
+            <option value="IT・SaaS・クラウド">IT・SaaS・クラウド</option>
+            <option value="Web・EC・デジタル">Web・EC・デジタル</option>
+            <option value="医療・クリニック">医療・クリニック</option>
+            <option value="調剤薬局">調剤薬局</option>
+            <option value="介護・福祉">介護・福祉</option>
+            <option value="飲食・食品">飲食・食品</option>
+            <option value="小売・EC">小売・EC</option>
+            <option value="物流・運輸">物流・運輸</option>
+            <option value="不動産">不動産</option>
+            <option value="金融・保険">金融・保険</option>
+            <option value="教育・塾・スクール">教育・塾・スクール</option>
+            <option value="人材・派遣">人材・派遣</option>
+            <option value="広告・メディア・PR">広告・メディア・PR</option>
+            <option value="コンサルティング">コンサルティング</option>
+            <option value="専門商社">専門商社</option>
+            <option value="その他サービス業">その他サービス業</option>
+          </select>
+        </div>
+        <div class="fg"><label>本社所在地</label>
+          <select id="s-pref">
+            <optgroup label="北海道・東北">
+              <option value="北海道">北海道</option><option value="青森県">青森県</option>
+              <option value="岩手県">岩手県</option><option value="宮城県">宮城県</option>
+              <option value="秋田県">秋田県</option><option value="山形県">山形県</option>
+              <option value="福島県">福島県</option>
+            </optgroup>
+            <optgroup label="関東">
+              <option value="茨城県">茨城県</option><option value="栃木県">栃木県</option>
+              <option value="群馬県">群馬県</option><option value="埼玉県">埼玉県</option>
+              <option value="千葉県">千葉県</option><option value="東京都" selected>東京都</option>
+              <option value="神奈川県">神奈川県</option>
+            </optgroup>
+            <optgroup label="中部">
+              <option value="新潟県">新潟県</option><option value="富山県">富山県</option>
+              <option value="石川県">石川県</option><option value="福井県">福井県</option>
+              <option value="山梨県">山梨県</option><option value="長野県">長野県</option>
+              <option value="岐阜県">岐阜県</option><option value="静岡県">静岡県</option>
+              <option value="愛知県">愛知県</option>
+            </optgroup>
+            <optgroup label="近畿">
+              <option value="三重県">三重県</option><option value="滋賀県">滋賀県</option>
+              <option value="京都府">京都府</option><option value="大阪府">大阪府</option>
+              <option value="兵庫県">兵庫県</option><option value="奈良県">奈良県</option>
+              <option value="和歌山県">和歌山県</option>
+            </optgroup>
+            <optgroup label="中国・四国">
+              <option value="鳥取県">鳥取県</option><option value="島根県">島根県</option>
+              <option value="岡山県">岡山県</option><option value="広島県">広島県</option>
+              <option value="山口県">山口県</option><option value="徳島県">徳島県</option>
+              <option value="香川県">香川県</option><option value="愛媛県">愛媛県</option>
+              <option value="高知県">高知県</option>
+            </optgroup>
+            <optgroup label="九州・沖縄">
+              <option value="福岡県">福岡県</option><option value="佐賀県">佐賀県</option>
+              <option value="長崎県">長崎県</option><option value="熊本県">熊本県</option>
+              <option value="大分県">大分県</option><option value="宮崎県">宮崎県</option>
+              <option value="鹿児島県">鹿児島県</option><option value="沖縄県">沖縄県</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+      <div class="tc">
+        <div class="fg"><label>年間売上高</label>
+          <select id="s-sales">
+            <option value="3,000万円未満">3,000万円未満</option>
+            <option value="3,000万〜5,000万円">3,000万〜5,000万円</option>
+            <option value="5,000万〜1億円">5,000万〜1億円</option>
+            <option value="1億〜2億円" selected>1億〜2億円</option>
+            <option value="2億〜3億円">2億〜3億円</option>
+            <option value="3億〜5億円">3億〜5億円</option>
+            <option value="5億〜8億円">5億〜8億円</option>
+            <option value="8億〜10億円">8億〜10億円</option>
+            <option value="10億〜15億円">10億〜15億円</option>
+            <option value="15億〜20億円">15億〜20億円</option>
+            <option value="20億〜30億円">20億〜30億円</option>
+            <option value="30億〜50億円">30億〜50億円</option>
+            <option value="50億〜100億円">50億〜100億円</option>
+            <option value="100億〜300億円">100億〜300億円</option>
+            <option value="300億円超">300億円超</option>
+          </select>
+        </div>
+        <div class="fg"><label>営業利益率</label>
+          <select id="s-mar">
+            <option value="赤字">赤字</option>
+            <option value="0〜2%（トントン）">0〜2%（トントン）</option>
+            <option value="2〜5%">2〜5%</option>
+            <option value="5〜8%" selected>5〜8%</option>
+            <option value="8〜10%">8〜10%</option>
+            <option value="10〜15%">10〜15%</option>
+            <option value="15〜20%">15〜20%</option>
+            <option value="20〜25%">20〜25%</option>
+            <option value="25〜30%">25〜30%</option>
+            <option value="30〜40%">30〜40%</option>
+            <option value="40〜50%">40〜50%</option>
+            <option value="50%超">50%超</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg"><label>事業の強み・特徴</label>
+        <textarea id="s-str" rows="3" placeholder="例：関東圏に10店舗を展開する専門商社。独自の仕入れルートと高い固定客比率を保有。"></textarea>
+      </div>
+    </div>
+    <div class="nav"><div></div><button class="btn bp" onclick="goStep(2)">次へ：買い手条件 →</button></div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="panel" id="panel2">
+    <div class="card">
+      <div class="ct"><div class="icon">🎯</div>シナジー方向（複数選択可）</div>
+      <div class="cgrid">
+        <label class="cc" id="cc1"><input type="checkbox" name="syn" value="同業拡大" onchange="tc2('cc1',this)"><div><div class="ccl">📊 同業・水平展開</div><div class="ccs">規模拡大・シェア獲得</div></div></label>
+        <label class="cc" id="cc2"><input type="checkbox" name="syn" value="川上川下統合" onchange="tc2('cc2',this)"><div><div class="ccl">🔗 川上・川下統合</div><div class="ccs">バリューチェーン強化</div></div></label>
+        <label class="cc" id="cc3"><input type="checkbox" name="syn" value="新規事業進出" onchange="tc2('cc3',this)"><div><div class="ccl">🚀 新規事業進出</div><div class="ccs">異業種による多角化</div></div></label>
+        <label class="cc" id="cc4"><input type="checkbox" name="syn" value="地域展開" onchange="tc2('cc4',this)"><div><div class="ccl">🗾 地域展開</div><div class="ccs">地理的カバレッジ拡大</div></div></label>
+        <label class="cc" id="cc5"><input type="checkbox" name="syn" value="技術・ノウハウ獲得" onchange="tc2('cc5',this)"><div><div class="ccl">💡 技術・ノウハウ獲得</div><div class="ccs">特許・技術・人材取込</div></div></label>
+        <label class="cc" id="cc6"><input type="checkbox" name="syn" value="財務投資目的" onchange="tc2('cc6',this)"><div><div class="ccl">💰 財務投資目的</div><div class="ccs">PEファンド・投資会社</div></div></label>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ct"><div class="icon">🏭</div>買い手の希望条件</div>
+      <div class="tc">
+        <div class="fg"><label>希望業種</label>
+          <select id="b-ind">
+            <option value="同業種優先">同業種を優先</option>
+            <option value="関連業種も可">関連業種も含める</option>
+            <option value="業種不問">業種不問（幅広く）</option>
+          </select>
+        </div>
+        <div class="fg"><label>買い手規模</label>
+          <select id="b-size">
+            <option value="同規模">同規模（売上が近い企業）</option>
+            <option value="中小企業">中小企業（〜50億円）</option>
+            <option value="中堅企業" selected>中堅企業（50〜500億円）</option>
+            <option value="大企業">大企業（500億円超）</option>
+            <option value="上場企業">上場企業限定</option>
+            <option value="規模不問">規模不問</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg"><label>候補数の目標</label>
+        <div class="rrow">
+          <input type="range" id="cnt" min="10" max="30" value="20" step="5" oninput="document.getElementById('cntv').textContent=this.value+'社'">
+          <span class="rval" id="cntv">20社</span>
+        </div>
+      </div>
+    </div>
+    <div class="nav">
+      <button class="btn bs" onclick="goStep(1)">← 戻る</button>
+      <button class="btn bp" id="gen-btn" onclick="checkAndGen()">✨ ロングリストを生成する</button>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="panel" id="panel3">
+    <div id="load3" class="card" style="display:none">
+      <div class="loading"><div class="spinner"></div><span id="lstatus">候補企業を検索中...</span></div>
+      <div class="pwrap"><div class="pbar" id="pbar" style="width:0%"></div></div>
+      <div style="font-size:12px;color:var(--t2);margin-top:4px" id="plabel">準備中...</div>
+    </div>
+    <div id="res3" style="display:none">
+      <div class="sgrid" id="sgrid"></div>
+      <div class="card">
+        <div class="ct" style="justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:8px"><div class="icon">📋</div>候補企業リスト</div>
+          <div style="display:flex;gap:8px">
+            <button class="btn bs bsm" onclick="selAll()">全選択</button>
+            <button class="btn bs bsm" onclick="deselAll()">全解除</button>
+          </div>
+        </div>
+        <div class="fbar" id="fbar"></div>
+        <div class="clist protected" id="clist"></div>
+      </div>
+    </div>
+    <div class="nav">
+      <button class="btn bs" onclick="goStep(2)">← 戻る</button>
+      <button class="btn bp" onclick="goStep(4)">次へ：絞り込み →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="panel" id="panel4">
+    <div class="card">
+      <div class="ct"><div class="icon">⭐</div>ショートリスト</div>
+      <div class="slhdr">
+        <span style="font-size:13px;color:var(--t2)">チェックした企業</span>
+        <span class="slcnt" id="slcnt">0社</span>
+      </div>
+      <div id="slempty" class="smsg sw">⚠ STEP 3でチェックした企業がここに表示されます</div>
+      <div class="clist protected" id="slbody"></div>
+    </div>
+    <div class="card">
+      <div class="ct"><div class="icon">📝</div>アプローチ優先度</div>
+      <div id="prilist"></div>
+    </div>
+    <div class="nav">
+      <button class="btn bs" onclick="goStep(3)">← 戻る</button>
+      <button class="btn bp" onclick="goStep(5)">次へ：エクスポート →</button>
+    </div>
+  </div>
+
+  <!-- STEP 5 エクスポート -->
+  <div class="panel" id="panel5">
+
+    <!-- クレジットあり時 -->
+    <div id="export-available" style="display:none">
+      <div class="card">
+        <div class="ct"><div class="icon">📤</div>エクスポート</div>
+        <div class="smsg si">✅ クレジット1枚を使用してエクスポートできます</div>
+        <div class="tc" style="margin-bottom:16px">
+          <button class="btn bp" onclick="doExport('csv')" style="justify-content:center;width:100%;padding:14px">
+            📊 CSVでダウンロード（クレジット1枚）
+          </button>
+          <button class="btn bs" onclick="doExport('contact')" style="justify-content:center;width:100%;padding:14px">
+            📧 JPNEXTに送って依頼（PDF対応）
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- クレジットなし時（課金ゲート） -->
+    <div id="export-gate">
+      <div class="egate">
+        <div class="eg-icon">📊</div>
+        <div class="eg-title">エクスポートに1クレジット必要です</div>
+        <div class="eg-price">¥1,000</div>
+        <div class="eg-price-sub">1クレジット / 1エクスポート</div>
+        <div class="eg-feats">
+          <div class="eg-feat">CSVダウンロード（Excel対応）</div>
+          <div class="eg-feat">PDF形式での納品</div>
+          <div class="eg-feat">アプローチ優先度・メモ付き</div>
+          <div class="eg-feat">まとめ買いで最大20%OFF</div>
+        </div>
+        <button class="btn bpay" onclick="openPayModal('exp')" style="width:100%;justify-content:center;font-size:15px;padding:14px;position:relative;z-index:1">
+          💳 クレジットを購入してエクスポート
+        </button>
+        <div style="margin-top:12px;font-size:12px;color:#888;position:relative;z-index:1">
+          <a href="/contact.html" style="color:#888;text-decoration:underline">お問い合わせ（法人・請求書払い）</a>
+        </div>
+      </div>
+      <!-- ぼかしプレビュー -->
+      <div class="bprev">
+        <table class="btbl"><thead><tr><th>#</th><th>企業名</th><th>業種</th><th>規模</th><th>シナジー</th><th>スコア</th><th>優先度</th></tr></thead>
+        <tbody id="btbody"></tbody></table>
+        <div class="bov"><div class="bovt">🔒 クレジット購入後にダウンロード可能</div></div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="btn bs" onclick="goStep(4)">← 戻る</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Stripe.js（本番時に有効化） -->
+<!-- <script src="https://js.stripe.com/v3/"></script> -->
+
+<script>
+// コピペ対策
+document.addEventListener('contextmenu',e=>{if(e.target.closest('.protected')){e.preventDefault();return false;}});
+document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key==='p'){e.preventDefault();return false;}
+  if(e.target.closest('.protected')&&(e.ctrlKey||e.metaKey)&&['c','a','s'].includes(e.key.toLowerCase())){e.preventDefault();return false;}
+});
+window.addEventListener('beforeprint',e=>{e.preventDefault();return false;});
+
+// ===== ストレージキー =====
+const FREE_GEN_KEY='jpnext_ll_free_gen_v1';   // 月3回無料生成の使用数
+const FREE_MONTH_KEY='jpnext_ll_free_month_v1'; // 無料カウントのリセット用（YYYY-MM）
+const GEN_CREDIT_KEY='jpnext_ll_gen_credit_v1'; // 生成用クレジット（100円/枚）
+const EXP_CREDIT_KEY='jpnext_ll_exp_credit_v1'; // エクスポート用クレジット（1,000円/枚）
+const MAX_FREE_GEN=3; // 月3回無料
+
+// ===== 月リセット処理 =====
+function getCurrentMonth(){return new Date().toISOString().slice(0,7);} // "2026-03"
+function checkMonthReset(){
+  try{
+    const saved=localStorage.getItem(FREE_MONTH_KEY);
+    const now=getCurrentMonth();
+    if(saved===null){localStorage.setItem(FREE_MONTH_KEY,now);}
+    else if(saved!==now){localStorage.setItem(FREE_MONTH_KEY,now);localStorage.setItem(FREE_GEN_KEY,'0');}
+  }catch{}
+}
+
+// ===== 無料生成管理 =====
+function getFreeGenUsed(){checkMonthReset();try{return parseInt(localStorage.getItem(FREE_GEN_KEY)||'0');}catch{return 0;}}
+function incFreeGen(){try{localStorage.setItem(FREE_GEN_KEY,String(getFreeGenUsed()+1));}catch{}}
+function hasFreeGenLeft(){return getFreeGenUsed()<MAX_FREE_GEN;}
+
+// ===== 生成クレジット管理（100円/枚） =====
+function getGenCredits(){try{return parseInt(localStorage.getItem(GEN_CREDIT_KEY)||'0');}catch{return 0;}}
+function addGenCredits(n){try{localStorage.setItem(GEN_CREDIT_KEY,String(getGenCredits()+n));}catch{}}
+function useGenCredit(){
+  const c=getGenCredits();if(c<=0)return false;
+  try{localStorage.setItem(GEN_CREDIT_KEY,String(c-1));}catch{}return true;
+}
+
+// ===== エクスポートクレジット管理（1,000円/枚） =====
+function getExpCredits(){try{return parseInt(localStorage.getItem(EXP_CREDIT_KEY)||'0');}catch{return 0;}}
+function addExpCredits(n){try{localStorage.setItem(EXP_CREDIT_KEY,String(getExpCredits()+n));}catch{}}
+function useExpCredit(){
+  const c=getExpCredits();if(c<=0)return false;
+  try{localStorage.setItem(EXP_CREDIT_KEY,String(c-1));}catch{}return true;
+}
+
+// ===== 管理者フラグ（URLに ?admin=jpnext2026 をつけるだけで自動セット）=====
+(function(){
+  const p=new URLSearchParams(location.search);
+  if(p.get('admin')==='jpnext2026'){
+    try{localStorage.setItem('jpnext_admin_v1','true');}catch{}
+    // URLからadminパラメータを消す（見た目をきれいに）
+    history.replaceState({},'',location.pathname);
+  }
+})();
+function isAdmin(){return true;} // テスト中：完全無制限
+function canGenerate(){return isAdmin()||hasFreeGenLeft()||getGenCredits()>0;}
+
+function updUI(){
+  checkMonthReset();
+  const fused=getFreeGenUsed(),frem=Math.max(0,MAX_FREE_GEN-fused);
+  const gCred=getGenCredits(),eCred=getExpCredits();
+
+  // ドット（月3回）
+  const dots=document.getElementById('udots');
+  dots.innerHTML='';
+  for(let i=0;i<MAX_FREE_GEN;i++){const d=document.createElement('div');d.className='udot '+(i<fused?'used':'empty');dots.appendChild(d);}
+
+  // テキスト
+  const t=document.getElementById('utext');
+  if(isAdmin())t.innerHTML=`<span style="color:var(--gold)">⚙️ 管理者モード（無制限）</span>`;
+  else if(frem>0)t.innerHTML=`今月の無料生成 残り <strong style="color:var(--accent)">${frem}回</strong>`;
+  else if(gCred>0)t.innerHTML=`<span style="color:var(--a2)">✅ 生成クレジット残 ${gCred}枚</span>`;
+  else t.innerHTML=`<strong style="color:var(--red)">今月の無料枠終了</strong> — 生成クレジットを購入`;
+
+  // クレジット残高（生成/エクスポート 2種表示）
+  document.getElementById('credit-count').innerHTML=
+    `<span title="生成100円">⚡${gCred}</span>&nbsp;<span style="color:var(--border)">|</span>&nbsp;<span title="エクスポート1,000円">📊${eCred}</span>`;
+
+  // 生成ボタン
+  const btn=document.getElementById('gen-btn');
+  if(btn){
+    btn.disabled=!canGenerate();
+    if(isAdmin())btn.textContent='✨ ロングリストを生成（管理者：無制限）';
+    else if(frem>0)btn.textContent=`✨ ロングリストを生成（無料 残${frem}回）`;
+    else if(gCred>0)btn.textContent=`✨ ロングリストを生成（⚡クレジット1枚）`;
+    else btn.textContent='🔒 生成クレジットを購入してください';
+  }
+
+  // エクスポートゲート
+  const ea=document.getElementById('export-available');
+  const eg=document.getElementById('export-gate');
+  if(ea&&eg){if(eCred>0){ea.style.display='block';eg.style.display='none';}else{ea.style.display='none';eg.style.display='block';}}
+}
+
+// ===== モーダル =====
+// どちらのクレジットを購入するか記憶
+let payTarget='gen'; // 'gen' or 'exp'
+
+function openPayModal(target='gen'){
+  payTarget=target;
+  // プランを購入種別に合わせて更新
+  document.getElementById('pay-modal-title').textContent=
+    target==='gen'?'生成クレジットを購入（100円/枚）':'エクスポートクレジットを購入（1,000円/枚）';
+  renderPayPlans(target);
+  selPlan(target==='gen'?10:5); // 生成はまとめ買い推奨、エクスポートは5枚推奨
+  document.getElementById('pay-modal').classList.add('show');
+}
+function closeModal(id){document.getElementById(id).classList.remove('show');}
+
+// プランデータ
+const GEN_PLANS ={1:{price:100,label:'1枚',per:'¥100/回'},10:{price:900,label:'10枚',per:'¥90/回（10%OFF）'},30:{price:2400,label:'30枚',per:'¥80/回（20%OFF）'}};
+const EXP_PLANS ={1:{price:1000,label:'1枚',per:'¥1,000/回'},5:{price:4500,label:'5枚',per:'¥900/回（10%OFF）'},10:{price:8000,label:'10枚',per:'¥800/回（20%OFF）'}};
+
+let selPlanN=5;
+function renderPayPlans(target){
+  const plans=target==='gen'?GEN_PLANS:EXP_PLANS;
+  const keys=Object.keys(plans).map(Number);
+  const grid=document.getElementById('plan-grid');
+  grid.innerHTML=keys.map(n=>{
+    const p=plans[n];
+    const isPopular=(target==='gen'&&n===10)||(target==='exp'&&n===5);
+    return `<div class="plan-card${isPopular?' popular':''}" id="plan-${n}" onclick="selPlan(${n})">
+      <div class="plan-num">${n}</div>
+      <div class="plan-unit">枚</div>
+      <div class="plan-price">¥${p.price.toLocaleString()}</div>
+      <div class="plan-per">${p.per}</div>
+    </div>`;
+  }).join('');
+}
+
+function selPlan(n){
+  selPlanN=n;
+  document.querySelectorAll('.plan-card').forEach(el=>el.classList.remove('selected'));
+  const el=document.getElementById('plan-'+n);if(el)el.classList.add('selected');
+  const plans=payTarget==='gen'?GEN_PLANS:EXP_PLANS;
+  const p=plans[n];
+  if(p){
+    document.getElementById('pay-amount').textContent='¥'+p.price.toLocaleString();
+    document.getElementById('stripe-btn').textContent='💳 Stripeで支払う（¥'+p.price.toLocaleString()+'）';
+  }
+}
+
+// ===== Stripe Price IDs（本番時に設定） =====
+const STRIPE_PRICE_IDS={
+  gen:{1:'price_GEN_1',10:'price_GEN_10',30:'price_GEN_30'},
+  exp:{1:'price_EXP_1',5:'price_EXP_5',10:'price_EXP_10'}
+};
+const STRIPE_PK='pk_live_XXXXXXXXXX';
+
+async function handleStripeCheckout(){
+  /* 本番実装時：
+  const stripe=Stripe(STRIPE_PK);
+  const priceId=STRIPE_PRICE_IDS[payTarget][selPlanN];
+  await stripe.redirectToCheckout({
+    lineItems:[{price:priceId,quantity:1}],
+    mode:'payment',
+    successUrl:location.href+'?payment=success&type='+payTarget+'&qty='+selPlanN,
+    cancelUrl:location.href+'?payment=cancel'
+  });
+  */
+  // デモ：即時付与
+  if(payTarget==='gen')addGenCredits(selPlanN);
+  else addExpCredits(selPlanN);
+  closeModal('pay-modal');
+  const desc=document.getElementById('success-desc');
+  const label=payTarget==='gen'?`生成クレジット⚡${selPlanN}枚`:`エクスポートクレジット📊${selPlanN}枚`;
+  desc.innerHTML=`<strong>${label}</strong>が追加されました！<br><span style="font-size:12px;color:var(--t2)">※デモ版のため実際の決済は行われていません</span>`;
+  document.getElementById('success-modal').classList.add('show');
+  updUI();
+}
+
+function handleManualPurchase(){
+  closeModal('pay-modal');
+  const plans=payTarget==='gen'?GEN_PLANS:EXP_PLANS;
+  const p=plans[selPlanN]||{price:0};
+  window.location.href=`/contact.html?from=longlist&type=${payTarget}&qty=${selPlanN}&amount=${p.price}`;
+}
+
+// ===== URLパラメータでStripe return処理 =====
+(function(){
+  const p=new URLSearchParams(location.search);
+  if(p.get('payment')==='success'){
+    const type=p.get('type'),qty=parseInt(p.get('qty')||'0');
+    if(type==='gen')addGenCredits(qty);
+    else if(type==='exp')addExpCredits(qty);
+    alert(`✅ お支払い完了！クレジット${qty}枚が追加されました`);
+    history.replaceState({},'',location.pathname);
+  }
+})();
+
+// ===== ナビ =====
+let step=1,companies=[],selIds=new Set(),priData={};
+function goStep(n){
+  for(let i=1;i<=5;i++){
+    document.getElementById('panel'+i).classList.toggle('active',i===n);
+    const t=document.getElementById('tab'+i);
+    t.classList.toggle('active',i===n);
+    if(i<n)t.classList.add('done');else t.classList.remove('done');
+  }
+  step=n;
+  if(n===4)renderSL();
+  if(n===5){renderBlur();updUI();}
+  updUI();
+}
+function tc2(id,cb){document.getElementById(id).classList.toggle('sel',cb.checked);}
+
+function checkAndGen(){
+  if(!canGenerate()){document.getElementById('lim-modal').classList.add('show');return;}
+  generate();
+}
+
+async function generate(){
+  const ind=document.getElementById('s-ind').value;
+  if(!ind){alert('業種を選択してください');return;}
+  document.getElementById('gen-btn').disabled=true;
+  goStep(3);
+  document.getElementById('load3').style.display='block';
+  document.getElementById('res3').style.display='none';
+
+  // 無料枠 or 生成クレジット消費
+  if(hasFreeGenLeft())incFreeGen();
+  else useGenCredit();
+  updUI();
+
+  const syns=[...document.querySelectorAll('input[name="syn"]:checked')].map(e=>e.value);
+  const cnt=document.getElementById('cnt').value;
+  const str=document.getElementById('s-str').value;
+  const sal=document.getElementById('s-sales').value;
+  const mar=document.getElementById('s-mar').value;
+  const bsize=document.getElementById('b-size').value;
+  const bind=document.getElementById('b-ind').value;
+  const pref=document.getElementById('s-pref').value;
+
+  const sts=['業界データベースを検索中...','類似M&A事例を分析中...','シナジー候補を抽出中...','スコアリング計算中...','リストを整理中...'];
+  let si=0;
+  const bar=document.getElementById('pbar'),lbl=document.getElementById('plabel');
+  const iv=setInterval(()=>{
+    if(si<sts.length){document.getElementById('lstatus').textContent=sts[si];lbl.textContent=sts[si];bar.style.width=((si+1)/sts.length*85)+'%';si++;}
+  },1500);
+
+  const prompt=`あなたは日本のM&A仲介実務に精通した専門家です。以下の売り手企業に対して、実際のM&A実務の観点から買い手候補ロングリストを作成してください。
+
+【売り手企業情報】
+- 業種：${ind}
+- 所在地：${pref}
+- 年間売上：${sal}
+- 営業利益率：${mar}
+- 事業の強み：${str||'特記なし'}
+- 期待するシナジー：${syns.length>0?syns.join('、'):'指定なし'}
+- 買い手希望規模：${bsize}
+- 買い手希望業種：${bind}
+
+【重要な制約条件】
+1. 上場企業・非上場企業の両方を含めること（非上場でも実在する有力企業を積極的に含める）
+2. 売り手の年間売上「${sal}」に対して、買い手の売上規模は原則2〜20倍程度に収める
+3. 実在する日本企業のみ（架空企業・倒産済み企業は絶対に含めない）
+4. 過去にM&Aを実施した実績がある企業を優先する
+5. 業種・シナジーの論理的整合性を必ず確認すること
+6. 非上場企業の場合は「非上場・推定売上〇〇億円規模」と記載する
+
+【候補企業の選定基準（優先順）】
+① 同業または隣接業種でM&A実績がある企業
+② 売上規模が条件に合致している企業
+③ 戦略的にシナジーが明確に説明できる企業
+④ 財務的に買収余力がある企業（負債比率・キャッシュフロー）
+
+${cnt}社の候補をJSON形式のみで返答（説明文不要）：
+{"companies":[{"id":1,"name":"企業名（実在する日本企業）","industry":"業種","size":"上場/非上場の別・推定売上規模を具体的に","reason":"M&A実務の観点から買い手候補として有力な具体的理由（過去のM&A実績・シナジー・財務力を含む2〜3文）","score":85,"type":"同業拡大|川下統合|新規事業|財務投資|地域展開|技術獲得","priority":"高|中|低"}],"summary":{"total":${cnt},"high_priority":5,"industries":["業種1","業種2"],"avg_score":75}}
+
+必ず実在する企業のみを選定し、売上規模の整合性を最重要視してください。`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','anthropic-dangerous-direct-browser-calls':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:4000,messages:[{role:'user',content:prompt}],tools:[{"type":"web_search_20250305","name":"web_search"}]})
+    });
+    if(!res.ok)throw new Error('API:'+res.status);
+    const d=await res.json();
+    // web_search使用時はtextブロックのみ抽出
+    const txt=d.content.filter(b=>b.type==='text').map(b=>b.text||'').join('');
+    const jsonMatch=txt.match(/\{[\s\S]*\}/);
+    if(!jsonMatch)throw new Error('JSON not found in response');
+    const parsed=JSON.parse(jsonMatch[0]);
+    clearInterval(iv);bar.style.width='100%';lbl.textContent='✅ 完了！';
+    setTimeout(()=>{companies=parsed.companies;renderStats(parsed.summary);renderFilters();renderCo(companies);
+      document.getElementById('load3').style.display='none';document.getElementById('res3').style.display='block';
+      document.getElementById('gen-btn').disabled=!canGenerate();},500);
+  }catch(e){
+    clearInterval(iv);
+    console.error('API Error:', e);
+    lbl.textContent='❌ エラー: '+e.message;
+    bar.style.width='100%';
+    bar.style.background='var(--red)';
+    // エラー詳細をUIに表示
+    document.getElementById('load3').innerHTML += `<div style="color:var(--red);font-size:12px;margin-top:8px;padding:8px;background:var(--rl);border-radius:6px">❌ エラー詳細: ${e.message}<br>※APIキーが設定されていない場合はデモデータで表示します</div>`;
+    setTimeout(()=>{loadDemo(cnt,lbl,bar);},1500);
+  }
+}
+
+function loadDemo(cnt,lbl,bar){
+  bar.style.width='100%';
+  const demo=[
+    {id:1,name:'株式会社キーエンス',industry:'精密機器・FA',size:'東証プライム・売上9,000億円規模',reason:'センサー・FA分野での技術補完を狙う可能性が高い。製造業向け営業網とのシナジーが期待できる。成長投資に積極的な方針を持つ。',score:88,type:'技術獲得',priority:'高'},
+    {id:2,name:'オービック株式会社',industry:'ITソフトウェア',size:'東証プライム・売上500億円規模',reason:'業務システムとのデータ連携需要が高く、エンドユーザーとの接点拡大を狙う候補として有力。過去にも類似案件の実績あり。',score:82,type:'新規事業',priority:'高'},
+    {id:3,name:'アズワン株式会社',industry:'理化学・医療機器商社',size:'東証プライム・売上900億円規模',reason:'商社機能強化として同規模の専門商社を好むM&A実績あり。地域カバレッジ拡大の観点から高評価。',score:79,type:'同業拡大',priority:'高'},
+    {id:4,name:'SHOEIホールディングス',industry:'製造業',size:'東証プライム・売上200億円規模',reason:'製品ラインナップ拡充を目的とした垂直統合に積極的。製造ノウハウの取り込みに関心が高い。',score:74,type:'川下統合',priority:'中'},
+    {id:5,name:'ベネフィット・ワン',industry:'BPO・福利厚生',size:'東証プライム・売上400億円規模',reason:'多様な事業領域へのM&Aで急成長。新サービス領域として関心が高く成約実績も多数。',score:71,type:'新規事業',priority:'中'},
+    {id:6,name:'株式会社MonotaRO',industry:'工業用品EC',size:'東証プライム・売上2,500億円規模',reason:'EC化率向上を狙い専門分野のサプライヤーを取り込む戦略を持つ。仕入れルートの多様化に積極的。',score:68,type:'川下統合',priority:'中'},
+    {id:7,name:'GMOインターネットグループ',industry:'IT・インターネット',size:'東証プライム・売上2,000億円規模',reason:'グループ経営でのM&A積極戦略。デジタル化推進の観点からターゲット領域と合致する可能性あり。',score:64,type:'新規事業',priority:'中'},
+    {id:8,name:'ニチイ学館グループ',industry:'医療・介護サービス',size:'非上場・売上1,500億円規模',reason:'全国展開するサービス網を活かした水平展開を狙う。地域密着型事業の取り込みに積極的。',score:61,type:'地域展開',priority:'低'},
+    {id:9,name:'ユニ・チャーム株式会社',industry:'日用品',size:'東証プライム・売上8,000億円規模',reason:'国内での流通・販売網強化を目的としたM&Aも視野に入れている。',score:58,type:'地域展開',priority:'低'},
+    {id:10,name:'トランザクション株式会社',industry:'販促物・ノベルティ',size:'東証スタンダード・売上400億円規模',reason:'販売チャネルの多様化を課題とし、既存ネットワークを活かした事業補完に関心あり。',score:55,type:'同業拡大',priority:'低'},
+  ];
+  const sel=demo.slice(0,Math.min(parseInt(cnt),demo.length));
+  companies=sel;
+  lbl.textContent='✅ デモデータで表示（APIキー設定後に本番稼働）';
+  renderStats({total:sel.length,high_priority:sel.filter(c=>c.priority==='高').length,industries:[...new Set(sel.map(c=>c.industry))],avg_score:Math.round(sel.reduce((s,c)=>s+c.score,0)/sel.length)});
+  renderFilters();renderCo(companies);
+  document.getElementById('load3').style.display='none';
+  document.getElementById('res3').style.display='block';
+  document.getElementById('gen-btn').disabled=!canGenerate();
+}
+
+function renderStats(s){
+  document.getElementById('sgrid').innerHTML=`
+    <div class="sbox"><div class="snum">${s.total}</div><div class="slabel">総候補社数</div></div>
+    <div class="sbox"><div class="snum">${s.high_priority}</div><div class="slabel">優先度「高」</div></div>
+    <div class="sbox"><div class="snum">${s.avg_score}</div><div class="slabel">平均スコア</div></div>
+    <div class="sbox"><div class="snum">${s.industries?.length||0}</div><div class="slabel">業種カバレッジ</div></div>`;
+}
+
+function renderFilters(){
+  const types=[...new Set(companies.map(c=>c.type))];
+  const bar=document.getElementById('fbar');
+  bar.innerHTML='<span style="font-size:12px;color:var(--t2);font-weight:500">フィルター：</span>';
+  ['全て',...types,'高優先度のみ'].forEach(t=>{
+    const b=document.createElement('button');
+    b.className='fb'+(t==='全て'?' active':'');b.textContent=t;
+    b.onclick=()=>{document.querySelectorAll('.fb').forEach(x=>x.classList.remove('active'));b.classList.add('active');
+      if(t==='全て')renderCo(companies);
+      else if(t==='高優先度のみ')renderCo(companies.filter(c=>c.priority==='高'));
+      else renderCo(companies.filter(c=>c.type===t));};
+    bar.appendChild(b);
+  });
+}
+
+function renderCo(list){
+  document.getElementById('clist').innerHTML=list.map(c=>{
+    const sc=c.score>=80?'var(--accent)':c.score>=60?'var(--gold)':'var(--red)';
+    const pt=c.priority==='高'?`<span class="tag tg">★ 優先度高</span>`:c.priority==='中'?`<span class="tag ty">◆ 優先度中</span>`:`<span class="tag tgr">● 優先度低</span>`;
+    return `<div class="ccard ${selIds.has(c.id)?'sel':''}" id="cc-${c.id}">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px">
+        <div><div class="cn">${c.name}</div>
+          <div class="cm"><span class="tag tgr">${c.industry}</span>${pt}<span class="tag tgr" style="background:#eff6ff;color:#1e40af;border-color:#bfdbfe">${c.type}</span></div>
+          <div style="font-size:12px;color:var(--t2)">${c.size}</div></div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+          <input type="checkbox" class="cchk" ${selIds.has(c.id)?'checked':''} onchange="togSel(${c.id},this.checked)">
+          <div class="cscore"><div class="sbw"><div class="sbb" style="width:${c.score}%;background:${sc}"></div></div><span style="color:${sc}">${c.score}</span></div>
+        </div>
+      </div>
+      <div class="cr">${c.reason}</div></div>`;
+  }).join('');
+}
+
+function togSel(id,checked){
+  if(checked)selIds.add(id);else selIds.delete(id);
+  const c=document.getElementById('cc-'+id);if(c)c.classList.toggle('sel',checked);
+  document.getElementById('slcnt').textContent=selIds.size+'社';
+}
+function selAll(){companies.forEach(c=>selIds.add(c.id));renderCo(companies);document.getElementById('slcnt').textContent=selIds.size+'社';}
+function deselAll(){selIds.clear();renderCo(companies);document.getElementById('slcnt').textContent='0社';}
+
+function renderSL(){
+  const sel=companies.filter(c=>selIds.has(c.id));
+  document.getElementById('slcnt').textContent=sel.length+'社';
+  if(sel.length===0){document.getElementById('slempty').style.display='block';document.getElementById('slbody').innerHTML='';document.getElementById('prilist').innerHTML='';return;}
+  document.getElementById('slempty').style.display='none';
+  document.getElementById('slbody').innerHTML=sel.map(c=>`
+    <div class="ccard sel" style="margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><div class="cn">${c.name}</div><div style="font-size:12px;color:var(--t2);margin-top:4px">${c.industry} ／ ${c.size}</div></div>
+        <span class="tag ${c.priority==='高'?'tg':c.priority==='中'?'ty':'tgr'}">${c.priority==='高'?'★ 高':c.priority==='中'?'◆ 中':'● 低'}</span>
+      </div></div>`).join('');
+  document.getElementById('prilist').innerHTML=sel.map((c,i)=>{const pd=priData[c.id]||{};return `
+    <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border)">
+      <div style="min-width:28px;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">${i+1}</div>
+      <div style="flex:1"><div style="font-weight:600;font-size:14px;margin-bottom:6px">${c.name}</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <select onchange="priData[${c.id}]={...(priData[${c.id}]||{}),order:this.value}" style="font-size:12px;padding:4px 8px;border:1px solid var(--border);border-radius:6px;flex:1;min-width:120px">
+            <option value="1番手" ${pd.order==='1番手'?'selected':''}>🔥 1番手</option>
+            <option value="2番手">📌 2番手</option>
+            <option value="3番手以降">📋 3番手以降</option>
+            <option value="様子見">⏳ 様子見</option>
+          </select>
+          <input type="text" placeholder="メモ（担当者名・コネクション等）" value="${pd.memo||''}" onchange="priData[${c.id}]={...(priData[${c.id}]||{}),memo:this.value}" style="font-size:12px;padding:4px 8px;flex:2;min-width:180px">
+        </div></div></div>`;}).join('');
+}
+
+function renderBlur(){
+  const sel=companies.filter(c=>selIds.has(c.id));if(sel.length===0)return;
+  document.getElementById('btbody').innerHTML=sel.slice(0,8).map((c,i)=>`
+    <tr><td>${i+1}</td><td><strong>${c.name}</strong></td><td>${c.industry}</td>
+    <td style="font-size:11px">${c.size}</td><td>${c.type}</td>
+    <td style="font-weight:700;color:var(--accent)">${c.score}</td>
+    <td>${c.priority==='高'?'★高':c.priority==='中'?'◆中':'●低'}</td></tr>`).join('');
+}
+
+// ===== エクスポート実行（エクスポートクレジット消費） =====
+function doExport(type){
+  if(!useExpCredit()){openPayModal('exp');return;}
+  updUI();
+  if(type==='csv'){
+    const sel=companies.filter(c=>selIds.has(c.id));
+    if(sel.length===0){alert('企業を選択してください');addExpCredits(1);updUI();return;}
+    const h=['#','企業名','業種','規模感','シナジータイプ','スコア','優先度','アプローチ順','メモ','選定理由'];
+    const rows=sel.map((c,i)=>{const pd=priData[c.id]||{};return [i+1,c.name,c.industry,c.size,c.type,c.score,c.priority,pd.order||'',pd.memo||'',c.reason].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',');});
+    const csv='\uFEFF'+[h.join(','),...rows].join('\n');
+    const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;a.download='longlist_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+    alert(`✅ ダウンロード完了！\n📊エクスポートクレジット残高：${getExpCredits()}枚`);
+  }else{
+    window.location.href='/contact.html?from=longlist&export=pdf&count='+selIds.size;
+  }
+}
+
+// 初期化（旧バージョンのキーをクリア）
+try{
+  localStorage.removeItem('jpnext_ll_free_v1');
+  localStorage.removeItem('jpnext_ll_credit_v1');
+}catch{}
+updUI();
+</script>
+</body>
+</html>
