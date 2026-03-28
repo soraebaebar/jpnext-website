@@ -817,12 +817,12 @@ ${cnt}社の候補をJSON形式のみで返答（説明文不要）：
 必ず実在する企業のみを選定し、売上規模の整合性を最重要視してください。`;
 
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
+    const res=await fetch('/api/generate',{
       method:'POST',
-      headers:{'Content-Type':'application/json','anthropic-dangerous-direct-browser-calls':'true'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:4000,messages:[{role:'user',content:prompt}],tools:[{"type":"web_search_20250305","name":"web_search"}]})
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({prompt})
     });
-    if(!res.ok)throw new Error('API:'+res.status);
+    if(!res.ok){const errData=await res.json().catch(()=>({}));throw new Error('API:'+res.status+' '+JSON.stringify(errData));}
     const d=await res.json();
     // web_search使用時はtextブロックのみ抽出
     const txt=d.content.filter(b=>b.type==='text').map(b=>b.text||'').join('');
