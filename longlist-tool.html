@@ -785,36 +785,19 @@ async function generate(){
     if(si<sts.length){document.getElementById('lstatus').textContent=sts[si];lbl.textContent=sts[si];bar.style.width=((si+1)/sts.length*85)+'%';si++;}
   },1500);
 
-  const prompt=`あなたは日本のM&A仲介実務に精通した専門家です。以下の売り手企業に対して、実際のM&A実務の観点から買い手候補ロングリストを作成してください。
+  const prompt=`日本のM&A仲介専門家として、以下の売り手に対する買い手候補を${cnt}社リストアップしてください。
 
-【売り手企業情報】
-- 業種：${ind}
-- 所在地：${pref}
-- 年間売上：${sal}
-- 営業利益率：${mar}
-- 事業の強み：${str||'特記なし'}
-- 期待するシナジー：${syns.length>0?syns.join('、'):'指定なし'}
-- 買い手希望規模：${bsize}
-- 買い手希望業種：${bind}
+売り手：業種=${ind}、所在地=${pref}、売上=${sal}、利益率=${mar}、強み=${str||'特記なし'}
+シナジー=${syns.length>0?syns.join('・'):'指定なし'}、買い手規模=${bsize}、買い手業種=${bind}
 
-【重要な制約条件】
-1. 上場企業・非上場企業の両方を含めること（非上場でも実在する有力企業を積極的に含める）
-2. 売り手の年間売上「${sal}」に対して、買い手の売上規模は原則2〜20倍程度に収める
-3. 実在する日本企業のみ（架空企業・倒産済み企業は絶対に含めない）
-4. 過去にM&Aを実施した実績がある企業を優先する
-5. 業種・シナジーの論理的整合性を必ず確認すること
-6. 非上場企業の場合は「非上場・推定売上〇〇億円規模」と記載する
+条件：
+・上場・非上場両方を含める（非上場は「非上場・推定売上XX億円」と記載）
+・買い手売上は売り手の2〜20倍程度
+・実在する日本企業のみ・M&A実績のある企業を優先
+・架空企業・倒産済み企業は除外
 
-【候補企業の選定基準（優先順）】
-① 同業または隣接業種でM&A実績がある企業
-② 売上規模が条件に合致している企業
-③ 戦略的にシナジーが明確に説明できる企業
-④ 財務的に買収余力がある企業（負債比率・キャッシュフロー）
-
-${cnt}社の候補をJSON形式のみで返答（説明文不要）：
-{"companies":[{"id":1,"name":"企業名（実在する日本企業）","industry":"業種","size":"上場/非上場の別・推定売上規模を具体的に","reason":"M&A実務の観点から買い手候補として有力な具体的理由（過去のM&A実績・シナジー・財務力を含む2〜3文）","score":85,"type":"同業拡大|川下統合|新規事業|財務投資|地域展開|技術獲得","priority":"高|中|低"}],"summary":{"total":${cnt},"high_priority":5,"industries":["業種1","業種2"],"avg_score":75}}
-
-必ず実在する企業のみを選定し、売上規模の整合性を最重要視してください。`;
+JSON形式のみで返答（説明文不要）：
+{"companies":[{"id":1,"name":"企業名","industry":"業種","size":"上場区分と売上規模","reason":"買い手候補として有力な理由（M&A実績・シナジー含む2文）","score":85,"type":"同業拡大|川下統合|新規事業|財務投資|地域展開|技術獲得","priority":"高|中|低"}],"summary":{"total":${cnt},"high_priority":3,"industries":["業種1"],"avg_score":75}}`;
 
   try{
     const res=await fetch('/api/generate',{
@@ -836,12 +819,23 @@ ${cnt}社の候補をJSON形式のみで返答（説明文不要）：
   }catch(e){
     clearInterval(iv);
     console.error('API Error:', e);
-    lbl.textContent='❌ エラー: '+e.message;
+    const isRateLimit = e.message && e.message.includes('rate_limit');
+    const errMsg = isRateLimit
+      ? '⏳ リクエストが集中しています。30秒後に自動で再試行します...'
+      : '❌ エラー: '+e.message;
+    lbl.textContent=errMsg;
     bar.style.width='100%';
-    bar.style.background='var(--red)';
-    // エラー詳細をUIに表示
-    document.getElementById('load3').innerHTML += `<div style="color:var(--red);font-size:12px;margin-top:8px;padding:8px;background:var(--rl);border-radius:6px">❌ エラー詳細: ${e.message}<br>※APIキーが設定されていない場合はデモデータで表示します</div>`;
-    setTimeout(()=>{loadDemo(cnt,lbl,bar);},1500);
+    bar.style.background=isRateLimit?'var(--gold)':'var(--red)';
+    if(isRateLimit){
+      let sec=30;
+      const countdown=setInterval(()=>{
+        sec--;
+        lbl.textContent=`⏳ ${sec}秒後に再試行...`;
+        if(sec<=0){clearInterval(countdown);generate();}
+      },1000);
+    } else {
+      setTimeout(()=>{loadDemo(cnt,lbl,bar);},1500);
+    }
   }
 }
 
